@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import Main.GradeP;
-
 public class SuperFrame extends JFrame{
 	ImageIcon icon;
 	JScrollPane scrollPane;
@@ -28,13 +26,13 @@ public class SuperFrame extends JFrame{
 		scrollPane = new JScrollPane(p1);
 		setContentPane(scrollPane);
 
-		
+
 		this.setJMenuBar(new MenuBar());
-		this.setTitle("¼ºÀû °ü¸® ÇÁ·Î±×·¥");
-		this.setSize(1200,800);
+		this.setTitle("ì„±ì  ê´€ë¦¬ í”„ë¡œê·¸ë¨");
+		this.setSize(1200, 800);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		
+
 	}
 }
