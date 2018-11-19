@@ -7,30 +7,31 @@ import javax.swing.*;
 
 
 public class MenuBar extends JMenuBar implements ActionListener{
+	JMenuItem open, save, close;
+	KeyStroke key;
 	public MenuBar() {
-		JMenuItem item;
-		KeyStroke key;
+		
 		//this.setSize(1200,200);
 		//파일관련
 		JMenu fileMenu = new JMenu("파일");
-		item = new JMenuItem("열기");
+		open = new JMenuItem("열기");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
-		item.setAccelerator(key);
-		item.addActionListener(this);
-		fileMenu.add(item);
+		open.setAccelerator(key);
+		open.addActionListener(this);
+		fileMenu.add(open);
 		
-		item = new JMenuItem("저장");
+		save = new JMenuItem("저장");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK);
-		item.setAccelerator(key);
-		item.addActionListener(this);
-		fileMenu.add(item);
+		save.setAccelerator(key);
+		save.addActionListener(this);
+		fileMenu.add(save);
 		
 		fileMenu.addSeparator();
-		item = new JMenuItem("종료");
+		close = new JMenuItem("종료");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
-		item.setAccelerator(key);
-		item.addActionListener(this);
-		fileMenu.add(item);
+		close.setAccelerator(key);
+		close.addActionListener(this);
+		fileMenu.add(close);
 		
 		JMenu gradeMenu = new JMenu("성적");
 		JMenu attendMenu = new JMenu("출결");
@@ -49,17 +50,30 @@ public class MenuBar extends JMenuBar implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JMenuItem mi = (JMenuItem)(e.getSource());
-		switch(mi.getText()) {
+		Object mi = e.getSource();
+		if(mi==open) {
+			System.out.println("hi");
+			System.exit(1);
+		}else if(mi==save) {
+			System.out.println("hi");
+			System.exit(1);
+		}else {
+			
+		}
+		/*switch(mi.getText()) {
 		case "열기":
+			System.exit(0);
 			//열기 관련 이벤트
 			break;
 		case "저장":
+			System.exit(0);
 			//저장 관련 이벤트
 			break;
 		case "종료":
+			System.out.println("hi");
+			System.exit(0);
 			//종료 관련 이벤트
 			break;
-		}
+		}*/
 	}
 }
