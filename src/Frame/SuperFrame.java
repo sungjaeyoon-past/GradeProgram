@@ -15,22 +15,25 @@ public class SuperFrame extends JFrame{
 	private StudentPanel StudentP;
 	private LecturePanel LectureP;
 	private StaticPanel StaticP;
+	private IntroPanel IntroP;
 	
 	public SuperFrame() {		
+		IntroP = new IntroPanel();
 		AttendP = new AttendPanel();
 		GradeP = new GradePanel();
 		StudentP = new StudentPanel();
 		LectureP = new LecturePanel();
 		StaticP = new StaticPanel();
 		
-		this.add(AttendP, BorderLayout.CENTER);
+		this.add(IntroP);
+		//this.add(AttendP, BorderLayout.CENTER);
 		//this.add(GradeP, BorderLayout.CENTER);
 		//this.add(StudentP, BorderLayout.CENTER);
 		//this.add(LectureP, BorderLayout.CENTER);
 		//this.add(StaticP, BorderLayout.CENTER);
 		
 		this.setJMenuBar(new MenuBar());
-		this.setTitle("己利贸府");
+		this.setTitle("己利贸府 橇肺弊伐");
 		this.setSize(1200, 800);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);

@@ -1,43 +1,72 @@
 package Frame;
 
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class MenuBar extends JMenuBar implements ActionListener{
-	JMenuItem open, save, close;
+	JMenuItem item, grade;
+	
 	KeyStroke key;
 	public MenuBar() {
-		
 		//this.setSize(1200,200);
 		//파일관련
 		JMenu fileMenu = new JMenu("파일");
-		open = new JMenuItem("열기");
+		item = new JMenuItem("열기");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
-		open.setAccelerator(key);
-		open.addActionListener(this);
-		fileMenu.add(open);
+		item.setAccelerator(key);
+		item.addActionListener(this);
+		fileMenu.setPreferredSize(new Dimension(80, 50));
+		fileMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		//fileMenu.setSize(100,50);
+		fileMenu.add(item);
 		
-		save = new JMenuItem("저장");
+		item = new JMenuItem("저장");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK);
-		save.setAccelerator(key);
-		save.addActionListener(this);
-		fileMenu.add(save);
+		item.setAccelerator(key);
+		item.addActionListener(this);
+		fileMenu.add(item);
 		
 		fileMenu.addSeparator();
-		close = new JMenuItem("종료");
+		item = new JMenuItem("종료");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
-		close.setAccelerator(key);
-		close.addActionListener(this);
-		fileMenu.add(close);
-		
+		item.setAccelerator(key);
+		item.addActionListener(this);
+		fileMenu.add(item);
+//성적
 		JMenu gradeMenu = new JMenu("성적");
+		grade = new JMenuItem("열기");
+		grade.addActionListener(this);
+		gradeMenu.setPreferredSize(new Dimension(80, 50));
+		gradeMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		gradeMenu.add(grade);
+				
+//출결		
 		JMenu attendMenu = new JMenu("출결");
+		attendMenu.setPreferredSize(new Dimension(80, 50));
+		attendMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		
+//통계		
 		JMenu staticMenu = new JMenu("통계");
+		staticMenu.setPreferredSize(new Dimension(80, 50));
+		staticMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		
+//학생
 		JMenu studentMenu = new JMenu("학생");
+		studentMenu.setPreferredSize(new Dimension(80, 50));
+		studentMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		
+//강의
 		JMenu lectureMenu = new JMenu("강의");
+		lectureMenu.setPreferredSize(new Dimension(80, 50));
+		lectureMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+	
+		
+		gradeMenu.setToolTipText("클릭하면 성적을 엽니다.");
+		attendMenu.setToolTipText("클릭하면 출결을 엽니다.");
+		staticMenu.setToolTipText("클릭하면 통계를 엽니다.");
+		studentMenu.setToolTipText("클릭하면 학생을 엽니다.");
+		lectureMenu.setToolTipText("클릭하면 강의를 엽니다.");
 		
 		this.add(fileMenu);
 		this.add(gradeMenu);	
@@ -50,31 +79,27 @@ public class MenuBar extends JMenuBar implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//JMenuitem mi = (JMeunitem)(e.getSource());
-		Object mi = e.getSource();
-		if(mi==open) {
-			System.out.println("hi");
-			System.exit(1);
-		}else if(mi==save) {
-			System.out.println("hi");
-			System.exit(1);
-		}else {
-			
-		}
-		/*switch(mi.getText()) {
+		JMenuItem mi = (JMenuItem) e.getSource();
+		Object menu = e.getSource();
+		
+		switch(mi.getText()) {
 		case "열기":
-			System.exit(0);
 			//열기 관련 이벤트
 			break;
 		case "저장":
-			System.exit(0);
 			//저장 관련 이벤트
 			break;
 		case "종료":
-			System.out.println("hi");
 			System.exit(0);
 			//종료 관련 이벤트
 			break;
-		}*/
+		}
+		
+		if(menu == grade) {
+			System.exit(0);
+			//성적 열기 부분 (메뉴바에 버튼을 넣을지, menuItem을 넣을지 고민)
+		}
+		
 	}
 }
+
