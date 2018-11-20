@@ -1,5 +1,5 @@
 package Frame;
 
-public class StudentPanel {
+public class StudentPanel extends TopPanel{
 
 }
