@@ -50,6 +50,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//JMenuitem mi = (JMeunitem)(e.getSource());
 		Object mi = e.getSource();
 		if(mi==open) {
 			System.out.println("hi");
