@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
-<<<<<<< HEAD
 import Main.GradeP;
 
 public class SuperFrame extends JFrame{	
