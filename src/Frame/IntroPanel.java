@@ -49,10 +49,10 @@ public class IntroPanel extends TopPanel{
 		developer.setBounds(670, 400, 380, 29);
 		add(developer);
 		
-		JLabel example = new JLabel("나중에 이쁘게 꾸밉시다 ..");
-		example.setFont(new Font("맑은고딕", Font.BOLD, 25));
+		JLabel example = new JLabel("# 고급 객체지향 프로그래밍 #");
+		example.setFont(new Font("a개미야", Font.BOLD, 25));
 		example.setForeground(Color.WHITE);
-		example.setBounds(670, 580, 380, 29);
+		example.setBounds(470, 650, 380, 29);
 		add(example);
 
 	}

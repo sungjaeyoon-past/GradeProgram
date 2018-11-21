@@ -5,12 +5,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MenuBar extends JMenuBar implements ActionListener{
-	JMenuItem item, grade;
+	JMenuItem item, grade, student;
+	
+	int test = 0;
+	//SuperFrame s = new SuperFrame(); //테스트 코드
 	
 	KeyStroke key;
 	public MenuBar() {
-		//this.setSize(1200,200);
-		//파일관련
+		
+//파일관련
 		JMenu fileMenu = new JMenu(" 파일");
 		item = new JMenuItem("열기");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
@@ -62,6 +65,9 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		JMenu studentMenu = new JMenu(" 학생");
 		studentMenu.setPreferredSize(new Dimension(80, 50));
 		studentMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		student = new JMenuItem("학생 열기");
+		student.addActionListener(this);
+		studentMenu.add(student);
 		
 //강의
 		JMenu lectureMenu = new JMenu(" 강의");
@@ -105,6 +111,13 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		if(menu == grade) {
 			System.exit(0);
 			//성적 열기 부분 (메뉴바에 버튼을 넣을지, menuItem을 넣을지 고민)
+		}else if(menu == student) {
+			System.out.println("hi");
+			test = 1;
+			System.out.println(test);
+			//s.stuManage();
+			//new StudentPanel();
+			
 		}
 		
 	}

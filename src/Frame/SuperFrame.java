@@ -21,8 +21,9 @@ public class SuperFrame extends JFrame{
 	private LecturePanel LectureP;
 	private StaticPanel StaticP;
 	private IntroPanel IntroP;
-	
+	MenuBar bar;
 	public SuperFrame() {		
+		bar = new MenuBar();
 		IntroP = new IntroPanel();
 		AttendP = new AttendPanel();
 		GradeP = new GradePanel();
@@ -30,19 +31,26 @@ public class SuperFrame extends JFrame{
 		LectureP = new LecturePanel();
 		StaticP = new StaticPanel();
 		
-		this.add(IntroP);
-		//this.add(AttendP, BorderLayout.CENTER);
-		//this.add(GradeP, BorderLayout.CENTER);
-		//this.add(StudentP, BorderLayout.CENTER);
-		//this.add(LectureP, BorderLayout.CENTER);
-		//this.add(StaticP, BorderLayout.CENTER);
-		
 		this.setJMenuBar(new MenuBar());
 		this.setTitle("己利贸府 橇肺弊伐 version.1");
 		this.setSize(1200, 800);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		
+		this.add(IntroP);
+		//this.add(AttendP, BorderLayout.CENTER);
+		//this.add(GradeP, BorderLayout.CENTER);
 
+		//this.add(LectureP, BorderLayout.CENTER);
+		//this.add(StaticP, BorderLayout.CENTER);
+
+	}
+	public void checkPanel() {
+		System.out.println(bar.test);
+		if(bar.test==1) {
+			System.out.println("test");
+			this.add(StudentP, BorderLayout.CENTER);
+		}
 	}
 }
