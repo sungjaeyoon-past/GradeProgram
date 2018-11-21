@@ -38,11 +38,11 @@ public class SuperFrame extends JFrame{
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
-		this.add(IntroP);
+		//this.add(IntroP);
 		//this.add(AttendP, BorderLayout.CENTER);
 		//this.add(GradeP, BorderLayout.CENTER);
 
-		//this.add(LectureP, BorderLayout.CENTER);
+		this.add(LectureP, BorderLayout.CENTER);
 		//this.add(StaticP, BorderLayout.CENTER);
 
 	}

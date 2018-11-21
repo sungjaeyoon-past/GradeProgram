@@ -1,6 +1,17 @@
 package Main;
 
 public class Lecture {
+	public Lecture( String name,int lectureNumber, int score, String division, String professor, String roomNumber,int count,String introduce ) {
+		this.name=name;
+		this.lectureNumber=lectureNumber;
+		this.score=score;
+		this.division=division;
+		this.professor=professor;
+		this.roomNumber=roomNumber;
+		this.count=count;
+		this.introduce=introduce;
+	}
+	
 	private int lectureNumber;
 	private String name;
 	private int score;//3학점
@@ -9,6 +20,7 @@ public class Lecture {
 	private String roomNumber;//강의실
 	private int count;//학생수
 	private String introduce;//강의소개
+	
 	public int getLectureNumber() {
 		return lectureNumber;
 	}
