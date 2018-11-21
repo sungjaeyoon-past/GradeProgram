@@ -25,11 +25,11 @@ public class SuperFrame extends JFrame{
 		LectureP = new LecturePanel();
 		StaticP = new StaticPanel();
 		
-		this.add(IntroP);
+		//this.add(IntroP);
 		//this.add(AttendP, BorderLayout.CENTER);
 		//this.add(GradeP, BorderLayout.CENTER);
 		//this.add(StudentP, BorderLayout.CENTER);
-		//this.add(LectureP, BorderLayout.CENTER);
+		this.add(LectureP, BorderLayout.CENTER);
 		//this.add(StaticP, BorderLayout.CENTER);
 		
 		this.setJMenuBar(new MenuBar());
