@@ -11,7 +11,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
 	public MenuBar() {
 		//this.setSize(1200,200);
 		//파일관련
-		JMenu fileMenu = new JMenu("파일");
+		JMenu fileMenu = new JMenu(" 파일");
 		item = new JMenuItem("열기");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
 		item.setAccelerator(key);
@@ -34,30 +34,37 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		item.addActionListener(this);
 		fileMenu.add(item);
 //성적
-		JMenu gradeMenu = new JMenu("성적");
-		grade = new JMenuItem("열기");
-		grade.addActionListener(this);
+		JMenu gradeMenu = new JMenu(" 성적");
 		gradeMenu.setPreferredSize(new Dimension(80, 50));
 		gradeMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		
+		
+		grade = new JMenuItem("성적 열기");
+		grade.addActionListener(this);
 		gradeMenu.add(grade);
+		
+		/*grade = new JMenuItem("성적 닫기");
+		grade.addActionListener(this);
+		gradeMenu.add(grade);*/
+		
 				
 //출결		
-		JMenu attendMenu = new JMenu("출결");
+		JMenu attendMenu = new JMenu(" 출결");
 		attendMenu.setPreferredSize(new Dimension(80, 50));
 		attendMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		
 //통계		
-		JMenu staticMenu = new JMenu("통계");
+		JMenu staticMenu = new JMenu(" 통계");
 		staticMenu.setPreferredSize(new Dimension(80, 50));
 		staticMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		
 //학생
-		JMenu studentMenu = new JMenu("학생");
+		JMenu studentMenu = new JMenu(" 학생");
 		studentMenu.setPreferredSize(new Dimension(80, 50));
 		studentMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		
 //강의
-		JMenu lectureMenu = new JMenu("강의");
+		JMenu lectureMenu = new JMenu(" 강의");
 		lectureMenu.setPreferredSize(new Dimension(80, 50));
 		lectureMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 	

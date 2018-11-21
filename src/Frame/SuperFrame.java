@@ -1,6 +1,11 @@
 package Frame;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,7 +38,7 @@ public class SuperFrame extends JFrame{
 		//this.add(StaticP, BorderLayout.CENTER);
 		
 		this.setJMenuBar(new MenuBar());
-		this.setTitle("己利贸府 橇肺弊伐");
+		this.setTitle("己利贸府 橇肺弊伐 version.1");
 		this.setSize(1200, 800);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
