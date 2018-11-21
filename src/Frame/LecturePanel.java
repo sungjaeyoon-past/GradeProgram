@@ -3,6 +3,8 @@ package Frame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -34,6 +36,7 @@ public class LecturePanel extends TopPanel {
 		this.add(infoP);
 		this.add(introP);
 		this.add(ratioP);
+		
 	}
 	
 	public JPanel creatInfoPanel() { //1.강의 정보 패널
@@ -69,8 +72,8 @@ public class LecturePanel extends TopPanel {
 	}
 	
 	public JPanel creatRatioPanel() { //3.비율 패널
-		JPanel jp=new JPanel();
-
+		JPanel jp=new JPanel();	
+		
 		JLabel j = new JLabel("비율 설정");
 		j.setFont(new Font("a개미야", Font.BOLD, 40));
 		j.setBounds(500, 470, 500, 100);
@@ -81,14 +84,33 @@ public class LecturePanel extends TopPanel {
 			myRatio.getcPlusRatio(),myRatio.getcRatio(),myRatio.getdPlusRatio(),myRatio.getdRatio(),myRatio.getfRatio()}};
 		JTable t=new JTable(row,col);
 		JScrollPane jsp = new JScrollPane(t);
-		jsp.setBounds(310, 600, 500, 42);
+		jsp.setBounds(290, 600, 500, 42);
 		add(jsp);
 		
+		ActionListener l = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myRatio.setaPlusRatio(t.getValueAt(0, 0));
+				myRatio.setaRatio(t.getValueAt(0, 1));
+				myRatio.setbPlusRatio(t.getValueAt(0, 2));
+				myRatio.setbRatio(t.getValueAt(0, 3));
+				myRatio.setcPlusRatio(t.getValueAt(0, 4));
+				myRatio.setcRatio(t.getValueAt(0, 5));
+				myRatio.setdPlusRatio(t.getValueAt(0, 6));
+				myRatio.setdRatio(t.getValueAt(0, 7));
+				myRatio.setfRatio(t.getValueAt(0, 8));
+			}
+		};
+		
 		JButton b=new JButton("저장");
-		b.setBounds(809, 600, 70, 42);
+		b.setBounds(789, 600, 70, 42);
+		b.addActionListener(l);
 		add(b);
+		
+		
 		
 		return jp;
 	}
+	
 	
 }
