@@ -1,5 +1,9 @@
 package Frame;
 
+import javax.swing.JButton;
+
 public class GradePanel extends TopPanel {
-	//己利 贸府 菩澄
+	public GradePanel(){
+		this.add(new JButton("己利 贸府"));
+	}
 }

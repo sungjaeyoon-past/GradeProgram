@@ -21,43 +21,51 @@ public class SuperFrame extends JFrame{
 	private LecturePanel LectureP;
 	private StaticPanel StaticP;
 	private IntroPanel IntroP;
-	private static MenuBar bar;
 	
 	public SuperFrame() {		
-		bar = new MenuBar();
 		IntroP = new IntroPanel();
 		AttendP = new AttendPanel();
 		GradeP = new GradePanel();
 		StudentP = new StudentPanel();
 		LectureP = new LecturePanel();
 		StaticP = new StaticPanel();
-		
-		this.setJMenuBar(new MenuBar());
-		this.setTitle("己利贸府 橇肺弊伐 version.1");
-		this.setSize(1200, 800);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		
-		if(bar.test==0) {
-			this.add(IntroP);
-			this.setVisible(true);
-		}else if(bar.test==1) {
-			System.out.println("SuperFrame");
-			this.remove(IntroP);
-			this.add(StudentP, BorderLayout.CENTER);
 			
-			//this.setVisible(true);
-			//StudentP.revalidate();
-			//StudentP.repaint();
-			
-		}
+		getContentPane().add(IntroP);
+		this.setJMenuBar(new MenuBar(this));
 		
 		//this.add(AttendP, BorderLayout.CENTER);
 		//this.add(GradeP, BorderLayout.CENTER);
 		//this.add(LectureP, BorderLayout.CENTER);
-		
+		//this.setVisible(true);
 		//this.add(StaticP, BorderLayout.CENTER);
+		
 	}
-	
-
+	public void change(String panelName) {
+		if(panelName.equals("gradeP")) {
+			getContentPane().removeAll();
+			getContentPane().add(GradeP);
+			revalidate();
+			repaint();
+		}else if(panelName.equals("attendP")){
+			getContentPane().removeAll();
+			getContentPane().add(AttendP);
+			revalidate();
+			repaint();
+		}else if(panelName.equals("staticP")){
+			getContentPane().removeAll();
+			getContentPane().add(StaticP);
+			revalidate();
+			repaint();
+		}else if(panelName.equals("studentP")){
+			getContentPane().removeAll();
+			getContentPane().add(StudentP);
+			revalidate();
+			repaint();
+		}else if(panelName.equals("lectureP")){
+			getContentPane().removeAll();
+			getContentPane().add(LectureP);
+			revalidate();
+			repaint();
+		}
+	}
 }

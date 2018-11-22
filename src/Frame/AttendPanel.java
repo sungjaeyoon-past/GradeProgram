@@ -4,6 +4,6 @@ import javax.swing.JButton;
 
 public class AttendPanel extends TopPanel{
 	public AttendPanel() {
-		this.add(new JButton("1"));
+		this.add(new JButton("출석 패널"));
 	}
 }

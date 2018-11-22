@@ -3,8 +3,11 @@ import Frame.*;
 
 public class GradeP {
 	public static void main(String[] args) {
-		new SuperFrame();
-		
+		SuperFrame css = new SuperFrame();
+		css.setTitle("己利贸府 橇肺弊伐 version.1");
+		css.setSize(1200, 800);
+		css.setResizable(false);
+		css.setDefaultCloseOperation(css.EXIT_ON_CLOSE);
+		css.setVisible(true);
 	}
-
 }
