@@ -6,13 +6,10 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar implements ActionListener{
 	JMenuItem item, grade, student;
-	
-	int test = 0;
-	//SuperFrame s = new SuperFrame(); //테스트 코드
-	
+
+	static public int test = 0;
 	KeyStroke key;
 	public MenuBar() {
-		
 //파일관련
 		JMenu fileMenu = new JMenu(" 파일");
 		item = new JMenuItem("열기");
@@ -88,6 +85,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		this.add(studentMenu);	
 		this.add(lectureMenu);	
 		setVisible(true);
+		
 	}
 
 	@Override
@@ -98,9 +96,11 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		switch(mi.getText()) {
 		case "열기":
 			//열기 관련 이벤트
+			JOptionPane.showMessageDialog(this, "열기 처리");
 			break;
 		case "저장":
 			//저장 관련 이벤트
+			JOptionPane.showMessageDialog(this, "저장 처리");
 			break;
 		case "종료":
 			System.exit(0);
@@ -109,15 +109,14 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		}
 		
 		if(menu == grade) {
-			System.exit(0);
+			JOptionPane.showMessageDialog(this, "성적 처리");
 			//성적 열기 부분 (메뉴바에 버튼을 넣을지, menuItem을 넣을지 고민)
 		}else if(menu == student) {
 			System.out.println("hi");
 			test = 1;
-			System.out.println(test);
-			//s.stuManage();
-			//new StudentPanel();
-			
+			//System.out.println(test);
+			new SuperFrame();
+
 		}
 		
 	}
