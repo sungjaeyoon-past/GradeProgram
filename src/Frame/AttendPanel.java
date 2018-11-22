@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 
 public class AttendPanel extends TopPanel{
 	public AttendPanel() {
+
 		setBackground(Color.WHITE);
 		setLayout(null);
 		
@@ -35,6 +36,9 @@ public class AttendPanel extends TopPanel{
 		add(combo);
 		add(jt);
 		add(jb);	
+
+		this.add(new JButton("출석 패널"));
+>>>>>>> 1aabe641c36cca9f1af54786fef73c57b025f7f4
 	}
 	
 }

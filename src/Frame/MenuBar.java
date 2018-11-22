@@ -4,13 +4,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MenuBar extends JMenuBar implements ActionListener{
-	JMenuItem item, grade, student;
+public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
+	JMenuItem item;
 
-	static public int test = 0;
+	private JMenu gradeMenu;
+	private JMenu studentMenu;
+	private JMenu lectureMenu;
+	private JMenu attendMenu;
+	private JMenu staticMenu;
+	
+	SuperFrame s;//슈퍼프레임 받기위해
 	KeyStroke key;
-	public MenuBar() {
-//파일관련
+	public MenuBar(SuperFrame s) {
+		this.s = s;
+	
 		JMenu fileMenu = new JMenu(" 파일");
 		item = new JMenuItem("열기");
 		key = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
@@ -34,42 +41,32 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		item.addActionListener(this);
 		fileMenu.add(item);
 //성적
-		JMenu gradeMenu = new JMenu(" 성적");
+		gradeMenu = new JMenu(" 성적");
 		gradeMenu.setPreferredSize(new Dimension(80, 50));
 		gradeMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		
-		
-		grade = new JMenuItem("성적 열기");
-		grade.addActionListener(this);
-		gradeMenu.add(grade);
-		
-		/*grade = new JMenuItem("성적 닫기");
-		grade.addActionListener(this);
-		gradeMenu.add(grade);*/
-		
+		gradeMenu.addMouseListener(this);
 				
 //출결		
-		JMenu attendMenu = new JMenu(" 출결");
+		attendMenu = new JMenu(" 출결");
 		attendMenu.setPreferredSize(new Dimension(80, 50));
 		attendMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		
+		attendMenu.addMouseListener(this);
 //통계		
-		JMenu staticMenu = new JMenu(" 통계");
+		staticMenu = new JMenu(" 통계");
 		staticMenu.setPreferredSize(new Dimension(80, 50));
 		staticMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		
+		staticMenu.addMouseListener(this);
 //학생
-		JMenu studentMenu = new JMenu(" 학생");
+		studentMenu = new JMenu(" 학생");
 		studentMenu.setPreferredSize(new Dimension(80, 50));
 		studentMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		student = new JMenuItem("학생 열기");
-		student.addActionListener(this);
-		studentMenu.add(student);
+		studentMenu.addMouseListener(this);
 		
 //강의
-		JMenu lectureMenu = new JMenu(" 강의");
+		lectureMenu = new JMenu(" 강의");
 		lectureMenu.setPreferredSize(new Dimension(80, 50));
 		lectureMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		lectureMenu.addMouseListener(this);
 	
 		
 		gradeMenu.setToolTipText("클릭하면 성적을 엽니다.");
@@ -87,11 +84,35 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		setVisible(true);
 		
 	}
-
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		JMenu m = (JMenu)e.getSource();
+		if(m == gradeMenu) {
+			//JOptionPane.showMessageDialog(this, "성적 처리");
+			s.change("gradeP");
+			
+		}else if(m == attendMenu) {
+			System.out.println("student");
+			s.change("attendP");
+			
+		}else if(m == staticMenu) {
+			System.out.println("student");
+			s.change("staticP");
+			
+		}else if(m == studentMenu) {
+			System.out.println("student");
+			s.change("studentP");
+			
+		}else if(m == lectureMenu) {
+			System.out.println("student");
+			s.change("lectureP");
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JMenuItem mi = (JMenuItem) e.getSource();
-		Object menu = e.getSource();
 		
 		switch(mi.getText()) {
 		case "열기":
@@ -107,17 +128,24 @@ public class MenuBar extends JMenuBar implements ActionListener{
 			//종료 관련 이벤트
 			break;
 		}
-		
-		if(menu == grade) {
-			JOptionPane.showMessageDialog(this, "성적 처리");
-			//성적 열기 부분 (메뉴바에 버튼을 넣을지, menuItem을 넣을지 고민)
-		}else if(menu == student) {
-			System.out.println("hi");
-			test = 1;
-			//System.out.println(test);
-			new SuperFrame();
+			
+	}
 
-		}
-		
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+	
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub	
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 	}
 }
