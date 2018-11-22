@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import javafx.scene.paint.Color;
+
 public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	JMenuItem item;
 
@@ -15,6 +17,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	
 	SuperFrame s;//슈퍼프레임 받기위해
 	KeyStroke key;
+	
 	public MenuBar(SuperFrame s) {
 		this.s = s;
 	
@@ -84,20 +87,20 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		setVisible(true);
 		
 	}
-	
+// david Hwang had modified in 2018-11-22 : 주석 제거 및 정리
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		JMenu m = (JMenu)e.getSource();
 		if(m == gradeMenu) {
-			//JOptionPane.showMessageDialog(this, "성적 처리");
+			System.out.println("grade");
 			s.change("gradeP");
 			
 		}else if(m == attendMenu) {
-			System.out.println("student");
+			System.out.println("attend");
 			s.change("attendP");
 			
 		}else if(m == staticMenu) {
-			System.out.println("student");
+			System.out.println("static");
 			s.change("staticP");
 			
 		}else if(m == studentMenu) {
@@ -105,7 +108,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 			s.change("studentP");
 			
 		}else if(m == lectureMenu) {
-			System.out.println("student");
+			System.out.println("lecture");
 			s.change("lectureP");
 		}
 	}
@@ -130,7 +133,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		}
 			
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
