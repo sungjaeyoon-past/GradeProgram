@@ -39,7 +39,6 @@ public class SuperFrame extends JFrame{
 		//this.setVisible(true);
 		//this.add(StaticP, BorderLayout.CENTER);
 		
-<<<<<<< HEAD
 	}
 	public void change(String panelName) {
 		if(panelName.equals("gradeP")) {
@@ -70,35 +69,3 @@ public class SuperFrame extends JFrame{
 		}
 	}
 }
-=======
-	}
-	public void change(String panelName) {
-		if(panelName.equals("gradeP")) {
-			getContentPane().removeAll();
-			getContentPane().add(GradeP);
-			revalidate();
-			repaint();
-		}else if(panelName.equals("attendP")){
-			getContentPane().removeAll();
-			getContentPane().add(AttendP);
-			revalidate();
-			repaint();
-		}else if(panelName.equals("staticP")){
-			getContentPane().removeAll();
-			getContentPane().add(StaticP);
-			revalidate();
-			repaint();
-		}else if(panelName.equals("studentP")){
-			getContentPane().removeAll();
-			getContentPane().add(StudentP);
-			revalidate();
-			repaint();
-		}else if(panelName.equals("lectureP")){
-			getContentPane().removeAll();
-			getContentPane().add(LectureP);
-			revalidate();
-			repaint();
-		}
-	}
-}
->>>>>>> 1aabe641c36cca9f1af54786fef73c57b025f7f4
