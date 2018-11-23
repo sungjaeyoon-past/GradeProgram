@@ -40,52 +40,32 @@ public class SuperFrame extends JFrame{
 		//this.add(StaticP, BorderLayout.CENTER);
 		
 	}
-	public void change(String panelName) {
-		if(panelName.equals("gradeP")) { //己利贸府
-			getContentPane().removeAll();
-			getContentPane().add(GradeP);
-			revalidate();
-			repaint();
-
-		}else if(panelName.equals("attendP")){
-
-			
-		}else if(panelName.equals("attendP")){ //免籍贸府
-
-			getContentPane().removeAll();
-			getContentPane().add(AttendP);
-			revalidate();
-			repaint();
-
-		}else if(panelName.equals("staticP")){
-
-			
-		}else if(panelName.equals("staticP")){ //烹拌贸府
-
-			getContentPane().removeAll();
-			getContentPane().add(StaticP);
-			revalidate();
-			repaint();
-
-		}else if(panelName.equals("studentP")){
-
-			
-		}else if(panelName.equals("studentP")){ //切积贸府
-
-			getContentPane().removeAll();
-			getContentPane().add(StudentP);
-			revalidate();
-			repaint();
-
-		}else if(panelName.equals("lectureP")){
-
-			
-		}else if(panelName.equals("lectureP")){ //碍狼贸府
-
-			getContentPane().removeAll();
-			getContentPane().add(LectureP);
-			revalidate();
-			repaint();
-		}
+	public void change(String panelName) {	
+		if(panelName.equals("gradeP")) {	
+			getContentPane().removeAll();	
+			getContentPane().add(GradeP);	
+			revalidate();	
+			repaint();	
+		}else if(panelName.equals("attendP")){	
+			getContentPane().removeAll();	
+			getContentPane().add(AttendP);	
+			revalidate();	
+			repaint();	
+		}else if(panelName.equals("staticP")){	
+			getContentPane().removeAll();	
+			getContentPane().add(StaticP);	
+			revalidate();	
+			repaint();	
+		}else if(panelName.equals("studentP")){	
+			getContentPane().removeAll();	
+			getContentPane().add(StudentP);	
+			revalidate();	
+			repaint();	
+		}else if(panelName.equals("lectureP")){	
+			getContentPane().removeAll();	
+			getContentPane().add(LectureP);	
+			revalidate();	
+			repaint();	
+		}	
 	}
 }

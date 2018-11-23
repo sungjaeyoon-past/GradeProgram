@@ -171,7 +171,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		JButton b = (JButton) e.getSource();
 		if(b==bSave) {
 			System.out.println("창 저장버튼");
-			insertStudent();
+			//insertStudent();
 			dispose();
 		}else if(b==bExit) {
 			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
@@ -183,7 +183,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		}
 	}
 	
-	private void insertStudent() {
+	/*private void insertStudent() {
 		StudentDB stuDB = new StudentDB();
 		Student stuget = getData();
 		boolean check = stuDB.insertStudent(stuget);//DB에 데이터를 저장
@@ -194,7 +194,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		Student stu = new Student();
 		
 		return stu;
-	}
+	}*/
 	
 	//컴포넌트 위치 설정
 	private void gbReset(JComponent c, int x, int y, int w, int h){
