@@ -25,7 +25,6 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		item.addActionListener(this);
 		fileMenu.setPreferredSize(new Dimension(80, 50));
 		fileMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		//fileMenu.setSize(100,50);
 		fileMenu.add(item);
 		
 		item = new JMenuItem("저장");
@@ -93,19 +92,15 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 			s.change("gradeP");
 			
 		}else if(m == attendMenu) {
-			System.out.println("student");
 			s.change("attendP");
 			
 		}else if(m == staticMenu) {
-			System.out.println("student");
 			s.change("staticP");
 			
 		}else if(m == studentMenu) {
-			System.out.println("student");
 			s.change("studentP");
 			
 		}else if(m == lectureMenu) {
-			System.out.println("student");
 			s.change("lectureP");
 		}
 	}
@@ -113,7 +108,6 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JMenuItem mi = (JMenuItem) e.getSource();
-		
 		switch(mi.getText()) {
 		case "열기":
 			//열기 관련 이벤트
@@ -127,8 +121,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 			System.exit(0);
 			//종료 관련 이벤트
 			break;
-		}
-			
+		}			
 	}
 
 	@Override
@@ -138,7 +131,6 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-	
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
