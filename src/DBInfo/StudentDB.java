@@ -15,7 +15,7 @@ public class StudentDB {
 	= "jdbc:mysql://localhost/student?characterEncoding=UTF-8&serverTimezone=UTC";
 	StudentPanel stuP;
 	
-	StudentDB(){
+	public StudentDB(){
 	}
 	
 	StudentDB(StudentPanel stuP){

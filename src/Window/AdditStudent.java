@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import DBInfo.StudentDB;
 import Main.Student;
 
 //새 창에서 학생을 추가해주는 클래스
 public class AdditStudent extends JFrame implements ActionListener{
 	JTextField tnumber, tStuNum, tname, tphoneNum;//숫자, 학생, 이름, 휴대폰
-	JTextField tremark, tratio;//특이사항, 성적
+	JTextField tratio;// 성적
+	JTextArea tremark;//특이사항
 	JTextField tYear, tMonth, tDate;//생일
 	JComboBox cbGrade; //1~4학년 선택
 	JRadioButton rbMan, rbWoman;//남여 성별
@@ -75,21 +77,25 @@ public class AdditStudent extends JFrame implements ActionListener{
 		gbc.weighty = 1.0;
 		
 	    JLabel st1 = new JLabel("번호 : ");
+	    st1.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    tnumber = new JTextField(5);
 	    gbReset(st1, 0, 0, 1, 1);
 	    gbReset(tnumber, 1, 0, 3, 1);
 	    
-	    JLabel st2 = new JLabel("학번:");
+	    JLabel st2 = new JLabel("학번 :");
+	    st2.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    tStuNum = new JTextField(20);
 	    gbReset(st2, 0, 1, 1, 1);
 	    gbReset(tStuNum, 1, 1, 3, 1);//위,아래, 공간
 	    
 	    JLabel st3 = new JLabel("이름 :");
+	    st3.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    tname = new JTextField(20);
 	    gbReset(st3, 0, 2, 1, 1);
 	    gbReset(tname, 1, 2, 3, 1);
 	    
 	    JLabel ygrade = new JLabel("학년 :");
+	    ygrade.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    String[] aygrade = {"1 학년","2 학년","3 학년","4 학년"};
 	    cbGrade = new JComboBox(aygrade);
 	    JPanel pgrade = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -98,6 +104,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(pgrade, 1, 3, 3, 1);
 	    
 	    JLabel Jgender = new JLabel("성별 :");
+	    Jgender.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    JPanel Pgender = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    rbMan = new JRadioButton("남", true);
 	    rbWoman = new JRadioButton("여", true);
@@ -110,11 +117,13 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(Pgender, 1,4,3,1);
 	    
 	    JLabel st4 = new JLabel("연락처 :");
+	    st4.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    tphoneNum = new JTextField(20);
 	    gbReset(st4, 0, 5, 1, 1);
 	    gbReset(tphoneNum, 1, 5, 3, 1);
 	    
 	    JLabel st5 = new JLabel("생년월일 :");
+	    st5.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    JPanel Pbirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    tYear = new JTextField(6);
 	    tMonth = new JTextField(6);
@@ -128,11 +137,14 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(Pbirth, 1, 6, 3, 1);
 	    
 	    JLabel st6 = new JLabel("특이사항 :");
-	    tremark = new JTextField(20);
+	    st6.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+	    tremark = new JTextArea(5, 20);
+	    JScrollPane scroll = new JScrollPane(tremark);
 	    gbReset(st6, 0, 7, 1, 1);
-	    gbReset(tremark, 1, 7, 3, 1);
+	    gbReset(scroll, 1, 7, 3, 1);
 	    
 	    JLabel st7 = new JLabel("성적 :");
+	    st7.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 	    tratio = new JTextField(20);
 	    gbReset(st7, 0, 8, 1, 1);
 	    gbReset(tratio, 1, 8, 3, 1);
@@ -147,7 +159,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    bSave.addActionListener(this);
 	    bExit.addActionListener(this);
 	    
-		setSize(360,390);
+		setSize(360,430);
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(600,300);
@@ -159,6 +171,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		JButton b = (JButton) e.getSource();
 		if(b==bSave) {
 			System.out.println("창 저장버튼");
+			insertStudent();
 			dispose();
 		}else if(b==bExit) {
 			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
@@ -170,8 +183,17 @@ public class AdditStudent extends JFrame implements ActionListener{
 		}
 	}
 	
-	private void updateStudent() {
+	private void insertStudent() {
+		StudentDB stuDB = new StudentDB();
+		Student stuget = getData();
+		boolean check = stuDB.insertStudent(stuget);//DB에 데이터를 저장
+		System.out.println("저장되었습니다");//확인
+	}
+	
+	public Student getData() {
+		Student stu = new Student();
 		
+		return stu;
 	}
 	
 	//컴포넌트 위치 설정
