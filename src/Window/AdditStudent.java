@@ -29,7 +29,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		//this.Pstd = Pstd;
 	}
 	
-	//데이터 받아 화면에 보여주려고..
+	//데이터 받아 화면에 보여주려고..(나중에 디비에서 가져옴)
 	private void inputData(Student stu) {
 		String number = stu.getNumber();
 		String studentNumber = stu.getStudentNumber();
@@ -120,9 +120,9 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    tMonth = new JTextField(6);
 	    tDate = new JTextField(6);
 	    Pbirth.add(tYear);
-	    Pbirth.add(new JLabel("/"));
+	    Pbirth.add(new JLabel(" / "));
 	    Pbirth.add(tMonth);
-	    Pbirth.add(new JLabel("/"));
+	    Pbirth.add(new JLabel(" / "));
 	    Pbirth.add(tDate);
 	    gbReset(st5, 0, 6, 1, 1);
 	    gbReset(Pbirth, 1, 6, 3, 1);
@@ -149,6 +149,8 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    
 		setSize(360,390);
 	    setVisible(true);
+	    setResizable(false);
+	    setLocation(600,300);
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);//현재창만 닫음
 	}
 	
@@ -157,14 +159,19 @@ public class AdditStudent extends JFrame implements ActionListener{
 		JButton b = (JButton) e.getSource();
 		if(b==bSave) {
 			System.out.println("창 저장버튼");
+			dispose();
 		}else if(b==bExit) {
-			int s = JOptionPane.showConfirmDialog(this, "종료하시면 저장된 내용이 사라집니다.");
+			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
 			if(s==JOptionPane.OK_OPTION) {
 				dispose(); // 현재 띄워진 프레임 종료
 			}else {
 				JOptionPane.showMessageDialog(this, "종료를 취소하였습니다.");
 			}
 		}
+	}
+	
+	private void updateStudent() {
+		
 	}
 	
 	//컴포넌트 위치 설정
