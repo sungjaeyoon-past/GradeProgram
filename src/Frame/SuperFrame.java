@@ -46,26 +46,42 @@ public class SuperFrame extends JFrame{
 			getContentPane().add(GradeP);
 			revalidate();
 			repaint();
+
+		}else if(panelName.equals("attendP")){
+
 			
 		}else if(panelName.equals("attendP")){ //免籍贸府
+
 			getContentPane().removeAll();
 			getContentPane().add(AttendP);
 			revalidate();
 			repaint();
+
+		}else if(panelName.equals("staticP")){
+
 			
 		}else if(panelName.equals("staticP")){ //烹拌贸府
+
 			getContentPane().removeAll();
 			getContentPane().add(StaticP);
 			revalidate();
 			repaint();
+
+		}else if(panelName.equals("studentP")){
+
 			
 		}else if(panelName.equals("studentP")){ //切积贸府
+
 			getContentPane().removeAll();
 			getContentPane().add(StudentP);
 			revalidate();
 			repaint();
+
+		}else if(panelName.equals("lectureP")){
+
 			
 		}else if(panelName.equals("lectureP")){ //碍狼贸府
+
 			getContentPane().removeAll();
 			getContentPane().add(LectureP);
 			revalidate();
@@ -73,4 +89,3 @@ public class SuperFrame extends JFrame{
 		}
 	}
 }
-
