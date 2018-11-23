@@ -18,8 +18,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-
-//david Hwang has modified in 2018-11-22 : AttendPanel 구현
 public class AttendPanel extends TopPanel{
 	private String tHead[] = {"순번", "학번", "이름", "1", "2", "3", "4", "5",
 			"6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",

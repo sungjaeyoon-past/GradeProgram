@@ -87,7 +87,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		setVisible(true);
 		
 	}
-// david Hwang had modified in 2018-11-22 : 주석 제거 및 정리
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		JMenu m = (JMenu)e.getSource();
