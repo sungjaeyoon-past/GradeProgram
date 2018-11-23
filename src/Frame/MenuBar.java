@@ -152,4 +152,3 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		// TODO Auto-generated method stub
 	}
 }
-

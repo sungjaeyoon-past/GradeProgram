@@ -1,5 +1,6 @@
 package Frame;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
 
 //david Hwang has modified in 2018-11-22 : AttendPanel ±¸Çö
 public class AttendPanel extends TopPanel{
@@ -105,5 +107,6 @@ public class AttendPanel extends TopPanel{
 		botP.add(paging, BorderLayout.CENTER);
 		
 		return botP;
+
 	}
 }
