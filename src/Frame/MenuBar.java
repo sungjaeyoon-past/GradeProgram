@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import javafx.scene.paint.Color;
+
 public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	JMenuItem item;
 
@@ -15,6 +17,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	
 	SuperFrame s;//슈퍼프레임 받기위해
 	KeyStroke key;
+	
 	public MenuBar(SuperFrame s) {
 		this.s = s;
 	
@@ -25,6 +28,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		item.addActionListener(this);
 		fileMenu.setPreferredSize(new Dimension(80, 50));
 		fileMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		//fileMenu.setSize(100,50);
 		fileMenu.add(item);
 		
 		item = new JMenuItem("저장");
@@ -83,24 +87,28 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		setVisible(true);
 		
 	}
-	
+// david Hwang had modified in 2018-11-22 : 주석 제거 및 정리
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		JMenu m = (JMenu)e.getSource();
 		if(m == gradeMenu) {
-			//JOptionPane.showMessageDialog(this, "성적 처리");
+			System.out.println("grade");
 			s.change("gradeP");
 			
 		}else if(m == attendMenu) {
+			System.out.println("attend");
 			s.change("attendP");
 			
 		}else if(m == staticMenu) {
+			System.out.println("static");
 			s.change("staticP");
 			
 		}else if(m == studentMenu) {
+			System.out.println("student");
 			s.change("studentP");
 			
 		}else if(m == lectureMenu) {
+			System.out.println("lecture");
 			s.change("lectureP");
 		}
 	}
@@ -108,6 +116,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JMenuItem mi = (JMenuItem) e.getSource();
+		
 		switch(mi.getText()) {
 		case "열기":
 			//열기 관련 이벤트
@@ -121,9 +130,10 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 			System.exit(0);
 			//종료 관련 이벤트
 			break;
-		}			
+		}
+			
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -131,6 +141,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+	
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -141,4 +152,3 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		// TODO Auto-generated method stub
 	}
 }
-

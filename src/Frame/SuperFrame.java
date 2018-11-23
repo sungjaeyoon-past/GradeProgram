@@ -73,3 +73,4 @@ public class SuperFrame extends JFrame{
 		}
 	}
 }
+
