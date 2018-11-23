@@ -1,14 +1,22 @@
 package Main;
 
 public class Student {
-	private String studentNumber;
-	private String name;
-	private int grade;
-	private boolean gender;
-	private String phoneNumber;
-	private String birthday;
-	private String remarks;
-	private int ratio;//A+=1
+	private String number; // 순번
+	private String studentNumber;//학번
+	private String name;//이름
+	private String grade; //학년
+	private String gender; //성별
+	private String phoneNumber; //폰번호
+	private String birthday; //생일
+	private String remarks; //특이사항
+	private String ratio;//A+ =1, 등급(성적)
+	
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
 	public String getStudentNumber() {
 		return studentNumber;
 	}
@@ -21,16 +29,16 @@ public class Student {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-	public boolean isGender() {
+	public String isGender() {
 		return gender;
 	}
-	public void setGender(boolean gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getPhoneNumber() {
@@ -51,13 +59,18 @@ public class Student {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public int getRatio() {
+	public String getRatio() {
 		return ratio;
 	}
-	public void setRatio(int ratio) {
+	public void setRatio(String ratio) {
 		this.ratio = ratio;
 	}
 	
-	
 
+	@Override
+	public String toString() {
+		return "MemberDTO [number=" + number + ", studentNumber=" + studentNumber + ", name=" + name + 
+				", grade=" + grade + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", birthday="
+				+ birthday + ", remarks=" + remarks + ", ratio=" + ratio + "]";
+	}
 }

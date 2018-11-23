@@ -63,4 +63,5 @@ public class IntroPanel extends TopPanel{
 		super.paintComponent(g);
 		g.drawImage(bg, 0, 0, null);
 	}
+
 }
