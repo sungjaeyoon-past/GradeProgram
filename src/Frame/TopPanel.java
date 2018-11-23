@@ -2,6 +2,6 @@ package Frame;
 
 import javax.swing.JPanel;
 
-public class TopPanel extends JPanel{
+public abstract class TopPanel extends JPanel{
 	
 }

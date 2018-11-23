@@ -147,7 +147,7 @@ public class StudentDB {
 	
 	//학생 정보 수정
 	public boolean updateStudent(Student upstd) {
-		System.out.println("std="+upstd.toString());
+		System.out.println("std="+upstd.toString()); // 현재 정보 콘솔에 ..(확인하기위해)
 		boolean check = false;
 		Connection con = null;
 		PreparedStatement ps = null;
