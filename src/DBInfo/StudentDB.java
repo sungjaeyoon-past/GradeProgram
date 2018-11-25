@@ -3,6 +3,7 @@ package DBInfo;
 import java.sql.*;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import Frame.StudentPanel;
@@ -29,7 +30,7 @@ public class StudentDB {
 		try {
 			Class.forName(DRIVER);
 			System.out.println("데이터베이스 연결중..");
-			con = DriverManager.getConnection(url, "root", "Dlrudals95`"); // 각자 로컬 아이디로 ..
+			con = DriverManager.getConnection(url, "root", "자기 로컬 비밀번호 여기에 작성"); // 각자 로컬 아이디로 ..
 			System.out.println("데이터베이스 연결 성공");
 		}catch(ClassNotFoundException ex) {
 			System.out.println(ex.getMessage());
@@ -39,34 +40,34 @@ public class StudentDB {
 		return con;
 	}
 	
-	//한사람 이름으로 회원정보 검색
-	public Student getStudent(String name) {
-		Student dto = new Student();
+	//한사람 학번으로 학생정보 검색
+	public Student getStudent(String stuNum) {
+		Student st = new Student();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			con = makeConnection();
-			String sql = "select * from student where name=?";
+			String sql = "select * from student where studentNumber=?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, name);
+			ps.setString(1, stuNum);//하나의 쿼리를 검색
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
-				dto.setNumber(rs.getString("number"));
-				dto.setStudentNumber(rs.getString("studentNumber"));
-				dto.setName(rs.getString("name"));
-				dto.setGrade(rs.getString("grade"));
-				dto.setGender(rs.getString("gender"));
-				dto.setPhoneNumber(rs.getString("phoneNumber"));
-				dto.setBirthday(rs.getString("birthday"));
-				dto.setRemarks(rs.getString("remarks"));
-				dto.setRatio(rs.getString("ratio"));
+				st.setNumber(rs.getString("number"));
+				st.setStudentNumber(rs.getString("studentNumber"));
+				st.setName(rs.getString("name"));
+				st.setGrade(rs.getString("grade"));
+				st.setGender(rs.getString("gender"));
+				st.setPhoneNumber(rs.getString("phoneNumber"));
+				st.setBirthday(rs.getString("birthday"));
+				st.setRemarks(rs.getString("remark"));
+				st.setRatio(rs.getString("ratio"));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dto;
+		return st;
 	}
 	
 	//리스트 목록 출력
@@ -89,7 +90,7 @@ public class StudentDB {
                 String gender = rs.getString("gender");
                 String phoneNumber = rs.getString("phoneNumber");
                 String birthday = rs.getString("birthday");
-                String remarks = rs.getString("remarks");
+                String remarks = rs.getString("remark");
                 String ratio = rs.getString("ratio");
                
                 Vector row = new Vector();
@@ -119,9 +120,10 @@ public class StudentDB {
 		
 		try {
 			con = makeConnection();
-			String sql = "inset into student(number,studentNumber,name,grade,gender,phoneNumber,birthday,remark,ratio)"+
+			String sql = "insert into student(number,studentNumber,name,grade,gender,phoneNumber,birthday,remark,ratio)"+
 					"values(?,?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
+			
 			ps.setString(1, std.getNumber());
 			ps.setString(2, std.getStudentNumber());
 			ps.setString(3, std.getName());
@@ -136,8 +138,6 @@ public class StudentDB {
 			if(saveStu>0) {
 				System.out.println("가입 성공");
 				check=true;
-			}else {
-				System.out.println("가입 실패");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -147,7 +147,7 @@ public class StudentDB {
 	
 	//학생 정보 수정
 	public boolean updateStudent(Student upstd) {
-		System.out.println("std="+upstd.toString()); // 현재 정보 콘솔에 ..(확인하기위해)
+		//System.out.println("std="+upstd.toString()); // 현재 정보 콘솔에 ..(확인하기위해)
 		boolean check = false;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -166,8 +166,11 @@ public class StudentDB {
 			ps.setString(7, upstd.getRemarks());
 			ps.setString(8, upstd.getRatio());
 			ps.setString(9, upstd.getStudentNumber());
+			//System.out.println(upstd.getNumber());
+			//System.out.println(upstd.getStudentNumber()); //테스트코드
 			
 			int saveStu = ps.executeUpdate(); // 실행 => 저장
+			
 			if(saveStu>0) {
 				check=true;
 			}else {
@@ -198,7 +201,7 @@ public class StudentDB {
 				System.out.println("디비 삭제 실패");
 			}
 		}catch(Exception e) {
-			System.out.println(e+"->오류 발생");
+			System.out.println(e);
 		}
 		return check;
 	}
@@ -230,7 +233,7 @@ public class StudentDB {
 			
 			//tablemodel에 있는 데이터 지우기
 			for(int i=0; i<model.getRowCount();) {
-				model.removeRow(0);;
+				model.removeRow(0);
 			}
 		}catch(SQLException e) {
 			System.out.println(e);

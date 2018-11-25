@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import DBInfo.StudentDB;
+import Frame.StudentPanel;
 import Main.Student;
 
 //새 창에서 학생을 추가해주는 클래스
@@ -15,9 +16,9 @@ public class AdditStudent extends JFrame implements ActionListener{
 	JTextField tYear, tMonth, tDate;//생일
 	JComboBox cbGrade; //1~4학년 선택
 	JRadioButton rbMan, rbWoman;//남여 성별
-	JButton bSave, bExit;//학생등록, 취소
+	JButton bSave, bExit, bModify;//학생등록, 취소
 	
-	Student Pstd;//실제 보여줄 패널
+	StudentPanel Pstd;//실제 보여줄 패널
 	
 	GridBagLayout glay; //gridbagLayout사용, 컴포넌트 위치 및 크기 직접설정 가능
 	GridBagConstraints gbc;//컴포넌트에 조건을 설정하기 위해
@@ -26,13 +27,33 @@ public class AdditStudent extends JFrame implements ActionListener{
 		Show();
 	}
 	
-	public AdditStudent(Student Pstd) {
+	public AdditStudent(StudentPanel Pstd) {
 		Show();
-		//this.Pstd = Pstd;
+		bModify.setEnabled(false);	
+        bModify.setVisible(false);
+		this.Pstd = Pstd;
+	}
+	public AdditStudent(String stuNum, StudentPanel sPanel, int i) {
+		if(i == 1) {
+			this.Pstd = sPanel;
+			StudentDB stdb = new StudentDB();
+			Student st = new Student();
+			st = stdb.getStudent(stuNum);
+		}else {
+			this.Pstd = sPanel;
+			Show();
+			bSave.setEnabled(false);	
+	        bSave.setVisible(false);
+			StudentDB stdb = new StudentDB();
+			Student st = new Student();
+			st = stdb.getStudent(stuNum);
+			inputData(st);
+			
+		}
 	}
 	
 	//데이터 받아 화면에 보여주려고..(나중에 디비에서 가져옴)
-	private void inputData(Student stu) {
+	public void inputData(Student stu) {
 		String number = stu.getNumber();
 		String studentNumber = stu.getStudentNumber();
 		String name = stu.getName();
@@ -43,6 +64,8 @@ public class AdditStudent extends JFrame implements ActionListener{
 		String remarks = stu.getRemarks();
 		String ratio = stu.getRatio();
 		
+		//System.out.println(number); //테스트
+		//System.out.println(studentNumber); //테스트
 		tnumber.setText(number);
 		tnumber.setEditable(false);//수정x
 		tStuNum.setText(studentNumber);
@@ -151,12 +174,15 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    
 	    JPanel PButton = new JPanel();
 	    bSave = new JButton("저장"); 
+	    bModify = new JButton("수정");
 	    bExit = new JButton("종료");
 	    PButton.add(bSave);
+	    PButton.add(bModify);
 	    PButton.add(bExit);
 	    gbReset(PButton, 0, 9, 4, 1);
 	    
 	    bSave.addActionListener(this);
+	    bModify.addActionListener(this);
 	    bExit.addActionListener(this);
 	    
 		setSize(360,430);
@@ -169,32 +195,100 @@ public class AdditStudent extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
-		if(b==bSave) {
+		if(b == bSave) {
 			System.out.println("창 저장버튼");
-			//insertStudent();
-			dispose();
-		}else if(b==bExit) {
+			insertStudent();
+		}else if(b == bExit) {
 			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
-			if(s==JOptionPane.OK_OPTION) {
+			if(s == JOptionPane.OK_OPTION) {
 				dispose(); // 현재 띄워진 프레임 종료
 			}else {
 				JOptionPane.showMessageDialog(this, "종료를 취소하였습니다.");
 			}
+		}else if(b == bModify) {
+			int s = JOptionPane.showConfirmDialog(this, "정보를 수정 하시겠습니까?");
+			if(s == JOptionPane.OK_OPTION) {
+				updateStudent();
+				dispose(); // 현재 띄워진 프레임 종료
+			}else {
+				JOptionPane.showMessageDialog(this, "정보 수정을 취소하셨습니다.");
+			}
 		}
+		Pstd.JTableRefresh(); //저장후 테이블 다시 새로고침
 	}
 	
-	/*private void insertStudent() {
+	public void insertStudent() {
 		StudentDB stuDB = new StudentDB();
 		Student stuget = getData();
 		boolean check = stuDB.insertStudent(stuget);//DB에 데이터를 저장
-		System.out.println("저장되었습니다");//확인
+		if(check) {
+			JOptionPane.showMessageDialog(this, "학생 저장 완료");
+			dispose();
+		}else {
+			JOptionPane.showMessageDialog(this, "학생 저장이 정상적으로 안되었음");
+		}
 	}
 	
+	public void updateStudent() {
+		StudentDB stuDB = new StudentDB();
+		Student stuget = getData();
+		boolean check = stuDB.updateStudent(stuget);//DB에 데이터를 저장
+		/*if(check) {
+			JOptionPane.showMessageDialog(this, "업데이트 완료");
+			dispose();
+		}else {
+			JOptionPane.showMessageDialog(this, "업데이트 오류");
+		}*/
+	}
+	
+	public void deleteStudent(String studentNumber) {
+		String stuNum = studentNumber;
+		StudentDB stuDB = new StudentDB();
+		boolean check = stuDB.deleteStudent(stuNum);
+		
+		if(check) {
+			JOptionPane.showMessageDialog(this, "데이터 삭제완료");
+			//Pstd.JTableRefresh();//actionPerformd에서만 실행됌
+            dispose(); 
+		}else {
+			JOptionPane.showMessageDialog(this, "데이터 삭제오류");
+		}
+		
+	}
+	//입력 값 확인하는 메소드
 	public Student getData() {
 		Student stu = new Student();
 		
-		return stu;
-	}*/
+		String number = tnumber.getText();
+		String studentNumber = tStuNum.getText();
+		String name = tname.getText();
+		String phoneNumber = tphoneNum.getText();
+		String remarks = tremark.getText();
+		String birth1 = tYear.getText();
+		String birth2 = tMonth.getText();
+		String birth3 = tDate.getText();
+		String birthday = birth1+birth2+birth3;
+		String grade = (String)cbGrade.getSelectedItem();
+		String gender="";
+		if(rbMan.isSelected()) {
+			gender="M";
+		}else if(rbWoman.isSelected()) {
+			gender="W";
+		}
+		String ratio = tratio.getText();
+		
+		stu.setNumber(number);
+		stu.setStudentNumber(studentNumber);
+		stu.setName(name);
+		stu.setPhoneNumber(phoneNumber);
+		stu.setRemarks(remarks);
+		stu.setBirthday(birthday);
+		stu.setGrade(grade);
+		stu.setGender(gender);
+		stu.setRatio(ratio);
+		
+		return stu;//받은 데이터를 넘김
+	}
 	
 	//컴포넌트 위치 설정
 	private void gbReset(JComponent c, int x, int y, int w, int h){

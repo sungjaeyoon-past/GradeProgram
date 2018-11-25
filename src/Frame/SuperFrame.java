@@ -66,6 +66,11 @@ public class SuperFrame extends JFrame{
 			getContentPane().add(LectureP);	
 			revalidate();	
 			repaint();	
-		}	
+		}else if(panelName.equals("IntroP")){	
+			getContentPane().removeAll();	
+			getContentPane().add(IntroP);	
+			revalidate();	
+			repaint();	
+		}		
 	}
 }

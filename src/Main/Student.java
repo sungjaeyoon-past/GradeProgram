@@ -69,7 +69,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [number=" + number + ", studentNumber=" + studentNumber + ", name=" + name + 
+		return "Student [number=" + number + ", studentNumber=" + studentNumber + ", name=" + name + 
 				", grade=" + grade + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", birthday="
 				+ birthday + ", remarks=" + remarks + ", ratio=" + ratio + "]";
 	}

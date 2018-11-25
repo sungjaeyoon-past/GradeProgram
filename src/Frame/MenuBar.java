@@ -14,6 +14,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	private JMenu lectureMenu;
 	private JMenu attendMenu;
 	private JMenu staticMenu;
+	private JMenu IntroMenu;
 	
 	SuperFrame s;//슈퍼프레임 받기위해
 	KeyStroke key;
@@ -66,17 +67,22 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		studentMenu.addMouseListener(this);
 		
 //강의
-		lectureMenu = new JMenu(" 강의");
+		lectureMenu = new JMenu(" 강의 ");
 		lectureMenu.setPreferredSize(new Dimension(80, 50));
 		lectureMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		lectureMenu.addMouseListener(this);
-	
+//제작정보
+		IntroMenu = new JMenu(" Help");
+		IntroMenu.setPreferredSize(new Dimension(80, 50));
+		IntroMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		IntroMenu.addMouseListener(this);
 		
 		gradeMenu.setToolTipText("클릭하면 성적을 엽니다.");
 		attendMenu.setToolTipText("클릭하면 출결을 엽니다.");
 		staticMenu.setToolTipText("클릭하면 통계를 엽니다.");
 		studentMenu.setToolTipText("클릭하면 학생을 엽니다.");
 		lectureMenu.setToolTipText("클릭하면 강의를 엽니다.");
+		IntroMenu.setToolTipText("클락하면 제작정보를 엽니다.");
 		
 		this.add(fileMenu);
 		this.add(gradeMenu);	
@@ -84,6 +90,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 		this.add(staticMenu);	
 		this.add(studentMenu);	
 		this.add(lectureMenu);	
+		this.add(IntroMenu);
 		setVisible(true);
 		
 	}
@@ -92,24 +99,23 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		JMenu m = (JMenu)e.getSource();
 		if(m == gradeMenu) {
-			System.out.println("grade");
 			s.change("gradeP");
 			
+			
 		}else if(m == attendMenu) {
-			System.out.println("attend");
 			s.change("attendP");
 			
 		}else if(m == staticMenu) {
-			System.out.println("static");
 			s.change("staticP");
 			
 		}else if(m == studentMenu) {
-			System.out.println("student");
 			s.change("studentP");
 			
 		}else if(m == lectureMenu) {
-			System.out.println("lecture");
 			s.change("lectureP");
+			
+		}else if(m == IntroMenu) {
+			s.change("IntroP");
 		}
 	}
 	

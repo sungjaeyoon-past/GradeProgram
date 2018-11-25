@@ -1,36 +1,201 @@
 package Frame;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.Font;
 import java.awt.event.*;
+import java.util.Vector;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
-import javax.swing.JButton;
-
+import DBInfo.StudentDB;
+import Main.Student;
 import Window.AdditStudent;
 
-public class StudentPanel extends TopPanel{
-
-	//AdditStudent s = new AdditStudent();
+public class StudentPanel extends TopPanel implements ActionListener, MouseListener{
+	private JScrollPane studentT;
+	Vector stulist; //학생 리스트
+	Vector cols; // 테이블 헤더
+	DefaultTableModel model;
+	JTable table;
+	
+	JComboBox search_jcb;
+	JButton btn, mbtn, dbtn, search_btn;
+	JTextField search_Text;
+	
+	StudentDB s;
+	Student stu;
+	AdditStudent aClick, bClick; //delete 메소드 부르기위해(additStudent)
+	String studentNumber;
+	
 	public StudentPanel(){
-		JButton btn = new JButton("학생 등록");
+		s = new StudentDB(); // db에 저장된 데이터를 가져오기 위해
+		stu = new Student(); //search할때 값 가져오기 위해
+		stulist = s.getMemberList();
+		
+		this.setLayout(new BorderLayout());
+		JPanel topS;
+		topS = makesT();
+		this.add(topS, BorderLayout.NORTH);
+		
+		JPanel midS = new JPanel();
+		studentT = makeStudentTable();
+		midS.add(studentT);
+		this.add(midS, BorderLayout.CENTER);
+	}
+
+	//Top패널 부분 
+	public JPanel makesT() {
+		cols = getColumn();//학생 검색하기 위해 데이터 받아옴
+		
+		JPanel sTop = new JPanel();
+		JPanel sTop_search = new JPanel();
+		JPanel sTop_mod = new JPanel();
+		
+		sTop.setLayout(new BorderLayout());
+		sTop_search.setLayout(new FlowLayout());
+		sTop_mod.setLayout(new FlowLayout());
+		
+		//search_jcb.setSelectedItem(cols);
+		search_Text = new JTextField("");//나중에 디비로 이어지게
+		search_Text.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		search_Text.setPreferredSize(new Dimension(150, 50));
+		
+		String[] head = {"학번","이름","성적"};
+		search_jcb = new JComboBox(head);
+		search_jcb.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		search_jcb.setPreferredSize(new Dimension(80, 50));
+		
+		search_btn = new JButton("학생 검색");
+		search_btn.setPreferredSize(new Dimension(120, 50));
+		search_btn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		search_btn.addActionListener(this);
+		
+		btn = new JButton("학생 등록");
 		btn.setPreferredSize(new Dimension(130, 50));
 		btn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		btn.addActionListener(new MyActionListener());
-		add(btn);
+		btn.addActionListener(this);
 		
-		setLayout(new FlowLayout(FlowLayout.RIGHT));
-		setBackground(Color.WHITE);
+		mbtn = new JButton("정보 수정");
+		mbtn.setPreferredSize(new Dimension(130, 50));
+		mbtn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		mbtn.addActionListener(this);
+		
+		dbtn = new JButton("학생 삭제");
+		dbtn.setPreferredSize(new Dimension(130, 50));
+		dbtn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
+		dbtn.addActionListener(this);
+		
+		sTop_search.add(search_jcb);
+		sTop_search.add(search_Text);
+		sTop_search.add(search_btn);
+		sTop_mod.add(btn);
+		sTop_mod.add(mbtn);
+		sTop_mod.add(dbtn);
+		
+		sTop.add(sTop_search, BorderLayout.WEST);
+		sTop.add(sTop_mod,BorderLayout.EAST);
+
+		return sTop;
 	}
 	
-	private class MyActionListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-            JButton b = (JButton) e.getSource();
-            if (b.getText().equals("학생 등록")) {
-            	System.out.println("학생등록을 누름");
-            	new AdditStudent();
-            }
-		}
+	//mid 패널부분
+	public JScrollPane makeStudentTable() {
+		StudentDB studb = new StudentDB();
+		Font f = new Font("HY엽서L", Font.BOLD, 20);//테이블 헤더 설정
+		
+		cols = getColumn(); //헤더 데이터 받음
+		model = new DefaultTableModel(stulist, cols);
+		table = new JTable(model);
+		
+		table.getTableHeader().setReorderingAllowed(false);//column 위치변경x
+		//table.getTableHeader().setResizingAllowed(false);//크기조절 불가
+		table.setFont(new Font("HY엽서L", 1, 15));//테이블 폰트변경
+		table.setRowHeight(50);//테이블 높이변경
+		table.addMouseListener(this);
+		JScrollPane pane = new JScrollPane(table);
+		
+		JTableHeader header = table.getTableHeader();
+		header.setFont(f);
+		
+		pane.setPreferredSize(new java.awt.Dimension(1185, 601));//테이블 사이즈 조정
+		table.getColumn("번호").setPreferredWidth(1);
+		table.getColumn("이름").setPreferredWidth(10);
+		table.getColumn("학년").setPreferredWidth(10);
+		table.getColumn("성별").setPreferredWidth(5);
+		table.getColumn("휴대폰번호").setPreferredWidth(100);
+		table.getColumn("특이사항").setPreferredWidth(300);
+		table.getColumn("성적").setPreferredWidth(10);
+		
+		return pane;
+	}
+	
+	public Vector getColumn() {
+		Vector col = new Vector();
+		col.add("번호");
+		col.add("학번");
+		col.add("이름");
+		col.add("학년");
+		col.add("성별");
+		col.add("휴대폰번호");
+		col.add("생년월일");
+		col.add("특이사항");
+		col.add("성적");
+		return col;
+	}
+	
+	public void JTableRefresh() {
+		StudentDB stdb = new StudentDB();
+		DefaultTableModel model = new DefaultTableModel(stdb.getMemberList(), getColumn());//DB데이터 다시 받아 테이블 초기화
+		table.setModel(model); // 테이블 새로고침
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 JButton b = (JButton) e.getSource();
+         if (b.getText().equals("학생 등록")) {
+         	System.out.println("학생등록을 누름");
+         	new AdditStudent(this);
+         	
+         }else if(b.getText().equals("정보 수정")) {
+        	
+        	if(studentNumber == null) {
+        		JOptionPane.showMessageDialog(this, "정보 수정 실패 : 수정 하려는 줄을 선택하시오.");
+        	}else {
+        		bClick = new AdditStudent(studentNumber, this, 2);
+        	}
+        	
+        	//JOptionPane.showMessageDialog(this, "정보수정");
+        	
+         }else if(b.getText().equals("학생 삭제")) {
+        	System.out.println("학생삭제");
+        	if(studentNumber == null) {
+        		JOptionPane.showMessageDialog(this, "삭제실패 : 삭제하려는 줄을 선택하시오.");
+        	}else {
+        		aClick.deleteStudent(studentNumber);
+        	}
+        	this.JTableRefresh();//action부분에 넣어야함.
+         }
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int rowSelect = table.getSelectedRow();
+		studentNumber = (String)table.getValueAt(rowSelect,1); //2번째 row에 있는 학번 가져옴
+		System.out.println(rowSelect);
+		System.out.println(studentNumber);//몇번째 줄 클릭했는지 위치 확인
+		aClick = new AdditStudent(studentNumber, this, 1);//수정할때 클릭한 데이터 넘기기 위해
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {	
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
 	}
 }

@@ -31,22 +31,22 @@ public class IntroPanel extends TopPanel{
 		labelImage.setBounds(100, 190, 430, 320);//이미지 위치랑 크기 조정
 		add(labelImage);
 		
-		JLabel projectName = new JLabel("1. 프로젝트 명 : lalavla");
+		JLabel projectName = new JLabel("1. 프로젝트 명 : 성적처리 프로그램");
 		projectName.setFont(new Font("a개미야", Font.BOLD, 35)); // 개미야 폰트 있어야 적용 ^^
 		projectName.setForeground(Color.WHITE);
-		projectName.setBounds(670, 260, 380, 29);
+		projectName.setBounds(670, 260, 480, 29);
 		add(projectName);
 		
-		JLabel version = new JLabel("2. 버젼 정보 : ");
+		JLabel version = new JLabel("2. 버젼 정보 : version 0.1");
 		version.setFont(new Font("a개미야", Font.BOLD, 35));
 		version.setForeground(Color.WHITE);
-		version.setBounds(670, 330, 380, 29);
+		version.setBounds(670, 330, 480, 29);
 		add(version);
 		
-		JLabel developer = new JLabel("3. 제작자 : 로션");
+		JLabel developer = new JLabel("3. 제작자 : 윤위이황");
 		developer.setFont(new Font("a개미야", Font.BOLD, 35));
 		developer.setForeground(Color.WHITE);
-		developer.setBounds(670, 400, 380, 29);
+		developer.setBounds(670, 400, 480, 29);
 		add(developer);
 		
 		JLabel example = new JLabel("# 고급 객체지향 프로그래밍 #");
