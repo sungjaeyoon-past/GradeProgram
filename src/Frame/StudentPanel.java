@@ -173,8 +173,10 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
         		JOptionPane.showMessageDialog(this, "삭제실패 : 삭제하려는 줄을 선택하시오.");
         	}else {
         		aClick.deleteStudent(studentNumber);
+        		this.JTableRefresh();//action부분에 넣어야함.
+        		studentNumber = null;
         	}
-        	this.JTableRefresh();//action부분에 넣어야함.
+        	
          }
 	}
 	

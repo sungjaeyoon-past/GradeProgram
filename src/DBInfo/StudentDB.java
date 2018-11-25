@@ -30,7 +30,7 @@ public class StudentDB {
 		try {
 			Class.forName(DRIVER);
 			System.out.println("데이터베이스 연결중..");
-			con = DriverManager.getConnection(url, "root", "자기 로컬 비밀번호 여기에 작성"); // 각자 로컬 아이디로 ..
+			con = DriverManager.getConnection(url, "root", "Dlrudals95`"); // 각자 로컬 아이디로 ..
 			System.out.println("데이터베이스 연결 성공");
 		}catch(ClassNotFoundException ex) {
 			System.out.println(ex.getMessage());
