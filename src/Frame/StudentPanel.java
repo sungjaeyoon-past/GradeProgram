@@ -148,6 +148,17 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		StudentDB stdb = new StudentDB();
 		DefaultTableModel model = new DefaultTableModel(stdb.getMemberList(), getColumn());//DB데이터 다시 받아 테이블 초기화
 		table.setModel(model); // 테이블 새로고침
+		studentNumber = null;
+		
+		//버그 발생시 여기부분이 제일 큼
+		table.getColumn("번호").setPreferredWidth(1);
+		table.getColumn("이름").setPreferredWidth(10);
+		table.getColumn("학년").setPreferredWidth(10);
+		table.getColumn("성별").setPreferredWidth(5);
+		table.getColumn("휴대폰번호").setPreferredWidth(100);
+		table.getColumn("특이사항").setPreferredWidth(300);
+		table.getColumn("성적").setPreferredWidth(10);
+		
 	}
 
 	@Override
@@ -156,16 +167,14 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
          if (b.getText().equals("학생 등록")) {
          	System.out.println("학생등록을 누름");
          	new AdditStudent(this);
+         	//studentNumber = null;
          	
          }else if(b.getText().equals("정보 수정")) {
-        	
         	if(studentNumber == null) {
         		JOptionPane.showMessageDialog(this, "정보 수정 실패 : 수정 하려는 줄을 선택하시오.");
         	}else {
         		bClick = new AdditStudent(studentNumber, this, 2);
         	}
-        	
-        	//JOptionPane.showMessageDialog(this, "정보수정");
         	
          }else if(b.getText().equals("학생 삭제")) {
         	System.out.println("학생삭제");
@@ -174,7 +183,7 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
         	}else {
         		aClick.deleteStudent(studentNumber);
         		this.JTableRefresh();//action부분에 넣어야함.
-        		studentNumber = null;
+        		//studentNumber = null;
         	}
         	
          }

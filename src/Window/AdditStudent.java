@@ -210,6 +210,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 			if(s == JOptionPane.OK_OPTION) {
 				updateStudent();
 				dispose(); // 현재 띄워진 프레임 종료
+				
 			}else {
 				JOptionPane.showMessageDialog(this, "정보 수정을 취소하셨습니다.");
 			}
