@@ -115,6 +115,10 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		table.addMouseListener(this);
 		JScrollPane pane = new JScrollPane(table);
 		
+		//테이블 스크롤 정책(넣어야 스크롤 생김)
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		JTableHeader header = table.getTableHeader();
 		header.setFont(f);
 		

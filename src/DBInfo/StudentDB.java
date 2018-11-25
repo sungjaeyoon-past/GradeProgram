@@ -10,36 +10,19 @@ import Frame.StudentPanel;
 import Main.Student;
 
 public class StudentDB {
-	private static final String DRIVER
-	= "com.mysql.cj.jdbc.Driver";
-	private static final String url 
-	= "jdbc:mysql://localhost/student?characterEncoding=UTF-8&serverTimezone=UTC";
+	
 	StudentPanel stuP;
+	ConnectionDB connectDB;
 	
 	public StudentDB(){
+		connectDB = new ConnectionDB();
 	}
 	
 	StudentDB(StudentPanel stuP){
 		this.stuP = stuP;
 		System.out.println("exampe=>"+stuP);
 	}
-	
-	// 디비 연결 METHOD
-	public Connection makeConnection() {
-		Connection con = null;
-		try {
-			Class.forName(DRIVER);
-			System.out.println("데이터베이스 연결중..");
-			con = DriverManager.getConnection(url, "root", "Dlrudals95`"); // 각자 로컬 아이디로 ..
-			System.out.println("데이터베이스 연결 성공");
-		}catch(ClassNotFoundException ex) {
-			System.out.println(ex.getMessage());
-		}catch(SQLException ex) {
-			System.out.println("SQLException:"+ex.getMessage());
-		}
-		return con;
-	}
-	
+
 	//한사람 학번으로 학생정보 검색
 	public Student getStudent(String stuNum) {
 		Student st = new Student();
@@ -47,7 +30,7 @@ public class StudentDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "select * from student where studentNumber=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, stuNum);//하나의 쿼리를 검색
@@ -77,7 +60,7 @@ public class StudentDB {
 		PreparedStatement ps = null; //db명령 넣음
 		ResultSet rs = null; //출력
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "select * from student order by name asc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -119,7 +102,7 @@ public class StudentDB {
 		PreparedStatement ps = null; //db명령 넣음
 		
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "insert into student(number,studentNumber,name,grade,gender,phoneNumber,birthday,remark,ratio)"+
 					"values(?,?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
@@ -152,7 +135,7 @@ public class StudentDB {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "update student set number=?, name=?, grade=?, gender=?, phoneNumber=?, birthday=?"+
 			", remark=?, ratio=?" + "where studentNumber=?";
 			ps = con.prepareStatement(sql);
@@ -189,7 +172,7 @@ public class StudentDB {
 		PreparedStatement ps = null;
 		
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "delete from student where studentNumber=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, studentNumber);
@@ -212,7 +195,7 @@ public class StudentDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = makeConnection();
+			con = connectDB.makeConnection();
 			String sql = "select *from student order by name asc";
 			ps = con.prepareStatement(sql); 
 			rs = ps.executeQuery();
