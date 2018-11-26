@@ -21,7 +21,7 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	
 	JComboBox search_jcb;
 	JButton btn, mbtn, dbtn, search_btn; //등록, 수정, 삭제, 검색버튼
-	JButton stuNumSort, nameSort; // 학번 순으로 정렬하는 버튼
+	JButton resetB, stuNumSort, nameSort; // 리셋, 학번, 이름순으로 정렬하는 버튼
 	JLabel topic;
 	JTextField search_Text;
 	
@@ -166,7 +166,9 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	public void JTableRefresh() {
 		StudentDB stdb = new StudentDB();
 		DefaultTableModel model = new DefaultTableModel(stdb.getMemberList(), getColumn());//DB데이터 다시 받아 테이블 초기화
+		this.model = model;
 		table.setModel(model); // 테이블 새로고침
+		
 		studentNumber = null;
 		
 		//버그 발생시 여기부분이 제일 큼
@@ -185,11 +187,17 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		JPanel sBot_sort = new JPanel();
 	
 		sBot_sort.setLayout(new FlowLayout(FlowLayout.LEFT));
+		resetB = new JButton("▼  번호정렬");
 		stuNumSort = new JButton("▼  학번정렬");
+		nameSort = new JButton("▼  이름정렬");
 		//stuNumSort.setBounds(0,0,0,0);
+		resetB.addActionListener(this);
 		stuNumSort.addActionListener(this);
+		nameSort.addActionListener(this);
 		
+		sBot_sort.add(resetB);
 		sBot_sort.add(stuNumSort);
+		sBot_sort.add(nameSort);
 		
 		
 		return sBot_sort;
@@ -220,6 +228,15 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
         		//studentNumber = null;
         	}
         	
+         }else if(b.getText().equals("▼  이름정렬")) {
+        	 s.studentCheck(model);
+        	 studentNumber=null;
+         }else if(b.getText().equals("▼  학번정렬")) {
+        	 s.stuNumCheck(model);
+        	 studentNumber=null;
+         }else if(b.getText().equals("▼  번호정렬")) {
+        	 s.numberCheck(model);
+        	 studentNumber=null;
          }
 	}
 	
