@@ -198,6 +198,11 @@ public class StudentDB {
 			String sql = "select *from student order by name asc";
 			ps = con.prepareStatement(sql); 
 			rs = ps.executeQuery();
+			//tablemodel에 있는 데이터 지우기
+			for(int i=0; i<model.getRowCount();) {
+				model.removeRow(0);
+			}
+			
 			while(rs.next()) {
 				Object data [] = {
 					rs.getString(1),
@@ -213,10 +218,6 @@ public class StudentDB {
 				model.addRow(data);
 			}
 			
-			//tablemodel에 있는 데이터 지우기
-			for(int i=0; i<model.getRowCount();) {
-				model.removeRow(0);
-			}
 		}catch(SQLException e) {
 			System.out.println(e);
 		}finally{

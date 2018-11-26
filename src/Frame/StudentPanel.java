@@ -21,6 +21,7 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	
 	JComboBox search_jcb;
 	JButton btn, mbtn, dbtn, search_btn; //등록, 수정, 삭제, 검색버튼
+	JButton stuNumSort, nameSort; // 학번 순으로 정렬하는 버튼
 	JLabel topic;
 	JTextField search_Text;
 	
@@ -43,6 +44,10 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		studentT = makeStudentTable();
 		midS.add(studentT);
 		this.add(midS, BorderLayout.CENTER);
+		
+		JPanel botS;
+		botS = makesB();
+		this.add(botS, BorderLayout.SOUTH);
 	}
 
 	//Top패널 부분 
@@ -174,7 +179,22 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		table.getColumn("성적").setPreferredWidth(10);
 		
 	}
-
+	//bottom부분
+	public JPanel makesB() {
+		
+		JPanel sBot_sort = new JPanel();
+	
+		sBot_sort.setLayout(new FlowLayout(FlowLayout.LEFT));
+		stuNumSort = new JButton("▼  학번정렬");
+		//stuNumSort.setBounds(0,0,0,0);
+		stuNumSort.addActionListener(this);
+		
+		sBot_sort.add(stuNumSort);
+		
+		
+		return sBot_sort;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		 JButton b = (JButton) e.getSource();
