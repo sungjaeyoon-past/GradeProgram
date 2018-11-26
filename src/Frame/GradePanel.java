@@ -25,6 +25,7 @@ import DBInfo.GradeDB;
 import Main.Student;
 import Window.AdditStudent;
 import Window.addGrade;
+import Window.editRatio;
 import Window.removeGrade;
 
 public class GradePanel extends TopPanel implements ActionListener, MouseListener{
@@ -51,14 +52,13 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		this.setLayout(new BorderLayout());
 		JPanel top = createTop();
 		this.add(top, BorderLayout.NORTH);
-		//addColumn("과제3");
-		///removeColumn("출석");
-
 
 		JPanel mid = new JPanel();
 		studentT = makeStudentTable();
 		mid.add(studentT);
 		this.add(mid, BorderLayout.CENTER);
+		
+		g.getGradeRatio();
 	}
 
 	public JPanel createTop() {
@@ -139,10 +139,13 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 
 		pane.setPreferredSize(new java.awt.Dimension(1185, 601));// 테이블 사이즈 조정
 		String fieldName[]=g.getFieldName();
+		
+		table.getColumn("번호").setPreferredWidth(1);
+		table.getColumn("학번").setPreferredWidth(4);
+		table.getColumn("이름").setPreferredWidth(1);
+		table.getColumn("성적").setPreferredWidth(1);
+		table.getColumn("합계").setPreferredWidth(1);
 
-		for(int i=3;i<g.getFieldNum();i++) {		
-			table.getColumn(fieldName[i]).setPreferredWidth(2);
-		}		
 
 		return pane;
 	}
@@ -150,11 +153,16 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 	public Vector getColumn() {
 		Vector col = new Vector();
 		int fieldNum=g.getFieldNum();
+		int ratio[]=g.getRatio();
 		String fieldName[]=g.getFieldName();
-		col.add("순번");
-		for(int i=1;i<fieldNum;i++) {
+		col.add("번호");
+		for(int i=1;i<4;i++) {
 			col.add(fieldName[i]);
 		}
+		for(int i=4;i<fieldNum;i++) {
+			col.add(fieldName[i]+"("+ ratio[i-4] +"%)");
+		}
+		col.add("합계");
 		return col;
 	}
 
@@ -178,14 +186,11 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 			System.out.println("점수입력을 누름");
 			
 		} else if (b.getText().equals("항목 추가")) {
-			System.out.println("항목 추가를 누름");
 			new addGrade(g , this);
 		} else if (b.getText().equals("항목 삭제")) {
-			System.out.println("항목 삭제를 누름");
 			new removeGrade(g , this);			
 		}else if (b.getText().equals("비율 설정")) {
-			System.out.println("비율 설정을 누름");
-				
+			new editRatio(g , this);			
 		}
 	}
 

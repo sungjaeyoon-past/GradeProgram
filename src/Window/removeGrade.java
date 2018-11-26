@@ -71,7 +71,7 @@ public class removeGrade extends JFrame implements ActionListener {
 	    PButton.add(removeButton);
 	    gbReset(PButton, 0, 9, 4, 1);    
 		
-	    setSize(200,50*(fieldNum-5));
+	    setSize(200,80*(fieldNum-4));
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(750,450);
