@@ -20,7 +20,6 @@ public class StudentDB {
 	
 	StudentDB(StudentPanel stuP){
 		this.stuP = stuP;
-		System.out.println("exampe=>"+stuP);
 	}
 
 	//한사람 학번으로 학생정보 검색

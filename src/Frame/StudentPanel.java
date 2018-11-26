@@ -20,7 +20,8 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	JTable table;
 	
 	JComboBox search_jcb;
-	JButton btn, mbtn, dbtn, search_btn;
+	JButton btn, mbtn, dbtn, search_btn; //등록, 수정, 삭제, 검색버튼
+	JLabel topic;
 	JTextField search_Text;
 	
 	StudentDB s;
@@ -50,13 +51,19 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		
 		JPanel sTop = new JPanel();
 		JPanel sTop_search = new JPanel();
+		JPanel sTop_mid = new JPanel();
 		JPanel sTop_mod = new JPanel();
 		
 		sTop.setLayout(new BorderLayout());
 		sTop_search.setLayout(new FlowLayout());
+		sTop_mid.setLayout(new FlowLayout());
 		sTop_mod.setLayout(new FlowLayout());
 		
 		//search_jcb.setSelectedItem(cols);
+		topic = new JLabel("Student");
+		topic.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 40));
+		
+		
 		search_Text = new JTextField("");//나중에 디비로 이어지게
 		search_Text.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_Text.setPreferredSize(new Dimension(150, 50));
@@ -86,14 +93,17 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		dbtn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		dbtn.addActionListener(this);
 		
+	
 		sTop_search.add(search_jcb);
 		sTop_search.add(search_Text);
 		sTop_search.add(search_btn);
+		sTop_mid.add(topic);
 		sTop_mod.add(btn);
 		sTop_mod.add(mbtn);
 		sTop_mod.add(dbtn);
 		
 		sTop.add(sTop_search, BorderLayout.WEST);
+		sTop.add(sTop_mid, BorderLayout.CENTER);
 		sTop.add(sTop_mod,BorderLayout.EAST);
 
 		return sTop;
@@ -197,7 +207,6 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	public void mouseClicked(MouseEvent e) {
 		int rowSelect = table.getSelectedRow();
 		studentNumber = (String)table.getValueAt(rowSelect,1); //2번째 row에 있는 학번 가져옴
-		System.out.println(rowSelect);
 		System.out.println(studentNumber);//몇번째 줄 클릭했는지 위치 확인
 		aClick = new AdditStudent(studentNumber, this, 1);//수정할때 클릭한 데이터 넘기기 위해
 	}
