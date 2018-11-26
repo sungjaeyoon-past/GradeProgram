@@ -25,7 +25,7 @@ public class IntroPanel extends TopPanel{
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel labelImage = new JLabel(""); //이미지 위치를 지정할 라벨 설정
-		Image img = new ImageIcon(this.getClass().getResource("/mainImage.PNG")).getImage();
+		Image img = new ImageIcon(this.getClass().getResource("/sample2.GIF")).getImage();
 		labelImage.setIcon(new ImageIcon(img));
 		
 		labelImage.setBounds(100, 190, 430, 320);//이미지 위치랑 크기 조정
