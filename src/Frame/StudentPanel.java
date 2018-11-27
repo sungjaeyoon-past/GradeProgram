@@ -19,7 +19,7 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	DefaultTableModel model;
 	JTable table;
 	
-	JComboBox search_jcb;
+	JComboBox search_jcb; //검색하려는 콤보박스
 	JButton btn, mbtn, dbtn, search_btn; //등록, 수정, 삭제, 검색버튼
 	JButton resetB, stuNumSort, nameSort; // 리셋, 학번, 이름순으로 정렬하는 버튼
 	JLabel topic;
@@ -73,7 +73,7 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		search_Text.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_Text.setPreferredSize(new Dimension(150, 50));
 		
-		String[] head = {"학번","이름","성적"};
+		String[] head = {"학번","이름"};
 		search_jcb = new JComboBox(head);
 		search_jcb.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_jcb.setPreferredSize(new Dimension(80, 50));
@@ -206,38 +206,52 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		 JButton b = (JButton) e.getSource();
-         if (b.getText().equals("학생 등록")) {
-         	System.out.println("학생등록을 누름");
-         	new AdditStudent(this);
-         	//studentNumber = null;
-         	
-         }else if(b.getText().equals("정보 수정")) {
-        	if(studentNumber == null) {
-        		JOptionPane.showMessageDialog(this, "정보 수정 실패 : 수정 하려는 줄을 선택하시오.");
-        	}else {
-        		bClick = new AdditStudent(studentNumber, this, 2);
-        	}
-        	
-         }else if(b.getText().equals("학생 삭제")) {
-        	System.out.println("학생삭제");
-        	if(studentNumber == null) {
-        		JOptionPane.showMessageDialog(this, "삭제실패 : 삭제하려는 줄을 선택하시오.");
-        	}else {
-        		aClick.deleteStudent(studentNumber);
-        		this.JTableRefresh();//action부분에 넣어야함.
-        		//studentNumber = null;
-        	}
-        	
-         }else if(b.getText().equals("▼  이름정렬")) {
-        	 s.studentCheck(model);
-        	 studentNumber=null;
-         }else if(b.getText().equals("▼  학번정렬")) {
-        	 s.stuNumCheck(model);
-        	 studentNumber=null;
-         }else if(b.getText().equals("▼  번호정렬")) {
-        	 s.numberCheck(model);
-        	 studentNumber=null;
-         }
+		 int selectedIndex = search_jcb.getSelectedIndex();
+		 //String name = (String)jcb.getSelectedItem(); // 선택한 콤보박스 string 값을 가져옴
+
+		 if (b.getText().equals("학생 등록")) {
+		 	System.out.println("학생등록을 누름");
+		 	new AdditStudent(this);
+		 	//studentNumber = null;
+		 	
+		 }else if(b.getText().equals("정보 수정")) {
+			if(studentNumber == null) {
+				JOptionPane.showMessageDialog(this, "정보 수정 실패 : 수정 하려는 줄을 선택하시오.");
+			}else {
+				bClick = new AdditStudent(studentNumber, this, 2);
+			}
+			
+		 }else if(b.getText().equals("학생 삭제")) {
+			System.out.println("학생삭제");
+			if(studentNumber == null) {
+				JOptionPane.showMessageDialog(this, "삭제실패 : 삭제하려는 줄을 선택하시오.");
+			}else {
+				aClick.deleteStudent(studentNumber);
+				this.JTableRefresh();//action부분에 넣어야함.
+				//studentNumber = null;
+			}
+		 }else if(b.getText().equals("▼  이름정렬")) {
+			 s.studentCheck(model);
+			 studentNumber=null;
+		 }else if(b.getText().equals("▼  학번정렬")) {
+			 s.stuNumCheck(model);
+			 studentNumber=null;
+		 }else if(b.getText().equals("▼  번호정렬")) {
+			 s.numberCheck(model);
+			 studentNumber=null;
+		 }else if(b.getText().equals("학생 검색")) {
+			 if(selectedIndex == 0) {
+				 String getString = search_Text.getText();
+				 System.out.println(getString);
+				 s.stuNumberSearch(model, getString);
+				 studentNumber=null;
+			 }else if(selectedIndex == 1) {
+				 String getString = search_Text.getText();
+				 System.out.println(getString);
+				 s.nameSearch(model, getString);
+				 studentNumber=null;
+			 }
+		 }
 	}
 	
 	@Override
