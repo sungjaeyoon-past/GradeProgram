@@ -26,6 +26,7 @@ import Main.Student;
 import Window.AdditStudent;
 import Window.addGrade;
 import Window.editRatio;
+import Window.editScore;
 import Window.removeGrade;
 
 public class GradePanel extends TopPanel implements ActionListener, MouseListener{
@@ -42,6 +43,7 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 	JButton inputScore;// 점수수정버튼
 	JButton ratioScore;// 비율설정버튼
 	JTextField search_Text;//검색버튼
+	String studentNumber;
 
 	GradeDB g;
 
@@ -183,8 +185,7 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if (b.getText().equals("점수 입력")) {
-			System.out.println("점수입력을 누름");
-			
+			new editScore(g , this);		
 		} else if (b.getText().equals("항목 추가")) {
 			new addGrade(g , this);
 		} else if (b.getText().equals("항목 삭제")) {
@@ -196,8 +197,10 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		int rowSelect = table.getSelectedRow();
+		studentNumber = (String)table.getValueAt(rowSelect,1); //2번째 row에 있는 학번 가져옴
+		System.out.println(studentNumber);//몇번째 줄 클릭했는지 위치 확인
+		//aClick = new AdditStudent(studentNumber, this, 1);//수정할때 클릭한 데이터 넘기기 위해
 	}
 
 	@Override
