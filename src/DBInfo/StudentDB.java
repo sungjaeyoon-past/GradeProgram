@@ -60,7 +60,7 @@ public class StudentDB {
 		ResultSet rs = null; //출력
 		try {
 			con = connectDB.makeConnection();
-			String sql = "select * from student order by name asc";
+			String sql = "select * from student order by number asc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			
@@ -198,6 +198,11 @@ public class StudentDB {
 			String sql = "select *from student order by name asc";
 			ps = con.prepareStatement(sql); 
 			rs = ps.executeQuery();
+			//tablemodel에 있는 데이터 지우기
+			for(int i=0; i<model.getRowCount();) {
+				model.removeRow(0);
+			}
+			
 			while(rs.next()) {
 				Object data [] = {
 					rs.getString(1),
@@ -213,10 +218,40 @@ public class StudentDB {
 				model.addRow(data);
 			}
 			
+		}catch(SQLException e) {
+			System.out.println(e);
+		}
+    }
+	//학번 정렬
+	public void stuNumCheck(DefaultTableModel model) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = connectDB.makeConnection();
+			String sql = "select *from student order by studentNumber asc";
+			ps = con.prepareStatement(sql); 
+			rs = ps.executeQuery();
 			//tablemodel에 있는 데이터 지우기
 			for(int i=0; i<model.getRowCount();) {
 				model.removeRow(0);
 			}
+			
+			while(rs.next()) {
+				Object data [] = {
+					rs.getString(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5),
+					rs.getString(6),
+					rs.getString(7),
+					rs.getString(8),
+					rs.getString(9)
+				};
+				model.addRow(data);
+			}
+			
 		}catch(SQLException e) {
 			System.out.println(e);
 		}finally{
@@ -245,5 +280,113 @@ public class StudentDB {
                 }
             }
         }
+    }
+	
+	//리셋(번호정렬)
+	public void numberCheck(DefaultTableModel model) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = connectDB.makeConnection();
+			String sql = "select *from student order by number asc";
+			ps = con.prepareStatement(sql); 
+			rs = ps.executeQuery();
+			//tablemodel에 있는 데이터 지우기
+			for(int i=0; i<model.getRowCount();) {
+				model.removeRow(0);
+			}
+			
+			while(rs.next()) {
+				Object data [] = {
+					rs.getString(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5),
+					rs.getString(6),
+					rs.getString(7),
+					rs.getString(8),
+					rs.getString(9)
+				};
+				model.addRow(data);
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e);
+		}
+    }
+	
+	//학번 검색
+	public void stuNumberSearch(DefaultTableModel model, String stuNum) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = connectDB.makeConnection();
+			String sql = "select *from student where studentNumber=?";
+			ps = con.prepareStatement(sql); 
+			ps.setString(1, stuNum);//하나의 쿼리를 검색
+			rs = ps.executeQuery();
+			
+			//tablemodel에 있는 데이터 지우기
+			for(int i=0; i<model.getRowCount();) {
+				model.removeRow(0);
+			}
+			
+			while(rs.next()) {
+				Object data [] = {
+					rs.getString(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5),
+					rs.getString(6),
+					rs.getString(7),
+					rs.getString(8),
+					rs.getString(9)
+				};
+				model.addRow(data);
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e);
+		}
+    }
+	//이름검색
+	public void nameSearch(DefaultTableModel model, String name) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = connectDB.makeConnection();
+			String sql = "select *from student where name=?";
+			ps = con.prepareStatement(sql); 
+			ps.setString(1, name);//하나의 쿼리를 검색
+			rs = ps.executeQuery();
+			
+			//tablemodel에 있는 데이터 지우기
+			for(int i=0; i<model.getRowCount();) {
+				model.removeRow(0);
+			}
+			
+			while(rs.next()) {
+				Object data [] = {
+					rs.getString(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5),
+					rs.getString(6),
+					rs.getString(7),
+					rs.getString(8),
+					rs.getString(9)
+				};
+				model.addRow(data);
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e);
+		}
     }
 }
