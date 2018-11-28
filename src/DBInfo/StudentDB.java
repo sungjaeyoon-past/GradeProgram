@@ -117,6 +117,12 @@ public class StudentDB {
 			ps.setString(9, std.getRatio());
 			
 			int saveStu = ps.executeUpdate(); // 실행 => 저장
+			
+			sql="insert into grade(학번,이름,성적) values("+std.getStudentNumber()+",'"+ std.getName()+"','"+std.getRatio()+"')";
+	        System.out.println(sql);
+	        ps = con.prepareStatement(sql);
+	        ps.executeUpdate();
+	        
 			if(saveStu>0) {
 				System.out.println("가입 성공");
 				check=true;
@@ -135,11 +141,11 @@ public class StudentDB {
 		PreparedStatement ps = null;
 		try {
 			con = connectDB.makeConnection();
-			String sql = "update student set number=?, name=?, grade=?, gender=?, phoneNumber=?, birthday=?"+
-			", remark=?, ratio=?" + "where studentNumber=?";
+			String sql = "update student set studentNumber=?, name=?, grade=?, gender=?, phoneNumber=?, birthday=?"+
+			", remark=?, ratio=?" + "where number=?";
 			ps = con.prepareStatement(sql);
 			
-			ps.setString(1, upstd.getNumber());
+			ps.setString(1, upstd.getStudentNumber());
 			ps.setString(2, upstd.getName());
 			ps.setString(3, upstd.getGrade());
 			ps.setString(4, upstd.isGender());
@@ -147,12 +153,19 @@ public class StudentDB {
 			ps.setString(6, upstd.getBirthday());
 			ps.setString(7, upstd.getRemarks());
 			ps.setString(8, upstd.getRatio());
-			ps.setString(9, upstd.getStudentNumber());
-			//System.out.println(upstd.getNumber());
-			//System.out.println(upstd.getStudentNumber()); //테스트코드
-			
+			ps.setString(9, upstd.getNumber());
 			int saveStu = ps.executeUpdate(); // 실행 => 저장
 			
+			sql = "update grade set 이름=?, 성적=? WHERE 학번=?";// 학번 변경X
+			//sql = "update grade set 학번=" +upstd.getStudentNumber()+" , 이름='" +upstd.getName() + "',성적="+ upstd.getRatio();
+			System.out.println(sql);
+	        ps = con.prepareStatement(sql);
+	        
+			ps.setString(1, upstd.getName());
+			ps.setString(2, upstd.getRatio());
+			ps.setString(3, upstd.getStudentNumber());
+	        ps.executeUpdate();
+	        
 			if(saveStu>0) {
 				check=true;
 			}else {
@@ -176,6 +189,11 @@ public class StudentDB {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, studentNumber);
 			int saveStu = ps.executeUpdate();
+			
+			sql="delete from grade where 학번="+studentNumber;
+	        System.out.println(sql);
+	        ps = con.prepareStatement(sql);
+	        ps.executeUpdate();
 			if(saveStu>0) {
 				check = true;
 				System.out.println("디비 삭제 성공");
