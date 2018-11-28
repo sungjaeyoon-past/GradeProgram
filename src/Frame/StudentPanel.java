@@ -187,15 +187,12 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		JPanel sBot_sort = new JPanel();
 	
 		sBot_sort.setLayout(new FlowLayout(FlowLayout.LEFT));
-		resetB = new JButton("▼  번호정렬");
 		stuNumSort = new JButton("▼  학번정렬");
 		nameSort = new JButton("▼  이름정렬");
 		//stuNumSort.setBounds(0,0,0,0);
-		resetB.addActionListener(this);
 		stuNumSort.addActionListener(this);
 		nameSort.addActionListener(this);
 		
-		sBot_sort.add(resetB);
 		sBot_sort.add(stuNumSort);
 		sBot_sort.add(nameSort);
 		
@@ -235,9 +232,6 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 			 studentNumber=null;
 		 }else if(b.getText().equals("▼  학번정렬")) {
 			 s.stuNumCheck(model);
-			 studentNumber=null;
-		 }else if(b.getText().equals("▼  번호정렬")) {
-			 s.numberCheck(model);
 			 studentNumber=null;
 		 }else if(b.getText().equals("학생 검색")) {
 			 if(selectedIndex == 0) {

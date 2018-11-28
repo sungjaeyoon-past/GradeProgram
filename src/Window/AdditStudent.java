@@ -8,20 +8,20 @@ import DBInfo.StudentDB;
 import Frame.StudentPanel;
 import Main.Student;
 
-//»õ Ã¢¿¡¼­ ÇĞ»ıÀ» Ãß°¡ÇØÁÖ´Â Å¬·¡½º
+//ìƒˆ ì°½ì—ì„œ í•™ìƒì„ ì¶”ê°€í•´ì£¼ëŠ” í´ë˜ìŠ¤
 public class AdditStudent extends JFrame implements ActionListener{
-	JTextField tnumber, tStuNum, tname, tphoneNum;//¼ıÀÚ, ÇĞ»ı, ÀÌ¸§, ÈŞ´ëÆù
-	JTextField tratio;// ¼ºÀû
-	JTextArea tremark;//Æ¯ÀÌ»çÇ×
-	JTextField tYear, tMonth, tDate;//»ıÀÏ
-	JComboBox cbGrade; //1~4ÇĞ³â ¼±ÅÃ
-	JRadioButton rbMan, rbWoman;//³²¿© ¼ºº°
-	JButton bSave, bExit, bModify;//ÇĞ»ıµî·Ï, Ãë¼Ò
+	JTextField tnumber, tStuNum, tname, tphoneNum;//ìˆ«ì, í•™ìƒ, ì´ë¦„, íœ´ëŒ€í°
+	JTextField tratio;// ì„±ì 
+	JTextArea tremark;//íŠ¹ì´ì‚¬í•­
+	JTextField tYear, tMonth, tDate;//ìƒì¼
+	JComboBox cbGrade; //1~4í•™ë…„ ì„ íƒ
+	JRadioButton rbMan, rbWoman;//ë‚¨ì—¬ ì„±ë³„
+	JButton bSave, bExit, bModify;//í•™ìƒë“±ë¡, ì·¨ì†Œ
 	
-	StudentPanel Pstd;//½ÇÁ¦ º¸¿©ÁÙ ÆĞ³Î
+	StudentPanel Pstd;//ì‹¤ì œ ë³´ì—¬ì¤„ íŒ¨ë„
 	
-	GridBagLayout glay; //gridbagLayout»ç¿ë, ÄÄÆ÷³ÍÆ® À§Ä¡ ¹× Å©±â Á÷Á¢¼³Á¤ °¡´É
-	GridBagConstraints gbc;//ÄÄÆ÷³ÍÆ®¿¡ Á¶°ÇÀ» ¼³Á¤ÇÏ±â À§ÇØ
+	GridBagLayout glay; //gridbagLayoutì‚¬ìš©, ì»´í¬ë„ŒíŠ¸ ìœ„ì¹˜ ë° í¬ê¸° ì§ì ‘ì„¤ì • ê°€ëŠ¥
+	GridBagConstraints gbc;//ì»´í¬ë„ŒíŠ¸ì— ì¡°ê±´ì„ ì„¤ì •í•˜ê¸° ìœ„í•´
 	
 	public AdditStudent() {
 		Show();
@@ -52,7 +52,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		}
 	}
 	
-	//µ¥ÀÌÅÍ ¹Ş¾Æ È­¸é¿¡ º¸¿©ÁÖ·Á°í..(³ªÁß¿¡ µğºñ¿¡¼­ °¡Á®¿È)
+	//ë°ì´í„° ë°›ì•„ í™”ë©´ì— ë³´ì—¬ì£¼ë ¤ê³ ..(ë‚˜ì¤‘ì— ë””ë¹„ì—ì„œ ê°€ì ¸ì˜´)
 	public void inputData(Student stu) {
 		String number = stu.getNumber();
 		String studentNumber = stu.getStudentNumber();
@@ -64,17 +64,17 @@ public class AdditStudent extends JFrame implements ActionListener{
 		String remarks = stu.getRemarks();
 		String ratio = stu.getRatio();
 		
-		//System.out.println(number); //Å×½ºÆ®
-		//System.out.println(studentNumber); //Å×½ºÆ®
+		//System.out.println(number); //í…ŒìŠ¤íŠ¸
+		//System.out.println(studentNumber); //í…ŒìŠ¤íŠ¸
 		tnumber.setText(number);
-		tnumber.setEditable(false);//¼öÁ¤x
+		tnumber.setEditable(false);//ìˆ˜ì •x
 		tStuNum.setText(studentNumber);
 		tname.setText(name);
 		tphoneNum.setText(phoneNumber);
 		tremark.setText(remarks);
 		tratio.setText(ratio);
 		
-		tYear.setText(birthday.substring(0,4));//4°³½Ä ²÷¾î¼­ ÀĞ±â
+		tYear.setText(birthday.substring(0,4));//4ê°œì‹ ëŠì–´ì„œ ì½ê¸°
 		tMonth.setText(birthday.substring(4,6));
 		tDate.setText(birthday.substring(6,8));
 		
@@ -88,9 +88,9 @@ public class AdditStudent extends JFrame implements ActionListener{
 		
 	}
 	
-	//½ÇÁ¦ º¸¿©Áö´Â Ã¢ ¸Ş¼Òµå
+	//ì‹¤ì œ ë³´ì—¬ì§€ëŠ” ì°½ ë©”ì†Œë“œ
 	public void Show() {
-		this.setTitle("ÇĞ»ı µî·Ï");
+		this.setTitle("í•™ìƒ ë“±ë¡");
 		glay = new GridBagLayout();
 		gbc = new GridBagConstraints();
 		
@@ -99,38 +99,38 @@ public class AdditStudent extends JFrame implements ActionListener{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		
-	    JLabel st1 = new JLabel("¹øÈ£ : ");
-	    st1.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st1 = new JLabel("ë²ˆí˜¸ : ");
+	    st1.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tnumber = new JTextField(5);
 	    gbReset(st1, 0, 0, 1, 1);
 	    gbReset(tnumber, 1, 0, 3, 1);
 	    
-	    JLabel st2 = new JLabel("ÇĞ¹ø :");
-	    st2.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st2 = new JLabel("í•™ë²ˆ :");
+	    st2.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tStuNum = new JTextField(20);
 	    gbReset(st2, 0, 1, 1, 1);
-	    gbReset(tStuNum, 1, 1, 3, 1);//À§,¾Æ·¡, °ø°£
+	    gbReset(tStuNum, 1, 1, 3, 1);//ìœ„,ì•„ë˜, ê³µê°„
 	    
-	    JLabel st3 = new JLabel("ÀÌ¸§ :");
-	    st3.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st3 = new JLabel("ì´ë¦„ :");
+	    st3.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tname = new JTextField(20);
 	    gbReset(st3, 0, 2, 1, 1);
 	    gbReset(tname, 1, 2, 3, 1);
 	    
-	    JLabel ygrade = new JLabel("ÇĞ³â :");
-	    ygrade.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
-	    String[] aygrade = {"1 ÇĞ³â","2 ÇĞ³â","3 ÇĞ³â","4 ÇĞ³â"};
+	    JLabel ygrade = new JLabel("í•™ë…„ :");
+	    ygrade.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
+	    String[] aygrade = {"1 í•™ë…„","2 í•™ë…„","3 í•™ë…„","4 í•™ë…„"};
 	    cbGrade = new JComboBox(aygrade);
 	    JPanel pgrade = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    pgrade.add(cbGrade);
 	    gbReset(ygrade, 0, 3, 1, 1);
 	    gbReset(pgrade, 1, 3, 3, 1);
 	    
-	    JLabel Jgender = new JLabel("¼ºº° :");
-	    Jgender.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel Jgender = new JLabel("ì„±ë³„ :");
+	    Jgender.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    JPanel Pgender = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    rbMan = new JRadioButton("³²", true);
-	    rbWoman = new JRadioButton("¿©", true);
+	    rbMan = new JRadioButton("ë‚¨", true);
+	    rbWoman = new JRadioButton("ì—¬", true);
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(rbMan);
 	    group.add(rbWoman);
@@ -139,14 +139,14 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(Jgender, 0,4,1,1);
 	    gbReset(Pgender, 1,4,3,1);
 	    
-	    JLabel st4 = new JLabel("¿¬¶ôÃ³ :");
-	    st4.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st4 = new JLabel("ì—°ë½ì²˜ :");
+	    st4.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tphoneNum = new JTextField(20);
 	    gbReset(st4, 0, 5, 1, 1);
 	    gbReset(tphoneNum, 1, 5, 3, 1);
 	    
-	    JLabel st5 = new JLabel("»ı³â¿ùÀÏ :");
-	    st5.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st5 = new JLabel("ìƒë…„ì›”ì¼ :");
+	    st5.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    JPanel Pbirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    tYear = new JTextField(6);
 	    tMonth = new JTextField(6);
@@ -159,23 +159,23 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(st5, 0, 6, 1, 1);
 	    gbReset(Pbirth, 1, 6, 3, 1);
 	    
-	    JLabel st6 = new JLabel("Æ¯ÀÌ»çÇ× :");
-	    st6.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st6 = new JLabel("íŠ¹ì´ì‚¬í•­ :");
+	    st6.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tremark = new JTextArea(5, 20);
 	    JScrollPane scroll = new JScrollPane(tremark);
 	    gbReset(st6, 0, 7, 1, 1);
 	    gbReset(scroll, 1, 7, 3, 1);
 	    
-	    JLabel st7 = new JLabel("¼ºÀû :");
-	    st7.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
+	    JLabel st7 = new JLabel("ì„±ì  :");
+	    st7.setFont(new Font("KBIZí•œë§ˆìŒê³ ë”• M", Font.BOLD, 15));
 	    tratio = new JTextField(20);
 	    gbReset(st7, 0, 8, 1, 1);
 	    gbReset(tratio, 1, 8, 3, 1);
 	    
 	    JPanel PButton = new JPanel();
-	    bSave = new JButton("ÀúÀå"); 
-	    bModify = new JButton("¼öÁ¤");
-	    bExit = new JButton("Á¾·á");
+	    bSave = new JButton("ì €ì¥"); 
+	    bModify = new JButton("ìˆ˜ì •");
+	    bExit = new JButton("ì¢…ë£Œ");
 	    PButton.add(bSave);
 	    PButton.add(bModify);
 	    PButton.add(bExit);
@@ -189,56 +189,56 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(600,300);
-	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);//ÇöÀçÃ¢¸¸ ´İÀ½
+	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);//í˜„ì¬ì°½ë§Œ ë‹«ìŒ
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if(b == bSave) {
-			System.out.println("Ã¢ ÀúÀå¹öÆ°");
+			System.out.println("ì°½ ì €ì¥ë²„íŠ¼");
 			insertStudent();
 		}else if(b == bExit) {
-			int s = JOptionPane.showConfirmDialog(this, "Á¾·áÇÏ½Ã¸é ÀÛ¼ºÇÏ½Å ³»¿ëÀÌ »ç¶óÁı´Ï´Ù.");
+			int s = JOptionPane.showConfirmDialog(this, "ì¢…ë£Œí•˜ì‹œë©´ ì‘ì„±í•˜ì‹  ë‚´ìš©ì´ ì‚¬ë¼ì§‘ë‹ˆë‹¤.");
 			if(s == JOptionPane.OK_OPTION) {
-				dispose(); // ÇöÀç ¶ç¿öÁø ÇÁ·¹ÀÓ Á¾·á
+				dispose(); // í˜„ì¬ ë„ì›Œì§„ í”„ë ˆì„ ì¢…ë£Œ
 			}else {
-				JOptionPane.showMessageDialog(this, "Á¾·á¸¦ Ãë¼ÒÇÏ¿´½À´Ï´Ù.");
+				JOptionPane.showMessageDialog(this, "ì¢…ë£Œë¥¼ ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤.");
 			}
 		}else if(b == bModify) {
-			int s = JOptionPane.showConfirmDialog(this, "Á¤º¸¸¦ ¼öÁ¤ ÇÏ½Ã°Ú½À´Ï±î?");
+			int s = JOptionPane.showConfirmDialog(this, "ì •ë³´ë¥¼ ìˆ˜ì • í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 			if(s == JOptionPane.OK_OPTION) {
 				updateStudent();
-				dispose(); // ÇöÀç ¶ç¿öÁø ÇÁ·¹ÀÓ Á¾·á
+				dispose(); // í˜„ì¬ ë„ì›Œì§„ í”„ë ˆì„ ì¢…ë£Œ
 				
 			}else {
-				JOptionPane.showMessageDialog(this, "Á¤º¸ ¼öÁ¤À» Ãë¼ÒÇÏ¼Ì½À´Ï´Ù.");
+				JOptionPane.showMessageDialog(this, "ì •ë³´ ìˆ˜ì •ì„ ì·¨ì†Œí•˜ì…¨ìŠµë‹ˆë‹¤.");
 			}
 		}
-		Pstd.JTableRefresh(); //ÀúÀåÈÄ Å×ÀÌºí ´Ù½Ã »õ·Î°íÄ§
+		Pstd.JTableRefresh(); //ì €ì¥í›„ í…Œì´ë¸” ë‹¤ì‹œ ìƒˆë¡œê³ ì¹¨
 	}
 	
 	public void insertStudent() {
 		StudentDB stuDB = new StudentDB();
 		Student stuget = getData();
-		boolean check = stuDB.insertStudent(stuget);//DB¿¡ µ¥ÀÌÅÍ¸¦ ÀúÀå
+		boolean check = stuDB.insertStudent(stuget);//DBì— ë°ì´í„°ë¥¼ ì €ì¥
 		if(check) {
-			JOptionPane.showMessageDialog(this, "ÇĞ»ı ÀúÀå ¿Ï·á");
+			JOptionPane.showMessageDialog(this, "í•™ìƒ ì €ì¥ ì™„ë£Œ");
 			dispose();
 		}else {
-			JOptionPane.showMessageDialog(this, "ÇĞ»ı ÀúÀåÀÌ Á¤»óÀûÀ¸·Î ¾ÈµÇ¾úÀ½");
+			JOptionPane.showMessageDialog(this, "í•™ìƒ ì €ì¥ì´ ì •ìƒì ìœ¼ë¡œ ì•ˆë˜ì—ˆìŒ");
 		}
 	}
 	
 	public void updateStudent() {
 		StudentDB stuDB = new StudentDB();
 		Student stuget = getData();
-		boolean check = stuDB.updateStudent(stuget);//DB¿¡ µ¥ÀÌÅÍ¸¦ ÀúÀå
+		boolean check = stuDB.updateStudent(stuget);//DBì— ë°ì´í„°ë¥¼ ì €ì¥
 		/*if(check) {
-			JOptionPane.showMessageDialog(this, "¾÷µ¥ÀÌÆ® ¿Ï·á");
+			JOptionPane.showMessageDialog(this, "ì—…ë°ì´íŠ¸ ì™„ë£Œ");
 			dispose();
 		}else {
-			JOptionPane.showMessageDialog(this, "¾÷µ¥ÀÌÆ® ¿À·ù");
+			JOptionPane.showMessageDialog(this, "ì—…ë°ì´íŠ¸ ì˜¤ë¥˜");
 		}*/
 	}
 	
@@ -248,15 +248,15 @@ public class AdditStudent extends JFrame implements ActionListener{
 		boolean check = stuDB.deleteStudent(stuNum);
 		
 		if(check) {
-			JOptionPane.showMessageDialog(this, "µ¥ÀÌÅÍ »èÁ¦¿Ï·á");
-			//Pstd.JTableRefresh();//actionPerformd¿¡¼­¸¸ ½ÇÇà‰Î
+			JOptionPane.showMessageDialog(this, "ë°ì´í„° ì‚­ì œì™„ë£Œ");
+			//Pstd.JTableRefresh();//actionPerformdì—ì„œë§Œ ì‹¤í–‰Â‰
             dispose(); 
 		}else {
-			JOptionPane.showMessageDialog(this, "µ¥ÀÌÅÍ »èÁ¦¿À·ù");
+			JOptionPane.showMessageDialog(this, "ë°ì´í„° ì‚­ì œì˜¤ë¥˜");
 		}
 		
 	}
-	//ÀÔ·Â °ª È®ÀÎÇÏ´Â ¸Ş¼Òµå
+	//ì…ë ¥ ê°’ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ
 	public Student getData() {
 		Student stu = new Student();
 		
@@ -288,10 +288,10 @@ public class AdditStudent extends JFrame implements ActionListener{
 		stu.setGender(gender);
 		stu.setRatio(ratio);
 		
-		return stu;//¹ŞÀº µ¥ÀÌÅÍ¸¦ ³Ñ±è
+		return stu;//ë°›ì€ ë°ì´í„°ë¥¼ ë„˜ê¹€
 	}
 	
-	//ÄÄÆ÷³ÍÆ® À§Ä¡ ¼³Á¤
+	//ì»´í¬ë„ŒíŠ¸ ìœ„ì¹˜ ì„¤ì •
 	private void gbReset(JComponent c, int x, int y, int w, int h){
         gbc.gridx = x;
         gbc.gridy = y;
