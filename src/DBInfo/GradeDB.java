@@ -2,6 +2,7 @@ package DBInfo;
 
 import Frame.StudentPanel;
 import Main.GradeRatio;
+import Main.Student;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +24,7 @@ public class GradeDB {
 	private int[] ratio;
 	private int countStudent = 1;
 	private GradeRatio gr;
-
+	private Student[] studentList;
 	public int[] getRatio() {
 		return ratio;
 	}
@@ -41,7 +42,7 @@ public class GradeDB {
 	}
 	
 	public int[] getGradeRate() {
-		int []arr = new int[9];
+		int []arr = new int[10];
 		PreparedStatement ps= null;
 		ResultSet rs= null; // 출력
 		String sql = "SELECT AP,A,BP,B,CP,C,DP,D,F FROM student.graderate;";
@@ -50,7 +51,7 @@ public class GradeDB {
 			rs = ps.executeQuery();
 			rs.next();
 			for(int i=1;i<10;i++) {
-				arr[i]=rs.getInt(i);
+				arr[i-1]=rs.getInt(i);
 			}
 			for(int i:arr) {
 				System.out.println(i);
@@ -93,7 +94,7 @@ public class GradeDB {
 
 			while (rs.next()) {
 				Vector row = new Vector();
-				row.add(countStudent++);
+				row.add(countStudent);
 				for (int i = 1; i < fieldNum; i++) {
 					if (i == 3) {
 						row.add("F");
@@ -101,9 +102,22 @@ public class GradeDB {
 					}
 					row.add(rs.getString(fieldName[i]));
 				}
-
-				row.add(accumulateSum(row));
+				int sum=accumulateSum(row);
+				/*
+				studentList[countStudent-1]=new Student();
+				System.out.println(rs.getString("학번"));
+				System.out.println(rs.getString("이름"));
+				System.out.println(sum);
+				studentList[countStudent-1].setStudentNumber(rs.getString("학번"));
+				studentList[countStudent-1].setName(rs.getString("이름"));
+				studentList[countStudent-1].setSum(sum);
+				*/
+				row.add(sum);
 				data.add(row);
+				countStudent++;
+			}
+			for(int i=0;i<countStudent;i++) {		
+				//System.out.println(studentList[i].getName());
 			}
 
 		} catch (Exception e) {
