@@ -82,9 +82,6 @@ public class GradeDB {
 				gradeRatio[i]=(studentCount/100*gradeRate[i]+gradeRatio[i-1]);
 			}
 		}
-		for(double s:gradeRatio) {
-			System.out.println(s);
-		}
 		String str[]= {"A+","A","B+","B","C+","C","D+","D","F"};
 		int number=0;
 		for(int i=0;i<data.size();i++) {	
@@ -94,7 +91,14 @@ public class GradeDB {
 						Vector v = (Vector)data.get(i);
 						v.add(3,str[j]);
 						v.remove(4);
+						try {
+							PreparedStatement ps = con.prepareStatement("UPDATE student SET ratio='"+str[j] +"' WHERE studentNumber='"+v.get(1)+"'");
+							ps.executeUpdate();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 						i++;
+						
 					}
 				}					
 			}	

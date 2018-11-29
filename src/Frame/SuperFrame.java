@@ -58,7 +58,8 @@ public class SuperFrame extends JFrame{
 			revalidate();	
 			repaint();	
 		}else if(panelName.equals("studentP")){	
-			getContentPane().removeAll();	
+			getContentPane().removeAll();
+			StudentP = new StudentPanel();
 			getContentPane().add(StudentP);	
 			revalidate();	
 			repaint();	
