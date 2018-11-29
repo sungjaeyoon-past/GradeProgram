@@ -93,6 +93,7 @@ public class removeGrade extends JFrame implements ActionListener {
 				gdb.removeColumn(clikedField);
 				clikedField=null;
 				JOptionPane.showMessageDialog(this, "항목 삭제 완료");
+				JOptionPane.showMessageDialog(this, "나머지 항목의 비율을 다시 설정해주세요");
 				dispose();
 				gp.JTableRefresh();
 			}

@@ -1,6 +1,8 @@
 package DBInfo;
 
 import Frame.StudentPanel;
+import Main.GradeRatio;
+import Main.Student;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JTextField;
 
 import Frame.GradePanel;
+import Frame.LecturePanel;
 
 public class GradeDB {
 
@@ -19,7 +22,9 @@ public class GradeDB {
 	private GradePanel gp;
 	private String[] fieldName = new String[15];
 	private int[] ratio;
-
+	private int countStudent = 1;
+	private GradeRatio gr;
+	private Student[] studentList;
 	public int[] getRatio() {
 		return ratio;
 	}
@@ -35,8 +40,31 @@ public class GradeDB {
 	GradeDB(GradePanel gp) {
 		this.gp = gp;
 	}
+	
+	public int[] getGradeRate() {
+		int []arr = new int[10];
+		PreparedStatement ps= null;
+		ResultSet rs= null; // 출력
+		String sql = "SELECT AP,A,BP,B,CP,C,DP,D,F FROM student.graderate;";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			for(int i=1;i<10;i++) {
+				arr[i-1]=rs.getInt(i);
+			}
+			for(int i:arr) {
+				System.out.println(i);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return arr;
+	}
 
 	public Vector getMemberList() {
+		int rate[]=getGradeRate();
 		fieldNum = 0;
 		Vector data = new Vector();
 		PreparedStatement ps, ps2 = null;
@@ -63,15 +91,33 @@ public class GradeDB {
 			sql = "select * from grade";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-			int number = 1;
+
 			while (rs.next()) {
 				Vector row = new Vector();
-				row.add(number++);
+				row.add(countStudent);
 				for (int i = 1; i < fieldNum; i++) {
+					if (i == 3) {
+						row.add("F");
+						continue;
+					}
 					row.add(rs.getString(fieldName[i]));
 				}
-				row.add(accumulateSum(row));
+				int sum=accumulateSum(row);
+				/*
+				studentList[countStudent-1]=new Student();
+				System.out.println(rs.getString("학번"));
+				System.out.println(rs.getString("이름"));
+				System.out.println(sum);
+				studentList[countStudent-1].setStudentNumber(rs.getString("학번"));
+				studentList[countStudent-1].setName(rs.getString("이름"));
+				studentList[countStudent-1].setSum(sum);
+				*/
+				row.add(sum);
 				data.add(row);
+				countStudent++;
+			}
+			for(int i=0;i<countStudent;i++) {		
+				//System.out.println(studentList[i].getName());
 			}
 
 		} catch (Exception e) {
@@ -115,6 +161,27 @@ public class GradeDB {
 		return true;
 	}
 
+	public boolean setScore(int[] arr, String studentNumber) {
+		String query = "";
+		for (int i = 4; i < fieldNum; i++) {
+			query += fieldName[i];
+			query += "=" + arr[i - 4] + ", ";
+		}
+		query = query.substring(0, query.length() - 2);
+
+		String sql = "UPDATE grade SET " + query + " WHERE 학번=" + studentNumber;
+		System.out.println(sql);
+		try {
+			PreparedStatement ps;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public void addColumn(String newCol) {
 		String sql = "ALTER TABLE `student`.`grade` ADD COLUMN " + newCol + " INT NOT NULL DEFAULT 0";
 		try {
@@ -141,7 +208,7 @@ public class GradeDB {
 			sql = "ALTER TABLE `student`.`graderatio` DROP " + removeCol;
 			ps = con.prepareStatement(sql);
 			ps.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

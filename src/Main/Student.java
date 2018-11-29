@@ -4,12 +4,21 @@ public class Student {
 	private String number; // 순번
 	private String studentNumber;//학번
 	private String name;//이름
+	public int getSum() {
+		return sum;
+	}
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+
+
 	private String grade; //학년
 	private String gender; //성별
 	private String phoneNumber; //폰번호
 	private String birthday; //생일
 	private String remarks; //특이사항
 	private String ratio;//A+ =1, 등급(성적)
+	private int sum;
 	
 	public String getNumber() {
 		return number;
