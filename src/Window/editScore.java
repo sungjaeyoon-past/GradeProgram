@@ -31,6 +31,7 @@ public class editScore extends JFrame implements ActionListener{
 	
 	int fieldNum;
 	String []fieldName;
+	int scoreArray[];
 	
 	JTextField []inputScore;
 	
@@ -46,6 +47,7 @@ public class editScore extends JFrame implements ActionListener{
 		this.fieldNum=gdb.getFieldNum();
 		this.fieldName=gdb.getFieldName();
 		this.inputScore=new JTextField[fieldNum];
+		scoreArray=gdb.getScore(studentNumber);
 		Show();
 	}
 	
@@ -69,7 +71,7 @@ public class editScore extends JFrame implements ActionListener{
 		for(int i=4;i<fieldNum;i++) {
 			JLabel jl=new JLabel(fieldName[i]+":");
 			jl.setFont(new Font("KBIZÇÑ¸¶À½°íµñ M", Font.BOLD, 15));
-			inputScore[i-4] = new JTextField("",1);
+			inputScore[i-4] = new JTextField(""+scoreArray[i-4],1);
 			gbReset(jl, 0, i-3, 1, 1);
 		    gbReset(inputScore[i-4], 1, i-3, 1, 1);
 		}	

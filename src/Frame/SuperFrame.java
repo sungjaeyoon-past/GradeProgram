@@ -42,7 +42,8 @@ public class SuperFrame extends JFrame{
 	}
 	public void change(String panelName) {	
 		if(panelName.equals("gradeP")) {	
-			getContentPane().removeAll();	
+			getContentPane().removeAll();
+			GradeP = new GradePanel();
 			getContentPane().add(GradeP);	
 			revalidate();	
 			repaint();	
