@@ -97,6 +97,10 @@ public class editScore extends JFrame implements ActionListener{
 			int arr[]=new int[fieldNum];
 			for(int i=0;i<fieldNum-4;i++) {
 				arr[i]=Integer.parseInt(inputScore[i].getText());
+				if((arr[i]<0)||(arr[i]>100)) {
+					JOptionPane.showMessageDialog(this, "0~100점의 점수를 입력해 주세요");
+					return;
+				}
 			}
 			if(gdb.setScore(arr, studentNumber)==true) {				
 				JOptionPane.showMessageDialog(this, "점수 입력 완료");

@@ -26,7 +26,7 @@ public class LecturePanel extends TopPanel {
 	}
 
 	public LecturePanel() {
-		this.myRatio = new GradeRatio(15,15,20,20,10,10,0,0,0);
+		this.myRatio = new GradeRatio(15,15,20,20,10,10,10,0,0);
 		this.myLecture = new Lecture("고급 객체 지향 프로그래밍",1333,3,"전공","장희정","Y5437",40,"Java J2SE를 기반으로 하는 객체지향 이론\r\n" + 
 				"객체지향 설계 원칙 및 디자인 패턴\r\n" + 
 				"Swing 및 JDBC를 이용한 객체지향 설계");
