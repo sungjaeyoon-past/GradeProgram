@@ -13,6 +13,8 @@ import java.util.Vector;
 
 import javax.swing.JTextField;
 
+import com.sun.glass.ui.Window;
+
 import Frame.GradePanel;
 import Frame.LecturePanel;
 
@@ -36,16 +38,8 @@ public class GradeDB {
 	GradeDB(GradePanel gp) {
 		this.gp = gp;
 	}
-
-	/*
-	 * studentList[countStudent-1]=new Student();
-	 * System.out.println(rs.getString("학번"));
-	 * System.out.println(rs.getString("이름")); System.out.println(sum);
-	 * studentList[countStudent-1].setStudentNumber(rs.getString("학번"));
-	 * studentList[countStudent-1].setName(rs.getString("이름"));
-	 * studentList[countStudent-1].setSum(sum);
-	 */
-
+	
+	//학생들의 리스트를 리턴
 	public Vector getMemberList() {
 		Vector data = new Vector();
 		try {
@@ -54,27 +48,85 @@ public class GradeDB {
 			getItemRatio();// 항목들의 비율을 가져옴
 			PreparedStatement ps = con.prepareStatement("select * from grade");
 			ResultSet rs = ps.executeQuery();
-
 			while (rs.next()) {
 				Vector row = new Vector();
-				row.add(countStudent);
-				for (int i = 1; i < fieldNum; i++) {
-					if (i == 3) {
-						row.add("F");
+				row.add(countStudent); // 순번
+				for (int i = 1; i < fieldNum; i++) { // 이름, 학번, 항목 추가
+					if (i == 3) {// 학점은 우선 임의로 삽입
+						row.add("F");//
 						continue;
 					}
 					row.add(rs.getString(fieldName[i]));
 				}
-				double sum = accumulateSum(row);
-				row.add(sum);
+				row.add(accumulateSum(row));
+				countStudent++; // 학생수 증가
 				data.add(row);
-				countStudent++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return data;
+		}	
+		Vector sortedVector = sortStudentBySum(data); //벡터를 총합으로 정렬
+		addGrade(sortedVector); //벡터에 학점 부여
+		return sortedVector;
 	};
+	
+	//학점을 부여
+	public void addGrade(Vector data) {
+		Vector addGrade = new Vector();
+		double studentCount=data.size(); // 학생수
+		double gradeRatio[]= new double[9];
+		for(int i=0;i<9;i++) {
+			if(i==0) {
+				gradeRatio[i]=studentCount/100*gradeRate[i];
+			}else {	
+				gradeRatio[i]=(studentCount/100*gradeRate[i]+gradeRatio[i-1]);
+			}
+		}
+		for(double s:gradeRatio) {
+			System.out.println(s);
+		}
+		String str[]= {"A+","A","B+","B","C+","C","D+","D","F"};
+		int number=0;
+		for(int i=0;i<data.size();i++) {	
+			for(int j=0;j<9;j++) {
+				if(i<gradeRatio[j]) {
+					for(;i<gradeRatio[j];) {				
+						Vector v = (Vector)data.get(i);
+						v.add(3,str[j]);
+						v.remove(4);
+						i++;
+					}
+				}					
+			}	
+		}		
+	}
+	
+	//벡터들을 sum 값으로 정렬시키는 함수
+	public Vector sortStudentBySum(Vector data) {
+		Vector sortedVector=new Vector();
+		int a=1;
+		int size = data.size(); 		
+		for(int j=0;j<size;j++) {
+			double max=0;
+			int maxIndex=0;
+			int rsize=data.size();		
+			for(int i=0;i<rsize;i++) {
+				Vector s = (Vector) data.get(i);
+				String str= ""+s.lastElement();
+				if(Double.parseDouble(str) > max) {
+					max = Double.parseDouble(str);
+					maxIndex=i;
+				}
+			}		
+			Vector maxVector=(Vector) data.get(maxIndex);
+			maxVector.remove(0);
+			maxVector.add(0,a);
+			sortedVector.add(maxVector);		
+			data.remove(maxIndex);	
+			a++;
+		}		
+		return sortedVector;
+	}
 
 	// 항목들의 비율을 가져오는 함수
 	public void getItemRatio() {
@@ -117,9 +169,6 @@ public class GradeDB {
 			rs.next();
 			for (int i = 1; i < 10; i++) {
 				arr[i - 1] = rs.getInt(i);
-			}
-			for (int i : arr) {
-				System.out.println(i);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
