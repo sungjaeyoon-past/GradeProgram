@@ -88,11 +88,10 @@ public class editRatio extends JFrame implements ActionListener{
 		JButton b = (JButton) e.getSource();
 		if(b == saveButton) {
 			int sum=0;
-			for(int i=0;i<fieldNum-4;i++) {
+			for(int i=0;i<fieldNum-4;i++) {	
 				sum+=Integer.parseInt(inputRatio[i].getText());
 			}
 			if(sum==100) {
-				//저장
 				if(gdb.setRatio(inputRatio)) {
 					JOptionPane.showMessageDialog(this, "항목 저장 완료");
 					dispose();							
