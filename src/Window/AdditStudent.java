@@ -67,8 +67,9 @@ public class AdditStudent extends JFrame implements ActionListener{
 		//System.out.println(number); //테스트
 		//System.out.println(studentNumber); //테스트
 		tnumber.setText(number);
-		tnumber.setEditable(false);//수정x
+		//tnumber.setEditable(false);//수정x
 		tStuNum.setText(studentNumber);
+		tStuNum.setEditable(false);//수정x
 		tname.setText(name);
 		tphoneNum.setText(phoneNumber);
 		tremark.setText(remarks);
