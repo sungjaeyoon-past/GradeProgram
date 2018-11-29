@@ -205,7 +205,6 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		int rowSelect = table.getSelectedRow();
 		studentNumber = (String)table.getValueAt(rowSelect,1);
 		studentName = (String)table.getValueAt(rowSelect,2);
-		System.out.println(studentNumber);//몇번째 줄 클릭했는지 위치 확인
 		//aClick = new AdditStudent(studentNumber, this, 1);//수정할때 클릭한 데이터 넘기기 위해
 	}
 
