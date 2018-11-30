@@ -10,8 +10,10 @@ import Main.Student;
 
 //새 창에서 학생을 추가해주는 클래스
 public class AdditStudent extends JFrame implements ActionListener{
-	JTextField tnumber, tStuNum, tname, tphoneNum;//숫자, 학생, 이름, 휴대폰
-	JTextField tratio;// 성적
+	public static int tNumber = 40; //현재 데이터가 40까지 이미 있어서.. (나중에 getNumber() 끌고올 예정)
+	
+	JTextField tStuNum, tname, tphoneNum;//숫자, 학생, 이름, 휴대폰
+	
 	JTextArea tremark;//특이사항
 	JTextField tYear, tMonth, tDate;//생일
 	JComboBox cbGrade; //1~4학년 선택
@@ -62,16 +64,18 @@ public class AdditStudent extends JFrame implements ActionListener{
 		String phoneNumber = stu.getPhoneNumber();
 		String birthday = stu.getBirthday();
 		String remarks = stu.getRemarks();
-		String ratio = stu.getRatio();
+		//String ratio = stu.getRatio();
 		
-		tnumber.setText(number);
+		//System.out.println(number); //테스트
+		//System.out.println(studentNumber); //테스트
+		//tnumber.setText(number);
 		//tnumber.setEditable(false);//수정x
 		tStuNum.setText(studentNumber);
 		tStuNum.setEditable(false);//수정x
 		tname.setText(name);
 		tphoneNum.setText(phoneNumber);
 		tremark.setText(remarks);
-		tratio.setText(ratio);
+		
 		
 		tYear.setText(birthday.substring(0,4));//4개식 끊어서 읽기
 		tMonth.setText(birthday.substring(4,6));
@@ -98,11 +102,6 @@ public class AdditStudent extends JFrame implements ActionListener{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		
-	    JLabel st1 = new JLabel("번호 : ");
-	    st1.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-	    tnumber = new JTextField(5);
-	    gbReset(st1, 0, 0, 1, 1);
-	    gbReset(tnumber, 1, 0, 3, 1);
 	    
 	    JLabel st2 = new JLabel("학번 :");
 	    st2.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
@@ -165,11 +164,6 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    gbReset(st6, 0, 7, 1, 1);
 	    gbReset(scroll, 1, 7, 3, 1);
 	    
-	    JLabel st7 = new JLabel("성적 :");
-	    st7.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-	    tratio = new JTextField(20);
-	    gbReset(st7, 0, 8, 1, 1);
-	    gbReset(tratio, 1, 8, 3, 1);
 	    
 	    JPanel PButton = new JPanel();
 	    bSave = new JButton("저장"); 
@@ -178,7 +172,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    PButton.add(bSave);
 	    PButton.add(bModify);
 	    PButton.add(bExit);
-	    gbReset(PButton, 0, 9, 4, 1);
+	    gbReset(PButton, 0, 8, 4, 1);
 	    
 	    bSave.addActionListener(this);
 	    bModify.addActionListener(this);
@@ -218,6 +212,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 	}
 	
 	public void insertStudent() {
+		tNumber = tNumber+1;
 		StudentDB stuDB = new StudentDB();
 		Student stuget = getData();
 		boolean check = stuDB.insertStudent(stuget);//DB에 데이터를 저장
@@ -257,9 +252,10 @@ public class AdditStudent extends JFrame implements ActionListener{
 	}
 	//입력 값 확인하는 메소드
 	public Student getData() {
+		
 		Student stu = new Student();
 		
-		String number = tnumber.getText();
+		String number = Integer.toString(tNumber);
 		String studentNumber = tStuNum.getText();
 		String name = tname.getText();
 		String phoneNumber = tphoneNum.getText();
@@ -270,12 +266,15 @@ public class AdditStudent extends JFrame implements ActionListener{
 		String birthday = birth1+birth2+birth3;
 		String grade = (String)cbGrade.getSelectedItem();
 		String gender="";
+		
+		//int birthday1 = Integer.parseInt(tYear.getText());  나중에 생년월일 8글짜 조건 작성
+		
+			
 		if(rbMan.isSelected()) {
 			gender="M";
 		}else if(rbWoman.isSelected()) {
 			gender="W";
 		}
-		String ratio = tratio.getText();
 		
 		stu.setNumber(number);
 		stu.setStudentNumber(studentNumber);
@@ -285,7 +284,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		stu.setBirthday(birthday);
 		stu.setGrade(grade);
 		stu.setGender(gender);
-		stu.setRatio(ratio);
+		
 		
 		return stu;//받은 데이터를 넘김
 	}
