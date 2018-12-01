@@ -72,7 +72,7 @@ public class GradeDB {
 		return sortedVector;
 	};
 
-	//이름으로 학생 검색
+	//이름,학번,성적으로 학생 검색
 	public Vector searchStudentByNameOrNumber(String name,int num) {
 		Vector s= new Vector();
 		for(int i=0;i<savedData.size();i++) {
@@ -174,6 +174,25 @@ public class GradeDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	//lecture에서 입력한 학점저장
+	public boolean setGradeRate(GradeRatio gr) {
+		PreparedStatement ps = null;
+		ResultSet rs = null; // 출력
+		String sql = "UPDATE graderate SET AP="+gr.getaPlusRatio()+",A="+gr.getaRatio()+",BP="+gr.getbPlusRatio()
+			+",B="+gr.getbRatio()+",CP="+gr.getcPlusRatio()+",C="+gr.getcRatio()+",DP="+gr.getdPlusRatio()+",D="+gr.getdRatio()+",F="+gr.getfRatio()+" WHERE idgraderatio2=1";		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	public int getCountStudent() {
+		return countStudent;
 	}
 
 	// 학점 비율 가져오는 함수

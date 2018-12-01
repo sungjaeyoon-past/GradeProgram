@@ -8,19 +8,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import DBInfo.GradeDB;
 import Frame.GradePanel;
-import javafx.scene.control.Label;
+import Frame.StudentPanel;
 
-public class editRatio extends JFrame implements ActionListener{
-	
+public class addItem extends JFrame implements ActionListener{
 	JTextField inputItem;
 	JButton saveButton;
 
@@ -29,26 +31,19 @@ public class editRatio extends JFrame implements ActionListener{
 	
 	GradeDB gdb;
 	GradePanel gp;
-	String []fieldName;
-	int fieldNum;
 	
-	JTextField inputRatio[];
-	
-	public editRatio() {
+	public addItem() {
 		Show();
 	}
 	
-	public editRatio(GradeDB gdb,GradePanel gp) {
+	public addItem(GradeDB gdb,GradePanel gp) {
 		this.gdb=gdb;
 		this.gp=gp;
-		fieldName = gdb.getFieldName();
-		fieldNum=gdb.getFieldNum();
-		inputRatio=new JTextField[fieldNum];
 		Show();
 	}
 	
 	public void Show() {
-		this.setTitle("비율 설정");
+		this.setTitle("항목 추가");
 		glay = new GridBagLayout();
 		gbc = new GridBagConstraints();
 		
@@ -57,26 +52,19 @@ public class editRatio extends JFrame implements ActionListener{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		
-		int []arr=gdb.getGradeRatio();
-		
-		for(int i=4;i<fieldNum;i++) {
-			JLabel jl=new JLabel(fieldName[i]+":");
-			jl.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-			inputRatio[i-4]= new JTextField(""+arr[i-4],1);
-			JLabel j2=new JLabel("%");
-			j2.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-			gbReset(jl, 0, i-4, 1, 1);
-		    gbReset(inputRatio[i-4], 1, i-4, 1, 1);
-		    gbReset(j2, 2, i-4, 1, 1);
-		}
-		
-		JPanel PButton = new JPanel();
+	    JLabel st1 = new JLabel("항목 이름: ");
+	    st1.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+	    inputItem = new JTextField(5);
+	    gbReset(st1, 0, 0, 1, 1);
+	    gbReset(inputItem, 1, 0, 3, 1);
+	    
+	    JPanel PButton = new JPanel();
 	    saveButton = new JButton("저장");
 	    saveButton.addActionListener(this);
 	    PButton.add(saveButton);
 	    gbReset(PButton, 0, 9, 4, 1);
 	    
-	    setSize(150,60+60*(fieldNum-4));
+	    setSize(150,150);
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(800,400);
@@ -87,24 +75,11 @@ public class editRatio extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if(b == saveButton) {
-			int sum=0;
-			for(int i=0;i<fieldNum-4;i++) {	
-				sum+=Integer.parseInt(inputRatio[i].getText());
-			}
-			if(sum==100) {
-				if(gdb.setRatio(inputRatio)) {
-					JOptionPane.showMessageDialog(this, "항목 저장 완료");
-					dispose();							
-				}else {
-					JOptionPane.showMessageDialog(this, "항목 저장 오류");			
-				}
-			}else {	
-				JOptionPane.showMessageDialog(this, "비율의 합이 100%가 되어야합니다.");
-			}
-
+			gdb.addColumn(inputItem.getText());
+			JOptionPane.showMessageDialog(this, "항목 저장 완료");
+			dispose();
 		}
 		gp.JTableRefresh();	
-		
 	}
 	private void gbReset(JComponent c, int x, int y, int w, int h){
         gbc.gridx = x;
@@ -115,5 +90,5 @@ public class editRatio extends JFrame implements ActionListener{
         gbc.insets = new Insets(2, 2, 2, 2);
         add(c, gbc);
     }
-
+	
 }

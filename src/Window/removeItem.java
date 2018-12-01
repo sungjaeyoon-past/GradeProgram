@@ -7,43 +7,47 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import DBInfo.GradeDB;
 import Frame.GradePanel;
-import Frame.StudentPanel;
 
-public class addGrade extends JFrame implements ActionListener{
+public class removeItem extends JFrame implements ActionListener {
 	JTextField inputItem;
-	JButton saveButton;
+	JButton removeButton;
 
 	GridBagLayout glay;
 	GridBagConstraints gbc;
 	
 	GradeDB gdb;
 	GradePanel gp;
+	String []fieldName;
+	int fieldNum;
 	
-	public addGrade() {
-		Show();
+	String clikedField;
+	
+	public removeItem() {
+		
 	}
-	
-	public addGrade(GradeDB gdb,GradePanel gp) {
+
+	public removeItem(GradeDB gdb,GradePanel gp) {
 		this.gdb=gdb;
 		this.gp=gp;
+		fieldName = gdb.getFieldName();
+		fieldNum=gdb.getFieldNum();
 		Show();
 	}
 	
 	public void Show() {
-		this.setTitle("항목 추가");
+		this.setTitle("항목 삭제");
 		glay = new GridBagLayout();
 		gbc = new GridBagConstraints();
 		
@@ -52,35 +56,50 @@ public class addGrade extends JFrame implements ActionListener{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		
-	    JLabel st1 = new JLabel("항목 이름: ");
-	    st1.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-	    inputItem = new JTextField(5);
-	    gbReset(st1, 0, 0, 1, 1);
-	    gbReset(inputItem, 1, 0, 3, 1);
+		ButtonGroup bg = new ButtonGroup();
+		
+		for(int i=4;i<fieldNum;i++) {	
+			JRadioButton rb = new JRadioButton(fieldName[i]);
+			gbReset(rb, 0, i-4, 1, 1);
+			bg.add(rb);
+			rb.addActionListener(this);
+		}	    
 	    
 	    JPanel PButton = new JPanel();
-	    saveButton = new JButton("저장");
-	    saveButton.addActionListener(this);
-	    PButton.add(saveButton);
-	    gbReset(PButton, 0, 9, 4, 1);
-	    
-	    setSize(150,150);
+	    removeButton = new JButton("삭제");
+	    removeButton.addActionListener(this);
+	    PButton.add(removeButton);
+	    gbReset(PButton, 0, 9, 4, 1);    
+		
+	    setSize(200,80*(fieldNum-4));
 	    setVisible(true);
 	    setResizable(false);
-	    setLocation(800,400);
+	    setLocation(750,450);
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton b = (JButton) e.getSource();
-		if(b == saveButton) {
-			gdb.addColumn(inputItem.getText());
-			JOptionPane.showMessageDialog(this, "항목 저장 완료");
-			dispose();
+		if(clikedField==null) {
+			String s = e.getActionCommand();		
+			for(int i=0;i<fieldNum;i++) {			
+				if(s.equals(fieldName[i])){
+					clikedField=fieldName[i];			
+				}
+			}
+		}else {
+			JButton b = (JButton) e.getSource();
+			if(b == removeButton) {
+				gdb.removeColumn(clikedField);
+				clikedField=null;
+				JOptionPane.showMessageDialog(this, "항목 삭제 완료");
+				JOptionPane.showMessageDialog(this, "나머지 항목의 비율을 다시 설정해주세요");
+				dispose();
+				gp.JTableRefresh();
+			}
 		}
-		gp.JTableRefresh();	
 	}
+	
 	private void gbReset(JComponent c, int x, int y, int w, int h){
         gbc.gridx = x;
         gbc.gridy = y;
@@ -91,4 +110,5 @@ public class addGrade extends JFrame implements ActionListener{
         add(c, gbc);
     }
 	
+
 }
