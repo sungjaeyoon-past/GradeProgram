@@ -28,6 +28,7 @@ public class GradeDB {
 	private int countStudent = 1;
 	private GradeRatio gr;
 	private int fieldNum;
+	private double averageItem;
 	Connection con = null;
 	Vector savedData;
 
@@ -120,11 +121,18 @@ public class GradeDB {
 	}
 	
 	//합계 분류해주는 함수
-	public double[] countNumberBySum() {
+	public double[] countNumberByItem(int number) {
 		double arr[]=new double[10];
+		double sum=0;
+		double num;
 		for(int i=0;i<savedData.size();i++) {
 			Vector v =(Vector)(savedData.get(i));
-			double num=Double.parseDouble(""+v.lastElement());
+			if(number==0) {
+				num=Double.parseDouble(""+v.lastElement());
+			}else {
+				num=Double.parseDouble(""+v.get(number+3));
+			}
+			sum+=num;
 			if(num>=0&&num<=10) {
 				arr[0]++;
 			}else if(num>=11&&num<=20) {
@@ -147,14 +155,16 @@ public class GradeDB {
 				arr[9]++;
 			}
 		}
+		for(double d :arr) {
+			//System.out.print(d+" ");
+		}
+		averageItem=sum/savedData.size();
+		//System.out.println(averageItem);
 		return arr;
 	}
 	
-	//항목단위로 분류해주는 함수
-	public double[] countNumberByItem(int fieldNum) {
-		double arr[]=new double[10];
-		
-		return arr;
+	public double getAverageItem() {
+		return averageItem;
 	}
 
 	// 벡터들을 sum 값으로 정렬시키는 함수

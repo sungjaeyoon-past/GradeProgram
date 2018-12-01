@@ -67,9 +67,9 @@ public class ChartPanel extends JPanel {
 				height = -height;
 			}
 
-			g.setColor(Color.GREEN);
+			g.setColor(Color.GRAY);
 			g.fillRect(valueX, valueY, barWidth - 2, height);
-			g.setColor(Color.black);
+			g.setColor(Color.GRAY);
 			g.drawRect(valueX, valueY, barWidth - 2, height);
 			int labelWidth = labelFontMetrics.stringWidth(names[i]);
 			x = i * barWidth + (barWidth - labelWidth) / 2;
