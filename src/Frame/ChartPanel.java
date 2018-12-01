@@ -37,9 +37,9 @@ public class ChartPanel extends JPanel {
 		int clientHeight = d.height;
 		int barWidth = clientWidth / values.length;
 
-		Font titleFont = new Font("KBIZ한마음고딕 M", Font.BOLD, 20);
+		Font titleFont = new Font("a개미야", Font.BOLD, 40);
 		FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
-		Font labelFont = new Font("KBIZ한마음고딕 M", Font.BOLD, 20);
+		Font labelFont = new Font("a개미야", Font.BOLD, 15);
 		FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
 
 		int titleWidth = titleFontMetrics.stringWidth(title);
@@ -67,7 +67,7 @@ public class ChartPanel extends JPanel {
 				height = -height;
 			}
 
-			g.setColor(Color.blue);
+			g.setColor(Color.GREEN);
 			g.fillRect(valueX, valueY, barWidth - 2, height);
 			g.setColor(Color.black);
 			g.drawRect(valueX, valueY, barWidth - 2, height);

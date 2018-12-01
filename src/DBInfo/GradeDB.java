@@ -118,6 +118,44 @@ public class GradeDB {
 			}
 		}
 	}
+	
+	//합계 분류해주는 함수
+	public double[] countNumberBySum() {
+		double arr[]=new double[10];
+		for(int i=0;i<savedData.size();i++) {
+			Vector v =(Vector)(savedData.get(i));
+			double num=Double.parseDouble(""+v.lastElement());
+			if(num>=0&&num<=10) {
+				arr[0]++;
+			}else if(num>=11&&num<=20) {
+				arr[1]++;				
+			}else if(num>=21&&num<=30) {
+				arr[2]++;
+			}else if(num>=31&&num<=40) {
+				arr[3]++;
+			}else if(num>=41&&num<=50) {
+				arr[4]++;
+			}else if(num>=51&&num<=60) {
+				arr[5]++;
+			}else if(num>=61&&num<=70) {
+				arr[6]++;
+			}else if(num>=71&&num<=80) {
+				arr[7]++;
+			}else if(num>=81&&num<=90) {
+				arr[8]++;
+			}else if(num>91&&num<=100) {
+				arr[9]++;
+			}
+		}
+		return arr;
+	}
+	
+	//항목단위로 분류해주는 함수
+	public double[] countNumberByItem(int fieldNum) {
+		double arr[]=new double[10];
+		
+		return arr;
+	}
 
 	// 벡터들을 sum 값으로 정렬시키는 함수
 	public Vector sortStudentBySum(Vector data) {
