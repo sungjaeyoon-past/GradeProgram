@@ -61,16 +61,16 @@ public class StaticPanel extends JPanel implements ActionListener {
 		JPanel j = new JPanel();
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButton rbSum = new JRadioButton("총점 점수 분포");
-		rbSum.setFont(new Font("a개미야", Font.BOLD, 25));
-		rbSum.setPreferredSize(new Dimension(200, 50));
+		rbSum.setFont(new Font("a개미야", Font.BOLD, 20));
+		rbSum.setPreferredSize(new Dimension(150, 50));
 		rbSum.addActionListener(this);
 		rbSum.setSelected(true);
 		bg.add(rbSum);
 		j.add(rbSum, BorderLayout.CENTER);
 		for (int i = 4; i < fieldNum; i++) {
 			JRadioButton rb = new JRadioButton(fieldName[i] + " 분포");
-			rb.setFont(new Font("a개미야", Font.BOLD, 25));
-			rb.setPreferredSize(new Dimension(200, 50));
+			rb.setFont(new Font("a개미야", Font.BOLD, 20));
+			rb.setPreferredSize(new Dimension(150, 50));
 			rb.addActionListener(this);
 			bg.add(rb);
 			j.add(rb, BorderLayout.CENTER);
@@ -97,7 +97,7 @@ public class StaticPanel extends JPanel implements ActionListener {
 		JTextField jb = new JTextField("평균 : " + gdb.getAverageItem());
 		jb.setFont(new Font("a개미야", Font.BOLD, 25));
 		jb.setPreferredSize(new Dimension(200, 50));
-		jb.setEnabled(false);
+		//jb.setEnabled(false);
 		j.add(jb, BorderLayout.CENTER);
 		return j;
 	}

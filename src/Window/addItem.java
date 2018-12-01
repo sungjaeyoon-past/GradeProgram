@@ -75,9 +75,13 @@ public class addItem extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if(b == saveButton) {
-			gdb.addColumn(inputItem.getText());
-			JOptionPane.showMessageDialog(this, "항목 저장 완료");
-			dispose();
+			if(gdb.getFieldNum()>10) {
+				JOptionPane.showMessageDialog(this, "항목을 더이상 만들 수 없습니다!");
+			}else {				
+				gdb.addColumn(inputItem.getText());
+				JOptionPane.showMessageDialog(this, "항목 저장 완료");
+				dispose();
+			}
 		}
 		gp.JTableRefresh();	
 	}
