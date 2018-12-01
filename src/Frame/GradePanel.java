@@ -91,7 +91,7 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		search_Text.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_Text.setPreferredSize(new Dimension(150, 50));
 
-		String[] head = { "학번", "이름"};
+		String[] head = { "학번", "이름","성적"};
 		search_jcb = new JComboBox(head);
 		search_jcb.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_jcb.setPreferredSize(new Dimension(80, 50));
