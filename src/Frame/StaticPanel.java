@@ -62,16 +62,14 @@ public class StaticPanel extends TopPanel implements ActionListener {
 	public JPanel createChart() {
 		JPanel j = new JPanel();
 		j.setSize(400, 300);
-		double[] values = new double[3];
-		String[] names = new String[3];
-		values[0] = 1;
-		names[0] = "Item 1";
-		values[1] = 2;
-		names[1] = "Item 2";
-		values[2] = 4;
-		names[2] = "Item 3";
+		double[] values = new double[10];
+		String[] names = {"0~10","10~20","20~30","30~40","40~50","50~60","60~70","70~80","80~90","90~100"};
+		for(int i=0;i<10;i++) {
+			values[i]=i;
+		}
+		
 		ChartPanel ch = new ChartPanel(values, names, "title");
-		ch.setPreferredSize(new Dimension(500, 500));
+		ch.setPreferredSize(new Dimension(800, 500));
 		j.add(ch, BorderLayout.CENTER);
 		return j;
 	}
