@@ -29,6 +29,7 @@ public class GradeDB {
 	private GradeRatio gr;
 	private int fieldNum;
 	Connection con = null;
+	Vector savedData;
 
 	public GradeDB() {
 		connectDB = new ConnectionDB();
@@ -67,8 +68,21 @@ public class GradeDB {
 		}
 		Vector sortedVector = sortStudentBySum(data); // 벡터를 총합으로 정렬
 		addGrade(sortedVector); // 벡터에 학점 부여
+		savedData=sortedVector;
 		return sortedVector;
 	};
+
+	//이름으로 학생 검색
+	public Vector searchStudentByNameOrNumber(String name,int num) {
+		Vector s= new Vector();
+		for(int i=0;i<savedData.size();i++) {
+			Vector t = (Vector)(savedData.get(i));
+			if(t.get(num+1).equals(name)) {
+				s.add(t);
+			}
+		}
+		return s;
+	}
 
 	// 학점을 부여
 	public void addGrade(Vector data) {
@@ -132,6 +146,7 @@ public class GradeDB {
 		return sortedVector;
 	}
 
+
 	// 항목들의 비율을 가져오는 함수
 	public void getItemRatio() {
 		try {
@@ -188,8 +203,8 @@ public class GradeDB {
 		for (int i = 4; i < fieldNum; i++) {
 			sum += (Integer.parseInt((String) v.get(i)) * itemRatio[i - 4]) / 100;
 		}
-
-		return Double.parseDouble(String.format("%.2f", sum));
+		return sum;
+		//return Double.parseDouble(String.format("%.2f", sum));
 	}
 
 	// 항목들의 비율을 설정해주는 함수

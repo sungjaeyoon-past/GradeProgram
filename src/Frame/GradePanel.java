@@ -61,7 +61,21 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		mid.add(studentT);
 		this.add(mid, BorderLayout.CENTER);
 		
+		JPanel botS;
+		botS = makesB();
+		this.add(botS, BorderLayout.SOUTH);
+		
 		g.getGradeRatio();
+	}
+	public JPanel makesB() {
+		JPanel sBot_sort = new JPanel();
+		
+		sBot_sort.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JButton backList = new JButton("목록");
+		backList.addActionListener(this);	
+		sBot_sort.add(backList);
+		
+		return sBot_sort;
 	}
 
 	public JPanel createTop() {
@@ -73,12 +87,11 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		jWest.setLayout(new FlowLayout());
 		jEast.setLayout(new FlowLayout());
 
-		// search_jcb.setSelectedItem(cols);
 		search_Text = new JTextField("");// 나중에 디비로 이어지게
 		search_Text.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_Text.setPreferredSize(new Dimension(150, 50));
 
-		String[] head = { "학번", "이름", "성적" };
+		String[] head = { "학번", "이름"};
 		search_jcb = new JComboBox(head);
 		search_jcb.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		search_jcb.setPreferredSize(new Dimension(80, 50));
@@ -86,7 +99,7 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 		search_btn = new JButton("학생 검색");
 		search_btn.setPreferredSize(new Dimension(120, 50));
 		search_btn.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
-		// search_btn.addActionListener(this);
+		search_btn.addActionListener(this);
 
 		inputScore = new JButton("점수 입력");
 		inputScore.setPreferredSize(new Dimension(130, 50));
@@ -142,13 +155,6 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 
 		pane.setPreferredSize(new java.awt.Dimension(1185, 601));// 테이블 사이즈 조정
 		String fieldName[]=g.getFieldName();
-		
-		table.getColumn("번호").setPreferredWidth(1);
-		table.getColumn("학번").setPreferredWidth(4);
-		table.getColumn("이름").setPreferredWidth(1);
-		table.getColumn("성적").setPreferredWidth(1);
-		table.getColumn("합계").setPreferredWidth(1);
-
 
 		return pane;
 	}
@@ -197,6 +203,11 @@ public class GradePanel extends TopPanel implements ActionListener, MouseListene
 			new removeGrade(g , this);			
 		}else if (b.getText().equals("비율 설정")) {
 			new editRatio(g , this);			
+		}else if(b.getText().equals("학생 검색")) {		
+			model = new DefaultTableModel(g.searchStudentByNameOrNumber(search_Text.getText(),search_jcb.getSelectedIndex()), getColumn());
+			table.setModel(model);
+		}else if(b.getText().equals("목록")) {
+			JTableRefresh();
 		}
 	}
 
