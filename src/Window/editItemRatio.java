@@ -17,42 +17,38 @@ import javax.swing.JTextField;
 
 import DBInfo.GradeDB;
 import Frame.GradePanel;
+import javafx.scene.control.Label;
 
-public class editScore extends JFrame implements ActionListener{
-	JButton saveButton;
+public class editItemRatio extends JFrame implements ActionListener{
 	
+	JTextField inputItem;
+	JButton saveButton;
+
 	GridBagLayout glay;
 	GridBagConstraints gbc;
 	
 	GradeDB gdb;
 	GradePanel gp;
-	String studentNumber;
-	String studentName;
-	
-	int fieldNum;
 	String []fieldName;
-	int scoreArray[];
+	int fieldNum;
 	
-	JTextField []inputScore;
+	JTextField inputRatio[];
 	
-	public editScore() {
+	public editItemRatio() {
 		Show();
 	}
 	
-	public editScore(GradeDB gdb,GradePanel gp,String studentNumber,String studentName) {
+	public editItemRatio(GradeDB gdb,GradePanel gp) {
 		this.gdb=gdb;
 		this.gp=gp;
-		this.studentNumber=studentNumber;
-		this.studentName=studentName;
-		this.fieldNum=gdb.getFieldNum();
-		this.fieldName=gdb.getFieldName();
-		this.inputScore=new JTextField[fieldNum];
-		scoreArray=gdb.getScore(studentNumber);
+		fieldName = gdb.getFieldName();
+		fieldNum=gdb.getFieldNum();
+		inputRatio=new JTextField[fieldNum];
 		Show();
 	}
 	
 	public void Show() {
-		this.setTitle("점수 입력");
+		this.setTitle("비율 설정");
 		glay = new GridBagLayout();
 		gbc = new GridBagConstraints();
 		
@@ -61,29 +57,26 @@ public class editScore extends JFrame implements ActionListener{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		
-		JLabel number=new JLabel("학번:"+studentNumber);
-		number.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-		gbReset(number, 0, 0, 1, 1);
-		JLabel name=new JLabel("이름:"+studentName);
-		name.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-		gbReset(name, 1, 0, 1, 1);		
+		int []arr=gdb.getGradeRatio();
 		
 		for(int i=4;i<fieldNum;i++) {
 			JLabel jl=new JLabel(fieldName[i]+":");
 			jl.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-			inputScore[i-4] = new JTextField(""+scoreArray[i-4],1);
-			gbReset(jl, 0, i-3, 1, 1);
-		    gbReset(inputScore[i-4], 1, i-3, 1, 1);
-		}	
-		
+			inputRatio[i-4]= new JTextField(""+arr[i-4],1);
+			JLabel j2=new JLabel("%");
+			j2.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+			gbReset(jl, 0, i-4, 1, 1);
+		    gbReset(inputRatio[i-4], 1, i-4, 1, 1);
+		    gbReset(j2, 2, i-4, 1, 1);
+		}
 		
 		JPanel PButton = new JPanel();
 	    saveButton = new JButton("저장");
 	    saveButton.addActionListener(this);
 	    PButton.add(saveButton);
-	    gbReset(PButton, 0, 9, 4, 1);	
+	    gbReset(PButton, 0, 9, 4, 1);
 	    
-	    setSize(200,60+60*(fieldNum-4));
+	    setSize(150,60+60*(fieldNum-4));
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(800,400);
@@ -94,25 +87,25 @@ public class editScore extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		if(b == saveButton) {
-			int arr[]=new int[fieldNum];
-			for(int i=0;i<fieldNum-4;i++) {
-				arr[i]=Integer.parseInt(inputScore[i].getText());
-				if((arr[i]<0)||(arr[i]>100)) {
-					JOptionPane.showMessageDialog(this, "0~100점의 점수를 입력해 주세요");
-					return;
+			int sum=0;
+			for(int i=0;i<fieldNum-4;i++) {	
+				sum+=Integer.parseInt(inputRatio[i].getText());
+			}
+			if(sum==100) {
+				if(gdb.setRatio(inputRatio)) {
+					JOptionPane.showMessageDialog(this, "항목 저장 완료");
+					dispose();							
+				}else {
+					JOptionPane.showMessageDialog(this, "항목 저장 오류");			
 				}
+			}else {	
+				JOptionPane.showMessageDialog(this, "비율의 합이 100%가 되어야합니다.");
 			}
-			if(gdb.setScore(arr, studentNumber)==true) {				
-				JOptionPane.showMessageDialog(this, "점수 입력 완료");
-				dispose();
-			}else {
-				JOptionPane.showMessageDialog(this, "점수 입력 실패");				
-			}
+
 		}
 		gp.JTableRefresh();	
 		
 	}
-	
 	private void gbReset(JComponent c, int x, int y, int w, int h){
         gbc.gridx = x;
         gbc.gridy = y;
@@ -122,4 +115,5 @@ public class editScore extends JFrame implements ActionListener{
         gbc.insets = new Insets(2, 2, 2, 2);
         add(c, gbc);
     }
+
 }

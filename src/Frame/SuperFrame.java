@@ -27,8 +27,8 @@ public class SuperFrame extends JFrame{
 		AttendP = new AttendPanel();
 		GradeP = new GradePanel();
 		StudentP = new StudentPanel();
-		LectureP = new LecturePanel();
-		StaticP = new StaticPanel();
+		LectureP = new LecturePanel(GradeP);
+		StaticP = new StaticPanel(GradeP);
 			
 		getContentPane().add(IntroP);
 		this.setJMenuBar(new MenuBar(this));
@@ -54,11 +54,13 @@ public class SuperFrame extends JFrame{
 			repaint();	
 		}else if(panelName.equals("staticP")){	
 			getContentPane().removeAll();	
+			StaticP = new StaticPanel(GradeP);
 			getContentPane().add(StaticP);	
 			revalidate();	
 			repaint();	
 		}else if(panelName.equals("studentP")){	
-			getContentPane().removeAll();	
+			getContentPane().removeAll();
+			StudentP = new StudentPanel();
 			getContentPane().add(StudentP);	
 			revalidate();	
 			repaint();	

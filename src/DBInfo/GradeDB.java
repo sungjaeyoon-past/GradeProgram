@@ -13,6 +13,8 @@ import java.util.Vector;
 
 import javax.swing.JTextField;
 
+import com.sun.glass.ui.Window;
+
 import Frame.GradePanel;
 import Frame.LecturePanel;
 
@@ -26,7 +28,9 @@ public class GradeDB {
 	private int countStudent = 1;
 	private GradeRatio gr;
 	private int fieldNum;
+	private double averageItem;
 	Connection con = null;
+	Vector savedData;
 
 	public GradeDB() {
 		connectDB = new ConnectionDB();
@@ -37,15 +41,7 @@ public class GradeDB {
 		this.gp = gp;
 	}
 
-	/*
-	 * studentList[countStudent-1]=new Student();
-	 * System.out.println(rs.getString("학번"));
-	 * System.out.println(rs.getString("이름")); System.out.println(sum);
-	 * studentList[countStudent-1].setStudentNumber(rs.getString("학번"));
-	 * studentList[countStudent-1].setName(rs.getString("이름"));
-	 * studentList[countStudent-1].setSum(sum);
-	 */
-
+	// 학생들의 리스트를 리턴
 	public Vector getMemberList() {
 		Vector data = new Vector();
 		try {
@@ -54,27 +50,150 @@ public class GradeDB {
 			getItemRatio();// 항목들의 비율을 가져옴
 			PreparedStatement ps = con.prepareStatement("select * from grade");
 			ResultSet rs = ps.executeQuery();
-
 			while (rs.next()) {
 				Vector row = new Vector();
-				row.add(countStudent);
-				for (int i = 1; i < fieldNum; i++) {
-					if (i == 3) {
-						row.add("F");
+				row.add(countStudent); // 순번
+				for (int i = 1; i < fieldNum; i++) { // 이름, 학번, 항목 추가
+					if (i == 3) {// 학점은 우선 임의로 삽입
+						row.add("F");//
 						continue;
 					}
 					row.add(rs.getString(fieldName[i]));
 				}
-				double sum = accumulateSum(row);
-				row.add(sum);
+				row.add(accumulateSum(row));
+				countStudent++; // 학생수 증가
 				data.add(row);
-				countStudent++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return data;
+		Vector sortedVector = sortStudentBySum(data); // 벡터를 총합으로 정렬
+		addGrade(sortedVector); // 벡터에 학점 부여
+		savedData=sortedVector;
+		return sortedVector;
 	};
+
+	//이름,학번,성적으로 학생 검색
+	public Vector searchStudentByNameOrNumber(String name,int num) {
+		Vector s= new Vector();
+		for(int i=0;i<savedData.size();i++) {
+			Vector t = (Vector)(savedData.get(i));
+			if(t.get(num+1).equals(name)) {
+				s.add(t);
+			}
+		}
+		return s;
+	}
+
+	// 학점을 부여
+	public void addGrade(Vector data) {
+		Vector addGrade = new Vector();
+		double studentCount = data.size(); // 학생수
+		double gradeRatio[] = new double[9];
+		for (int i = 0; i < 9; i++) {
+			if (i == 0) {
+				gradeRatio[i] = studentCount / 100 * gradeRate[i];
+			} else {
+				gradeRatio[i] = (studentCount / 100 * gradeRate[i] + gradeRatio[i - 1]);
+			}
+		}
+		String str[] = { "A+", "A", "B+", "B", "C+", "C", "D+", "D", "F" };
+		int number = 0;
+		for (int i = 0; i < data.size(); i++) {
+			for (int j = 0; j < 9; j++) {
+				if (i < gradeRatio[j]) {
+					for (; i < gradeRatio[j];) {
+						Vector v = (Vector) data.get(i);
+						v.add(3, str[j]);
+						v.remove(4);
+						try {
+							PreparedStatement ps = con.prepareStatement(
+									"UPDATE student SET ratio='" + str[j] + "' WHERE studentNumber='" + v.get(1) + "'");
+							ps.executeUpdate();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						i++;
+					}
+				}
+			}
+		}
+	}
+	
+	//합계 분류해주는 함수
+	public double[] countNumberByItem(int number) {
+		double arr[]=new double[10];
+		double sum=0;
+		double num;
+		for(int i=0;i<savedData.size();i++) {
+			Vector v =(Vector)(savedData.get(i));
+			if(number==0) {
+				num=Double.parseDouble(""+v.lastElement());
+			}else {
+				num=Double.parseDouble(""+v.get(number+3));
+			}
+			sum+=num;
+			if(num>=0&&num<=10) {
+				arr[0]++;
+			}else if(num>=11&&num<=20) {
+				arr[1]++;				
+			}else if(num>=21&&num<=30) {
+				arr[2]++;
+			}else if(num>=31&&num<=40) {
+				arr[3]++;
+			}else if(num>=41&&num<=50) {
+				arr[4]++;
+			}else if(num>=51&&num<=60) {
+				arr[5]++;
+			}else if(num>=61&&num<=70) {
+				arr[6]++;
+			}else if(num>=71&&num<=80) {
+				arr[7]++;
+			}else if(num>=81&&num<=90) {
+				arr[8]++;
+			}else if(num>91&&num<=100) {
+				arr[9]++;
+			}
+		}
+		for(double d :arr) {
+			//System.out.print(d+" ");
+		}
+		averageItem=sum/savedData.size();
+		//System.out.println(averageItem);
+		return arr;
+	}
+	
+	public double getAverageItem() {
+		return averageItem;
+	}
+
+	// 벡터들을 sum 값으로 정렬시키는 함수
+	public Vector sortStudentBySum(Vector data) {
+		Vector sortedVector = new Vector();
+		int a = 1;
+		int size = data.size();
+		for (int j = 0; j < size; j++) {
+			double max = 0;
+			int maxIndex = 0;
+			int rsize = data.size();
+			for (int i = 0; i < rsize; i++) {
+				Vector s = (Vector) data.get(i);
+				String str = "" + s.lastElement();
+				if (Double.parseDouble(str) > max) {
+					max = Double.parseDouble(str);
+					maxIndex = i;
+				}
+			}
+			Vector maxVector = (Vector) data.get(maxIndex);
+			maxVector.remove(0);
+			maxVector.add(0, a);
+			sortedVector.add(maxVector);
+			data.remove(maxIndex);
+			a++;
+		}
+		return sortedVector;
+	}
+
 
 	// 항목들의 비율을 가져오는 함수
 	public void getItemRatio() {
@@ -105,6 +224,25 @@ public class GradeDB {
 		}
 	}
 
+	//lecture에서 입력한 학점저장
+	public boolean setGradeRate(GradeRatio gr) {
+		PreparedStatement ps = null;
+		ResultSet rs = null; // 출력
+		String sql = "UPDATE graderate SET AP="+gr.getaPlusRatio()+",A="+gr.getaRatio()+",BP="+gr.getbPlusRatio()
+			+",B="+gr.getbRatio()+",CP="+gr.getcPlusRatio()+",C="+gr.getcRatio()+",DP="+gr.getdPlusRatio()+",D="+gr.getdRatio()+",F="+gr.getfRatio()+" WHERE idgraderatio2=1";		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	public int getCountStudent() {
+		return countStudent;
+	}
+
 	// 학점 비율 가져오는 함수
 	public int[] getGradeRate() {
 		int[] arr = new int[10];
@@ -117,9 +255,6 @@ public class GradeDB {
 			rs.next();
 			for (int i = 1; i < 10; i++) {
 				arr[i - 1] = rs.getInt(i);
-			}
-			for (int i : arr) {
-				System.out.println(i);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,8 +270,8 @@ public class GradeDB {
 		for (int i = 4; i < fieldNum; i++) {
 			sum += (Integer.parseInt((String) v.get(i)) * itemRatio[i - 4]) / 100;
 		}
-
-		return Double.parseDouble(String.format("%.2f", sum));
+		return sum;
+		//return Double.parseDouble(String.format("%.2f", sum));
 	}
 
 	// 항목들의 비율을 설정해주는 함수

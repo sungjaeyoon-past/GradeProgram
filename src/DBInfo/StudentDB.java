@@ -103,8 +103,8 @@ public class StudentDB {
 		
 		try {
 			con = connectDB.makeConnection();
-			String sql = "insert into student(number,studentNumber,name,grade,gender,phoneNumber,birthday,remark,ratio)"+
-					"values(?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into student(number,studentNumber,name,grade,gender,phoneNumber,birthday,remark)"+
+					"values(?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
 			
 			ps.setString(1, std.getNumber());
@@ -115,7 +115,7 @@ public class StudentDB {
 			ps.setString(6, std.getPhoneNumber());
 			ps.setString(7, std.getBirthday());
 			ps.setString(8, std.getRemarks());
-			ps.setString(9, std.getRatio());
+		
 			
 			int saveStu = ps.executeUpdate(); // 실행 => 저장
 			
@@ -142,29 +142,28 @@ public class StudentDB {
 		PreparedStatement ps = null;
 		try {
 			con = connectDB.makeConnection();
-			String sql = "update student set studentNumber=?, name=?, grade=?, gender=?, phoneNumber=?, birthday=?"+
-			", remark=?, ratio=?" + "where number=?";
+			String sql = "update student set name=?, grade=?, gender=?, phoneNumber=?, birthday=?"+
+			", remark=?" + "where studentNumber=?";
 			ps = con.prepareStatement(sql);
 			
-			ps.setString(1, upstd.getStudentNumber());
-			ps.setString(2, upstd.getName());
-			ps.setString(3, upstd.getGrade());
-			ps.setString(4, upstd.isGender());
-			ps.setString(5, upstd.getPhoneNumber());
-			ps.setString(6, upstd.getBirthday());
-			ps.setString(7, upstd.getRemarks());
-			ps.setString(8, upstd.getRatio());
-			ps.setString(9, upstd.getNumber());
+			
+			ps.setString(1, upstd.getName());
+			ps.setString(2, upstd.getGrade());
+			ps.setString(3, upstd.isGender());
+			ps.setString(4, upstd.getPhoneNumber());
+			ps.setString(5, upstd.getBirthday());
+			ps.setString(6, upstd.getRemarks());
+			ps.setString(7, upstd.getStudentNumber());
+			
 			int saveStu = ps.executeUpdate(); // 실행 => 저장
 			
-			sql = "update grade set 이름=?, 성적=? WHERE 학번=?";// 학번 변경X
+			sql = "update grade set 이름=? WHERE 학번=?";// 학번 변경X
 			//sql = "update grade set 학번=" +upstd.getStudentNumber()+" , 이름='" +upstd.getName() + "',성적="+ upstd.getRatio();
 			System.out.println(sql);
 	        ps = con.prepareStatement(sql);
 	        
 			ps.setString(1, upstd.getName());
-			ps.setString(2, upstd.getRatio());
-			ps.setString(3, upstd.getStudentNumber());
+			ps.setString(2, upstd.getStudentNumber());
 	        ps.executeUpdate();
 	        
 			if(saveStu>0) {
