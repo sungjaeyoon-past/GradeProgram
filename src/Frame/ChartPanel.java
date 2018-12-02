@@ -39,7 +39,7 @@ public class ChartPanel extends JPanel {
 
 		Font titleFont = new Font("a개미야", Font.BOLD, 40);
 		FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
-		Font labelFont = new Font("a개미야", Font.BOLD, 15);
+		Font labelFont = new Font("a개미야", Font.BOLD, 25);
 		FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
 
 		int titleWidth = titleFontMetrics.stringWidth(title);

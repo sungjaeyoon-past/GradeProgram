@@ -81,23 +81,29 @@ public class StaticPanel extends JPanel implements ActionListener {
 	public JPanel createChartByItem(int number) {
 		JPanel j = new JPanel();
 		double[] values = gdb.countNumberByItem(number);
-		String[] names = { "0~10(" + (int) values[0] + "명)", "10~20(" + (int) values[1] + "명)",
-				"20~30(" + (int) values[2] + "명)", "30~40(" + (int) values[3] + "명)", "40~50(" + (int) values[4] + "명)",
-				"50~60(" + (int) values[5] + "명)", "60~70(" + (int) values[6] + "명)", "70~80(" + (int) values[7] + "명)",
-				"80~90(" + (int) values[8] + "명)", "90~100(" + (int) values[9] + "명)" };
+		String[] names = { "0~10", "10~20","20~30", "30~40", "40~50","50~60", "60~70", "70~80","80~90", "90~100" };
 		ChartPanel ch;
 		if(number==0) {
 			ch = new ChartPanel(values, names,"총점 분포 그래프");
 		}else {
 			ch = new ChartPanel(values, names, fieldName[number+3]+"분포 그래프");
 		}
-		ch.setPreferredSize(new Dimension(1000, 570));
+		ch.setPreferredSize(new Dimension(1100, 530));
 		j.add(ch, BorderLayout.CENTER);
+				
+		for(int i=0;i<10;i++) {	
+			JTextField jb2 = new JTextField((int)values[i]+"명");
+			jb2.setFont(new Font("a개미야", Font.BOLD, 25));
+			jb2.setHorizontalAlignment(JTextField.CENTER);
+			jb2.setPreferredSize(new Dimension(105, 30));
+			jb2.setEditable(false);
+			j.add(jb2, BorderLayout.SOUTH);
+		}
 		
 		JTextField jb = new JTextField("평균 : " + gdb.getAverageItem());
 		jb.setFont(new Font("a개미야", Font.BOLD, 25));
+		jb.setHorizontalAlignment(JTextField.CENTER);
 		jb.setPreferredSize(new Dimension(200, 50));
-		//jb.setEnabled(false);
 		j.add(jb, BorderLayout.CENTER);
 		return j;
 	}
