@@ -29,6 +29,7 @@ import javax.swing.table.TableColumnModel;
 
 import DBInfo.AttendDB;
 import Main.Student;
+import Window.ModifyDialog;
 import DBInfo.ConnectionDB;
 
 import java.sql.Connection;
@@ -37,6 +38,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AttendPanel extends TopPanel {
+	private ModifyDialog modifier;
 	private JScrollPane sp;
 	private JTable table;
 	
@@ -109,7 +111,8 @@ public class AttendPanel extends TopPanel {
 		String[][] mem = new String[x][y];
 		try {
 			con = stu_db.getConnection().makeConnection();
-			String sql = "SELECT number, studentNumber, name FROM student.student";
+//			String sql = "SELECT number, studentNumber, name FROM student.student";
+			String sql = "SELECT * FROM student.attend";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 		
@@ -118,6 +121,26 @@ public class AttendPanel extends TopPanel {
 				mem[i][0] = rs.getString("number");
 				mem[i][1] = rs.getString("studentNumber");
 				mem[i][2] = rs.getString("name");
+				mem[i][3] = rs.getString("attend"); // 1
+				mem[i][4] = rs.getString("attend"); // 2
+				mem[i][5] = rs.getString("attend"); // 3
+				mem[i][6] = rs.getString("attend"); // 4
+				mem[i][7] = rs.getString("attend"); // 5
+				mem[i][8] = rs.getString("attend"); // 6
+				mem[i][9] = rs.getString("attend"); // 7
+				mem[i][10] = rs.getString("attend"); // 8
+				mem[i][11] = rs.getString("attend"); // 9
+				mem[i][12] = rs.getString("attend"); // 10
+				mem[i][13] = rs.getString("attend"); // 11
+				mem[i][14] = rs.getString("attend"); // 12
+				mem[i][15] = rs.getString("attend"); // 13
+				mem[i][16] = rs.getString("attend"); // 14
+				mem[i][17] = rs.getString("attend"); // 15
+				mem[i][18] = rs.getString("attend"); // 16
+				mem[i][19] = rs.getString("att");
+				mem[i][20] = rs.getString("late");
+				mem[i][21] = rs.getString("abs");
+				mem[i][22] = rs.getString("extra");
 				if(i%10 == 9) {
 					numberOfEntries++;
 				}
@@ -212,12 +235,14 @@ public class AttendPanel extends TopPanel {
 				System.out.println(nameSort.getSelectedItem());
 				System.out.println(typeName.getText());
 				//typeName.getText()와 AttendDB의 studentFound를 이용해 
-				stu_db.searchStudentNumber(model, typeName.getText());
+				stu_db.searchAttendData(model, typeName.getText());
 				
 				
 			}
 			else if(nameSort.getSelectedIndex() == 1) {
-				System.out.println("이름");
+				System.out.println(nameSort.getSelectedItem());
+				System.out.println(typeName.getText());
+				stu_db.searchAttendData(model, typeName.getText());
 			}
 		}
 	}
@@ -227,6 +252,23 @@ public class AttendPanel extends TopPanel {
 		//특정 레코드를 선택한 후(드래그는 기본기능 완료 후 고려) 출석 수정버튼을 클릭하면
 		//수정윈도우가 뜨게되고 해당 레코드의 현재 정보가 텍스트필드로 출력된다. 아래에는 확인과 취소 버튼이 존재한다.
 		//텍스트필드에서 수정을 하고 나면 확인을 누른다. 확인이 눌리면 현재 세팅이 갱신되고, Table이 리셋된다. 데이터베이스도 리셋된다.
+		boolean check=false;
+		for(int i=0; i<table.getRowCount(); i++) {
+			for(int j=0; j<table.getColumnCount(); j++) {
+				if(table.isCellSelected(i, j)) {
+					check = true;
+					break;
+				}
+			}
+			if(check) break;
+		}
+		if(check) {
+			System.out.println("출석 수정");
+			modifier = new ModifyDialog();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "수정할 셀을 선택하십시오.");
+		}
 	}
 	
 	// 출결 Table을 만든다.
