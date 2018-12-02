@@ -15,6 +15,7 @@ public class StudentDB {
 	ConnectionDB connectDB;
 	
 	public StudentDB(){
+		// return connected DB to 'connectDB'
 		connectDB = new ConnectionDB();
 	}
 	
@@ -22,7 +23,7 @@ public class StudentDB {
 		this.stuP = stuP;
 	}
 
-	//한사람 학번으로 학생정보 검색
+	//한사람 학번으로 학생정보 검색해서 가져온다.
 	public Student getStudent(String stuNum) {
 		Student st = new Student();
 		Connection con = null;
@@ -407,4 +408,8 @@ public class StudentDB {
 			System.out.println(e);
 		}
     }
+	// 2018-11-30 updated : make connectDB Getter
+	public ConnectionDB getConnection() {
+		return connectDB;
+	}
 }

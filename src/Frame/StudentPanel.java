@@ -196,7 +196,6 @@ public class StudentPanel extends TopPanel implements ActionListener, MouseListe
 		sBot_sort.add(stuNumSort);
 		sBot_sort.add(nameSort);
 		
-		
 		return sBot_sort;
 	}
 	
