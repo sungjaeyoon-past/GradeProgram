@@ -37,13 +37,16 @@ public class AttendDB extends StudentDB {
 			pstmt1 = con.prepareStatement(sql_att);
 			rs = pstmt.executeQuery();
 			getScore();
-			System.out.println(attendScore.get(1));
 //			while(pstmt1.executeQuery().next()) {
 //				count++;
 //			}
 //			rs.beforeFirst();
-			
-			if(!(rs.equals(pstmt1.executeQuery()))) { //두 DB가 다르면 attend의 table을 지우고 다시 저장한다.
+			if(pstmt1.execute(sql_att)) {
+				sql_att = "insert into student.attend "
+						+ "(number, studentNumber, name, attend, att, late, abs, extra)"
+						+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
+			}
+			else if(!(rs.equals(pstmt1.executeQuery()))) { //두 DB가 다르면 attend의 table을 지우고 다시 저장한다.
 //				while(rs.next()) {
 //					for(int i=0; i<count; i++) {
 //						if(!rs.getObject(col).equals(pstmt1.executeQuery().getObject(i))) {
@@ -52,15 +55,21 @@ public class AttendDB extends StudentDB {
 //					}
 //					col++;
 //				}
-				sql_att = "insert into student.attend (number, studentNumber, name) values (?, ?, ?)";
-				pstmt1 = con.prepareStatement(sql_att);
-				
-				while(rs.next()) {
-					pstmt1.setString(1, rs.getString("number"));
-					pstmt1.setString(2, rs.getString("studentNumber"));
-					pstmt1.setString(3, rs.getString("name"));
-					pstmt1.execute();
-				}
+//				sql_att = "insert into student.attend (number, studentNumber, name, abs) values (?, ?, ?, ?)";
+				sql_att = "update student.attend set number=?, studentNumber=?, name=?, attend=?,"
+						+ " att=?, late=?, abs=?, extra=?";
+			}
+			pstmt1 = con.prepareStatement(sql_att);
+			while(rs.next()) {
+				pstmt1.setString(1, rs.getString("number"));
+				pstmt1.setString(2, rs.getString("studentNumber"));
+				pstmt1.setString(3, rs.getString("name"));
+				pstmt1.setString(4, "");
+				pstmt1.setInt(5, 0);
+				pstmt1.setInt(6, 0);
+				pstmt1.setInt(7, 16);
+				pstmt1.setString(8, "");
+				pstmt1.execute();
 			}
 		}catch(SQLException e) {
 			System.out.print(1);
@@ -68,17 +77,23 @@ public class AttendDB extends StudentDB {
 		}
 	}
 	
-	public void searchStudentNumber(DefaultTableModel model, String stuNum) {
+	//검색 기능
+	public void searchAttendData(DefaultTableModel model, String stuText) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		String sql = null;
+		
 		try {
 			
 			con = connectDB.makeConnection();
-			String sql = "select * from student.attend where studentNumber=?";
+			if(isNum(stuText)) {
+				sql = "select * from student.attend where studentNumber=?";
+			}else {
+				sql = "select * from student.attend where name=?";
+			}
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, stuNum);
+			pstmt.setString(1, stuText);
 			rs = pstmt.executeQuery();
 			
 			for(int i=0; i<model.getRowCount();) {
@@ -89,7 +104,7 @@ public class AttendDB extends StudentDB {
 						rs.getString(1),
 						rs.getString(2),
 						rs.getString(3),
-						"","","","","","","","","","","","","","","","",
+						"","","","","","","","","","","","","","","",
 						rs.getString(4),
 						rs.getString(5),
 						rs.getString(6),
@@ -101,6 +116,19 @@ public class AttendDB extends StudentDB {
 		}catch(SQLException e) {
 			System.out.println("SQL : " + e.getMessage());
 		}
+		
+	}
+	public boolean isNum(String i) {
+		try {
+			Integer.parseInt(i);
+			return true;
+		}catch(NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	// 출결 수정
+	public void modifyAttendData() {
 		
 	}
 
