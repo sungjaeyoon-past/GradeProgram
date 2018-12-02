@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +16,8 @@ public class AttendDB extends StudentDB {
 	//StudentDB's connection ConnectDB
 	
 	//Attend Table에 Student만큼의 레코드를 넣어준다.
+	
+	private Vector attendScore;
 	public AttendDB() {
 		super();
 		
@@ -33,10 +36,13 @@ public class AttendDB extends StudentDB {
 			pstmt = con.prepareStatement(sql_stu);
 			pstmt1 = con.prepareStatement(sql_att);
 			rs = pstmt.executeQuery();
+			getScore();
+			System.out.println(attendScore.get(1));
 //			while(pstmt1.executeQuery().next()) {
 //				count++;
 //			}
 //			rs.beforeFirst();
+			
 			if(!(rs.equals(pstmt1.executeQuery()))) { //두 DB가 다르면 attend의 table을 지우고 다시 저장한다.
 //				while(rs.next()) {
 //					for(int i=0; i<count; i++) {
@@ -83,6 +89,7 @@ public class AttendDB extends StudentDB {
 						rs.getString(1),
 						rs.getString(2),
 						rs.getString(3),
+						"","","","","","","","","","","","","","","","",
 						rs.getString(4),
 						rs.getString(5),
 						rs.getString(6),
@@ -97,5 +104,35 @@ public class AttendDB extends StudentDB {
 		
 	}
 
-	
+	public void getScore(){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		attendScore = new Vector();
+		
+		try {
+			con = connectDB.makeConnection();
+			String sql = "select studentNumber, att, late, abs from student.attend";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.last();
+			
+			rs.beforeFirst();
+			while(rs.next()) {
+				// 100점 / 16주 = 100점 / 32번 = 3.125
+				Vector scoreSet = new Vector();
+				scoreSet.add(rs.getString(1));
+				scoreSet.add(rs.getInt(2)*3.125);
+				scoreSet.add(rs.getInt(3)*3.125);
+				scoreSet.add(rs.getInt(4)*3.125);
+				
+				attendScore.add(scoreSet);
+			}
+			
+		}catch(SQLException e) {
+			System.out.println("SQLException : "+e.getMessage());
+		}
+		
+//		return attendScore;
+	}
 }
