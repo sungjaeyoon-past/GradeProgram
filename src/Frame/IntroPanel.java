@@ -57,7 +57,7 @@ public class IntroPanel extends TopPanel{
 
 	}
 	//배경설정
-	Image bg = new ImageIcon("Image/background.jpg").getImage();
+	Image bg = new ImageIcon("Image/background1.GIF").getImage();
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

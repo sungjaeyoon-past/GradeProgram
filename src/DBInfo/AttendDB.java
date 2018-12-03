@@ -41,6 +41,7 @@ public class AttendDB extends StudentDB {
 //				count++;
 //			}
 //			rs.beforeFirst();
+			System.out.println(pstmt1.execute(sql_att));
 			if(pstmt1.execute(sql_att)) {
 				sql_att = "insert into student.attend "
 						+ "(number, studentNumber, name, attend, att, late, abs, extra)"
