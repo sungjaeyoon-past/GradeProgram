@@ -141,7 +141,7 @@ public class AttendPanel extends TopPanel {
 				mem[i][20] = rs.getString("late");
 				mem[i][21] = rs.getString("abs");
 				mem[i][22] = rs.getString("extra");
-				if(i%10 == 9) {
+				if(i%10 == 0) {
 					numberOfEntries++;
 				}
 			}
@@ -160,6 +160,7 @@ public class AttendPanel extends TopPanel {
 		
 		for(int i=start; i<start+10; i++) {
 			for(int j=0; j<23; j++) {
+				if(memberList.size() > i)
 				mem[i-(check*10)][j] = members[i][j];
 			}
 		}

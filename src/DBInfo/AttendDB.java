@@ -41,25 +41,34 @@ public class AttendDB extends StudentDB {
 //				count++;
 //			}
 //			rs.beforeFirst();
-			System.out.println(pstmt1.execute(sql_att));
-			if(pstmt1.execute(sql_att)) {
-				sql_att = "insert into student.attend "
-						+ "(number, studentNumber, name, attend, att, late, abs, extra)"
-						+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
-			}
-			else if(!(rs.equals(pstmt1.executeQuery()))) { //두 DB가 다르면 attend의 table을 지우고 다시 저장한다.
-//				while(rs.next()) {
-//					for(int i=0; i<count; i++) {
-//						if(!rs.getObject(col).equals(pstmt1.executeQuery().getObject(i))) {
-//							
-//						}
-//					}
-//					col++;
-//				}
-//				sql_att = "insert into student.attend (number, studentNumber, name, abs) values (?, ?, ?, ?)";
-				sql_att = "update student.attend set number=?, studentNumber=?, name=?, attend=?,"
-						+ " att=?, late=?, abs=?, extra=?";
-			}
+//			System.out.println(pstmt1.executeQuery().isBeforeFirst());
+			//attend 테이블에 아무것도 없을 때(초기화)
+//			if(!pstmt1.executeQuery().isBeforeFirst()) {
+//				sql_att = "insert into student.attend "
+//						+ "(number, studentNumber, name, attend, att, late, abs, extra)"
+//						+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
+//			}
+//			//student와 attend가 다를 때
+//			else if(!rs.equals(pstmt1.executeQuery())) { //두 DB가 다르면 attend의 table을 지우고 다시 저장한다.
+////				while(rs.next()) {
+////					for(int i=0; i<count; i++) {
+////						if(!rs.getObject(col).equals(pstmt1.executeQuery().getObject(i))) {
+////							
+////						}
+////					}
+////					col++;
+////				}
+////				sql_att = "insert into student.attend (number, studentNumber, name, abs) values (?, ?, ?, ?)";
+//				sql_att = "update student.attend set number=?, studentNumber=?, name=?, attend=?,"
+//						+ " att=?, late=?, abs=?, extra=?";
+//			}
+			sql_att = "insert into student.attend "
+					+ "(number, studentNumber, name, attend, att, late, abs, extra) "
+					+ "values (?, ?, ?, ?, ?, ?, ?, ?) "
+					+ "on duplicate key update "
+					+ "number=?, studentNumber=?, name=?, attend=?, " 
+					+ "att=?, late=?, abs=?, extra=?";
+
 			pstmt1 = con.prepareStatement(sql_att);
 			while(rs.next()) {
 				pstmt1.setString(1, rs.getString("number"));
@@ -70,10 +79,17 @@ public class AttendDB extends StudentDB {
 				pstmt1.setInt(6, 0);
 				pstmt1.setInt(7, 16);
 				pstmt1.setString(8, "");
+				pstmt1.setString(9, rs.getString("number"));
+				pstmt1.setString(10, rs.getString("studentNumber"));
+				pstmt1.setString(11, rs.getString("name"));
+				pstmt1.setString(12, "");
+				pstmt1.setInt(13, 0);
+				pstmt1.setInt(14, 0);
+				pstmt1.setInt(15, 16);
+				pstmt1.setString(16, "");
 				pstmt1.execute();
 			}
 		}catch(SQLException e) {
-			System.out.print(1);
 			System.out.println("SQLException: "+e.getMessage());
 		}
 	}
