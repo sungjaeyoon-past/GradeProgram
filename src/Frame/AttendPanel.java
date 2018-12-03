@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
 
 import DBInfo.AttendDB;
 import Main.Student;
-import Window.ModifyDialog;
+//import Window.ModifyDialog;
 import DBInfo.ConnectionDB;
 
 import java.sql.Connection;
@@ -37,8 +37,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AttendPanel extends TopPanel {
-	private ModifyDialog modifier;
+public class AttendPanel extends JPanel {
+	//private ModifyDialog modifier;
 	private JScrollPane sp;
 	private JTable table;
 	
@@ -265,7 +265,7 @@ public class AttendPanel extends TopPanel {
 		}
 		if(check) {
 			System.out.println("출석 수정");
-			modifier = new ModifyDialog();
+			//modifier = new ModifyDialog();
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "수정할 셀을 선택하십시오.");

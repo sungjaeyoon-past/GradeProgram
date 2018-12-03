@@ -32,13 +32,7 @@ public class SuperFrame extends JFrame{
 			
 		getContentPane().add(IntroP);
 		this.setJMenuBar(new MenuBar(this));
-		
-		//this.add(AttendP, BorderLayout.CENTER);
-		//this.add(GradeP, BorderLayout.CENTER);
-		//this.add(LectureP, BorderLayout.CENTER);
-		//this.setVisible(true);
-		//this.add(StaticP, BorderLayout.CENTER);
-		
+
 	}
 	public void change(String panelName) {	
 		if(panelName.equals("gradeP")) {	
@@ -65,7 +59,8 @@ public class SuperFrame extends JFrame{
 			revalidate();	
 			repaint();	
 		}else if(panelName.equals("lectureP")){	
-			getContentPane().removeAll();	
+			getContentPane().removeAll();
+			LectureP = new LecturePanel(GradeP);
 			getContentPane().add(LectureP);	
 			revalidate();	
 			repaint();	

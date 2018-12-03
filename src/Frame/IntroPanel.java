@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class IntroPanel extends TopPanel{
+public class IntroPanel extends JPanel{
 	IntroPanel(){
 		setBackground(Color.BLACK);
 		//setBorder(new EmptyBorder(5, 5, 5, 5)); // 처음 간격 설정

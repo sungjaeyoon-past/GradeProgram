@@ -12,7 +12,7 @@ import DBInfo.StudentDB;
 import Main.Student;
 import Window.AdditStudent;
 
-public class StudentPanel extends TopPanel implements ActionListener, MouseListener{
+public class StudentPanel extends JPanel implements ActionListener, MouseListener{
 	private JScrollPane studentT;
 	Vector stulist; //학생 리스트
 	Vector cols; // 테이블 헤더
