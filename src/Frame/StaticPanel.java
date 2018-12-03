@@ -15,6 +15,7 @@ import java.lang.Object;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -92,18 +93,18 @@ public class StaticPanel extends JPanel implements ActionListener {
 		j.add(ch, BorderLayout.CENTER);
 				
 		for(int i=0;i<10;i++) {	
-			JTextField jb2 = new JTextField((int)values[i]+"명");
+			JLabel jb2 = new JLabel((int)values[i]+"명");
 			jb2.setFont(new Font("a개미야", Font.BOLD, 25));
 			jb2.setHorizontalAlignment(JTextField.CENTER);
 			jb2.setPreferredSize(new Dimension(105, 30));
-			jb2.setEditable(false);
 			j.add(jb2, BorderLayout.SOUTH);
 		}
 		
-		JTextField jb = new JTextField("평균 : " + gdb.getAverageItem());
+		JTextField jb = new JTextField("평균 : " + (Math.round(gdb.getAverageItem()*100))/100);
 		jb.setFont(new Font("a개미야", Font.BOLD, 25));
 		jb.setHorizontalAlignment(JTextField.CENTER);
 		jb.setPreferredSize(new Dimension(200, 50));
+		jb.setEditable(false);
 		j.add(jb, BorderLayout.CENTER);
 		return j;
 	}

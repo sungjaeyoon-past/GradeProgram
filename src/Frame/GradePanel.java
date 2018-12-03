@@ -30,7 +30,7 @@ import Window.editItemRatio;
 import Window.editScore;
 import Window.removeItem;
 
-public class GradePanel extends TopPanel implements ActionListener, MouseListener {
+public class GradePanel extends JPanel implements ActionListener, MouseListener {
 	private JScrollPane studentT;
 	Vector stulist; // 학생 리스트
 	Vector cols; // 테이블 헤더
