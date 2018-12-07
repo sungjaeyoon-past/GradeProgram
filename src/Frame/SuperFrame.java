@@ -43,6 +43,7 @@ public class SuperFrame extends JFrame{
 			repaint();	
 		}else if(panelName.equals("attendP")){	
 			getContentPane().removeAll();	
+			AttendP = new AttendPanel();
 			getContentPane().add(AttendP);	
 			revalidate();	
 			repaint();	

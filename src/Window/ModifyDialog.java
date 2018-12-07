@@ -103,7 +103,7 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(lattend = new JLabel("출석 체크(o, v, x)"));
 		lattend.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 30));
 		
-		mainMod.add(latt1start = new JLabel("             [1  :  "));
+		mainMod.add(latt1start = new JLabel("      [1  :  "));
 		latt1start.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		mainMod.add(attend1 = new JTextField(2)); 
 		mainMod.add(attend2 = new JTextField(2));
@@ -111,10 +111,10 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(attend4 = new JTextField(2));
 		attend1.setText("x"); attend2.setText("x");
 		attend3.setText("x"); attend4.setText("x");
-		mainMod.add(latt1end = new JLabel("  ]            "));
+		mainMod.add(latt1end = new JLabel("  ]          "));
 		latt1end.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		
-		mainMod.add(latt2start = new JLabel("       [2  :  "));
+		mainMod.add(latt2start = new JLabel("   [2  :  "));
 		latt2start.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		mainMod.add(attend5 = new JTextField(2)); 
 		mainMod.add(attend6 = new JTextField(2));
@@ -125,7 +125,7 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(latt2end = new JLabel("  ]      "));
 		latt2end.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		
-		mainMod.add(latt3start = new JLabel("       [3  :  "));
+		mainMod.add(latt3start = new JLabel("   [3  :  "));
 		latt3start.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		mainMod.add(attend9 = new JTextField(2)); 
 		mainMod.add(attend10 = new JTextField(2));
@@ -136,7 +136,7 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(latt3end = new JLabel("  ]      "));
 		latt3end.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		
-		mainMod.add(latt4start = new JLabel("       [4  :  "));
+		mainMod.add(latt4start = new JLabel("   [4  :  "));
 		latt4start.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		mainMod.add(attend13 = new JTextField(2)); 
 		mainMod.add(attend14 = new JTextField(2));
@@ -147,9 +147,10 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(latt4end = new JLabel("  ]      "));
 		latt4end.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		
-		mainMod.add(ex = new JLabel("          비  고"));
-		ex.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+		mainMod.add(ex = new JLabel("   비  고"));
+		ex.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		mainMod.add(extra = new JTextField(12));
+		extra.setText("없음");
 		
 		mainMod.add(apply = new JButton("확   인"));
 		apply.addActionListener(this);

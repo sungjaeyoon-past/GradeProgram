@@ -72,12 +72,13 @@ public class AttendPanel extends JPanel {
 	Student stu;
 	Connection con;
 	ResultSet rs;
+	
 //	PreparedStatement pstmt;
 	
 	public AttendPanel() {
 		//DB가 있을 때 없을 때를 나누어야 할까
 		stu_db = new AttendDB(this);
-		
+			
 		memberList = stu_db.getMemberList(); // 2nd dim Vector
 		if(memberList == null) {
 			currentEntryIndex = 0;
@@ -90,21 +91,21 @@ public class AttendPanel extends JPanel {
 		// members(전체)에서 curDatas(10개만)
 		curDatas = new String[10][23];
 		curDatas = getMembers(0);
-		
+			
 		JPanel topP = makeTop();
 		midP = new JPanel();
 		JPanel botP;
-		
+			
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BorderLayout());
-		
+			
 		sp = makeAttendTable();
 		midP.add(sp);
-		
+			
 		midP.add(sp);
 		// 1PAGE = rs.next() 10번 읽는다. 
 		botP = makePaging();
-		
+			
 		this.add(topP, BorderLayout.NORTH);
 		this.add(midP, BorderLayout.CENTER);
 		this.add(botP, BorderLayout.SOUTH);
