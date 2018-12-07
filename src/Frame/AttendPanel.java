@@ -30,6 +30,7 @@ import javax.swing.table.TableColumnModel;
 import DBInfo.AttendDB;
 import Main.Student;
 import Window.ModifyDialog;
+//import Window.ModifyDialog;
 import DBInfo.ConnectionDB;
 
 import java.sql.Connection;
@@ -37,11 +38,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AttendPanel extends TopPanel {
-	private ModifyDialog modifier;
+public class AttendPanel extends JPanel {
+	//private ModifyDialog modifier;
 	private JScrollPane sp;
 	private JTable table;
 	private JPanel midP;
+	private ModifyDialog modifier;
 	
 	private String tHead[] = {"순번", "학번", "이름", "1", "2", "3", "4", "5",
 				"6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",

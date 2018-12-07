@@ -50,6 +50,7 @@ public class AttendDB extends StudentDB {
 					+ "on duplicate key update "
 					+ "number=?, studentNumber=?, name=?, attendString=?, " 
 					+ "att=?, late=?, abs=?, extra=?";
+
 			pstmt1 = con.prepareStatement(sql_att);
 			while(rs.next()) {
 				pstmt1.setString(1, rs.getString("number"));

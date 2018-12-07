@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.JTextArea;
 import Main.GradeRatio;
 import Main.Lecture;
 
-public class LecturePanel extends TopPanel implements ActionListener{
+public class LecturePanel extends JPanel implements ActionListener{
 	private Lecture myLecture;
 	GradePanel gpp;
 	
@@ -28,8 +29,8 @@ public class LecturePanel extends TopPanel implements ActionListener{
 		this.myLecture = new Lecture("고급 객체 지향 프로그래밍",1333,3,"전공","장희정","Y5437",gpp.getG().getCountStudent()-1,"Java J2SE를 기반으로 하는 객체지향 이론\r\n" + 
 				"객체지향 설계 원칙 및 디자인 패턴\r\n" + 
 				"Swing 및 JDBC를 이용한 객체지향 설계");
-		setBackground(Color.WHITE);
 		setLayout(null);
+		setBackground(Color.white);
 		
 		creatInfoPanel();    //1.강의 정보 패널
 		creatIntroPanel();  //2.강의 소개 패널	
@@ -37,7 +38,7 @@ public class LecturePanel extends TopPanel implements ActionListener{
 	}
 	
 	public void creatInfoPanel() { //1.강의 정보 패널
-		String str[]= {"강의 ","학점","구분","담당교수","강의실","강좌번호","학생수"};
+		String str[]= {"강의 ","학점","구분","담당교수","강의실","강좌번호","학생 수"};
 		Object obj[]= {myLecture.getName(),myLecture.getScore(),myLecture.getDivision(),
 				myLecture.getProfessor(),myLecture.getRoomNumber(),myLecture.getLectureNumber(),myLecture.getCount()};
 		
@@ -57,9 +58,16 @@ public class LecturePanel extends TopPanel implements ActionListener{
 		
 		JTextArea i = new JTextArea(myLecture.getIntroduce());
 		i.setEditable(false);
+		i.setEditable(false);
 		i.setFont(new Font("a개미야", Font.BOLD, 30));
-		i.setBounds(560, 230, 550, 200);
+		i.setBounds(560, 150, 550, 130);
 		add(i);
+		
+		ImageIcon ic = new ImageIcon("image/presentation.png");
+		JLabel icimage=new JLabel(ic);
+		icimage.setBounds(540, 300, 300, 300);
+		add(icimage);
+		
 	}
 	
 	@Override
