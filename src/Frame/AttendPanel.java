@@ -41,6 +41,7 @@ public class AttendPanel extends TopPanel {
 	private ModifyDialog modifier;
 	private JScrollPane sp;
 	private JTable table;
+	private JPanel midP;
 	
 	private String tHead[] = {"순번", "학번", "이름", "1", "2", "3", "4", "5",
 				"6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
@@ -69,11 +70,11 @@ public class AttendPanel extends TopPanel {
 	Student stu;
 	Connection con;
 	ResultSet rs;
-	PreparedStatement pstmt;
+//	PreparedStatement pstmt;
 	
 	public AttendPanel() {
 		//DB가 있을 때 없을 때를 나누어야 할까
-		stu_db = new AttendDB();
+		stu_db = new AttendDB(this);
 		
 		memberList = stu_db.getMemberList(); // 2nd dim Vector
 		if(memberList == null) {
@@ -82,13 +83,14 @@ public class AttendPanel extends TopPanel {
 		}
 		// table에 넣기 위해 필요한 세팅
 		members = new String[memberList.size()][23];
+		System.out.print("check");
 		members = setProperty(memberList.size(), 23);
 		// members(전체)에서 curDatas(10개만)
 		curDatas = new String[10][23];
 		curDatas = getMembers(0);
 		
 		JPanel topP = makeTop();
-		JPanel midP = new JPanel();
+		midP = new JPanel();
 		JPanel botP;
 		
 		this.setBackground(Color.WHITE);
@@ -111,9 +113,8 @@ public class AttendPanel extends TopPanel {
 		String[][] mem = new String[x][y];
 		try {
 			con = stu_db.getConnection().makeConnection();
-//			String sql = "SELECT number, studentNumber, name FROM student.student";
 			String sql = "SELECT * FROM student.attend";
-			pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 		
 			for(int i=0; i<x; i++) {
@@ -121,22 +122,22 @@ public class AttendPanel extends TopPanel {
 				mem[i][0] = rs.getString("number");
 				mem[i][1] = rs.getString("studentNumber");
 				mem[i][2] = rs.getString("name");
-				mem[i][3] = rs.getString("attend"); // 1
-				mem[i][4] = rs.getString("attend"); // 2
-				mem[i][5] = rs.getString("attend"); // 3
-				mem[i][6] = rs.getString("attend"); // 4
-				mem[i][7] = rs.getString("attend"); // 5
-				mem[i][8] = rs.getString("attend"); // 6
-				mem[i][9] = rs.getString("attend"); // 7
-				mem[i][10] = rs.getString("attend"); // 8
-				mem[i][11] = rs.getString("attend"); // 9
-				mem[i][12] = rs.getString("attend"); // 10
-				mem[i][13] = rs.getString("attend"); // 11
-				mem[i][14] = rs.getString("attend"); // 12
-				mem[i][15] = rs.getString("attend"); // 13
-				mem[i][16] = rs.getString("attend"); // 14
-				mem[i][17] = rs.getString("attend"); // 15
-				mem[i][18] = rs.getString("attend"); // 16
+				mem[i][3] = rs.getString("attendString").substring(0, 1); // 1
+				mem[i][4] = rs.getString("attendString").substring(1, 2); // 2
+				mem[i][5] = rs.getString("attendString").substring(2, 3); // 3
+				mem[i][6] = rs.getString("attendString").substring(3, 4); // 4
+				mem[i][7] = rs.getString("attendString").substring(4, 5); // 5
+				mem[i][8] = rs.getString("attendString").substring(5, 6); // 6
+				mem[i][9] = rs.getString("attendString").substring(6, 7); // 7
+				mem[i][10] = rs.getString("attendString").substring(7, 8); // 8
+				mem[i][11] = rs.getString("attendString").substring(8, 9); // 9
+				mem[i][12] = rs.getString("attendString").substring(9, 10); // 10
+				mem[i][13] = rs.getString("attendString").substring(10, 11); // 11
+				mem[i][14] = rs.getString("attendString").substring(11, 12); // 12
+				mem[i][15] = rs.getString("attendString").substring(12, 13); // 13
+				mem[i][16] = rs.getString("attendString").substring(13, 14); // 14
+				mem[i][17] = rs.getString("attendString").substring(14, 15); // 15
+				mem[i][18] = rs.getString("attendString").substring(15, 16); // 16
 				mem[i][19] = rs.getString("att");
 				mem[i][20] = rs.getString("late");
 				mem[i][21] = rs.getString("abs");
@@ -232,17 +233,14 @@ public class AttendPanel extends TopPanel {
 			JOptionPane.showMessageDialog(null, "텍스트필드에 검색 내용을 입력하시오.");
 		}
 		else{
-			if(nameSort.getSelectedIndex() == 0) {
-				System.out.println(nameSort.getSelectedItem());
-				System.out.println(typeName.getText());
+			System.out.println(nameSort.getSelectedIndex());
+			if(nameSort.getSelectedIndex() == 0 && stu_db.isNum(typeName.getText())) {
 				//typeName.getText()와 AttendDB의 studentFound를 이용해 
 				stu_db.searchAttendData(model, typeName.getText());
 				
 				
 			}
-			else if(nameSort.getSelectedIndex() == 1) {
-				System.out.println(nameSort.getSelectedItem());
-				System.out.println(typeName.getText());
+			else if(nameSort.getSelectedIndex() == 1 && !(stu_db.isNum(typeName.getText()))) {
 				stu_db.searchAttendData(model, typeName.getText());
 			}
 		}
@@ -254,24 +252,34 @@ public class AttendPanel extends TopPanel {
 		//수정윈도우가 뜨게되고 해당 레코드의 현재 정보가 텍스트필드로 출력된다. 아래에는 확인과 취소 버튼이 존재한다.
 		//텍스트필드에서 수정을 하고 나면 확인을 누른다. 확인이 눌리면 현재 세팅이 갱신되고, Table이 리셋된다. 데이터베이스도 리셋된다.
 		boolean check=false;
+		String num = new String();
 		for(int i=0; i<table.getRowCount(); i++) {
 			for(int j=0; j<table.getColumnCount(); j++) {
 				if(table.isCellSelected(i, j)) {
 					check = true;
+					num = (String) table.getValueAt(i, 1);
 					break;
 				}
 			}
 			if(check) break;
 		}
 		if(check) {
-			System.out.println("출석 수정");
-			modifier = new ModifyDialog();
+			System.out.println(num);
+			modifier = new ModifyDialog(num, stu_db, this);
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "수정할 셀을 선택하십시오.");
 		}
 	}
-	
+	public void resetting() {
+		System.out.println("리셋");
+		numberOfEntries = 0;
+		members = setProperty(memberList.size(), 23);
+		curDatas = getMembers(10*currentEntryIndex);
+		model.setDataVector(curDatas, tHead);
+		table.getColumn("학번").setPreferredWidth(150);
+	}
+
 	// 출결 Table을 만든다.
 	public JScrollPane makeAttendTable() {
 		model = new DefaultTableModel(curDatas, tHead) {

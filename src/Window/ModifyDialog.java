@@ -11,8 +11,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
+
+import DBInfo.AttendDB;
+import Frame.AttendPanel;
 
 public class ModifyDialog extends JFrame implements ActionListener {
+	JFrame modifier;
+	AttendPanel att_pane;
+	AttendDB att_db;
+	String target;
+	boolean isApplied;
+	
 	// 학번, 이름, 1~16 (하나하나 전부), 출석, 지각, 결석, 비고
 	JTextField studentNumber;
 	JTextField name;
@@ -32,25 +42,36 @@ public class ModifyDialog extends JFrame implements ActionListener {
 	JTextField attend14;
 	JTextField attend15;
 	JTextField attend16;
-	JTextField att;
-	JTextField late;
-	JTextField abs;
+	int att;
+	int late;
+	int abs;
 	JTextField extra;
 	JButton apply;
 	JButton cancel;
 	public ModifyDialog() {
-		JFrame modifier = new JFrame("출결수정");
+		modifier = new JFrame("출결수정");
 		modifier.setLayout(new BorderLayout());
 		modifier.setSize(300, 280);
 		modifier.setLocation(600, 300);
 		modifier.setResizable(false);	//사이즈 조절
 		modifier.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		modifier.setVisible(true);
-		
-		addPanel(modifier);
+		addPanel();
 	}
-	
-	public void addPanel(JFrame modifier) {
+	public ModifyDialog(String column, AttendDB db, AttendPanel pane) {
+		att_pane = pane;
+		att_db = db;
+		target = column;
+		modifier = new JFrame("출결수정");
+		modifier.setLayout(new BorderLayout());
+		modifier.setSize(300, 280);
+		modifier.setLocation(600, 300);
+		modifier.setResizable(false);	//사이즈 조절
+		modifier.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		modifier.setVisible(true);
+		addPanel();
+	}
+	public void addPanel() {
 		// 순번은 정해져있으니 고칠 필요 없
 		// 학번, 이름, 1~16 (하나하나 전부), 출석, 지각, 결석, 비고
 		JPanel mainMod = new JPanel();
@@ -69,16 +90,17 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		JLabel latt2start, latt2end;
 		JLabel latt3start, latt3end;
 		JLabel latt4start, latt4end;
+		JLabel ex;
 		
-		mainMod.add(lstuNum = new JLabel("학번 : "));
-		lstuNum.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-		mainMod.add(studentNumber = new JTextField(6));
+//		mainMod.add(lstuNum = new JLabel("학번 : "));
+//		lstuNum.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+//		mainMod.add(studentNumber = new JTextField(6));
+//		
+//		mainMod.add(lname = new JLabel("이름 : "));
+//		lname.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+//		mainMod.add(name = new JTextField(6)); 
 		
-		mainMod.add(lname = new JLabel("이름 : "));
-		lname.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-		mainMod.add(name = new JTextField(6)); 
-		
-		mainMod.add(lattend = new JLabel("출석 체크(o, x)"));
+		mainMod.add(lattend = new JLabel("출석 체크(o, v, x)"));
 		lattend.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 30));
 		
 		mainMod.add(latt1start = new JLabel("             [1  :  "));
@@ -125,17 +147,57 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		mainMod.add(latt4end = new JLabel("  ]      "));
 		latt4end.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
 		
+		mainMod.add(ex = new JLabel("          비  고"));
+		ex.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
+		mainMod.add(extra = new JTextField(12));
+		
 		mainMod.add(apply = new JButton("확   인"));
-		mainMod.add(apply = new JButton("취   소"));
+		apply.addActionListener(this);
+		mainMod.add(cancel = new JButton("취   소"));
+		cancel.addActionListener(this);
 		
 		return mainMod;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		JButton event = (JButton)e.getSource();		
+		att = 0; late = 0; abs = 0;
+		if(event == apply) {
+			String attendString = attend1.getText() + attend2.getText() + attend3.getText()
+					+ attend4.getText() + attend5.getText() + attend6.getText()
+					+ attend7.getText() + attend8.getText() + attend9.getText()
+					+attend10.getText() + attend11.getText() + attend12.getText()
+					+attend13.getText() + attend14.getText() + attend15.getText()
+					+attend16.getText();
+			for(int i=0; i<16; i++) {
+				if(attendString.substring(i, i+1).equals("o")) {
+					att++;
+				}else if(attendString.substring(i, i+1).equals("v")) {
+					late++;
+				}else if(attendString.substring(i, i+1).equals("x") ) {
+					abs++;
+				}
+			}
+
+			String[] attendStatus = {attendString, Integer.toString(att), 
+					Integer.toString(late), Integer.toString(abs), extra.getText()
+			};
+			
+			att_db.modifyAttendData(target, attendStatus);
+			//구현되지 않은것
+			//1. 다이얼로그 종료
+			//2. 테이블 새로고침
+			isApplied = true;
+			modifier.dispose();
+		}
+		else if(event == cancel) {
+			isApplied = false;
+			modifier.dispose();
+		}
 	}
 
-	
+	public boolean getIsApplied() {
+		return isApplied;
+	}
 }
