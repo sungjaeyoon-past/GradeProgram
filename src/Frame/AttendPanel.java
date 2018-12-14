@@ -86,7 +86,7 @@ public class AttendPanel extends JPanel {
 		}
 		// table에 넣기 위해 필요한 세팅
 		members = new String[memberList.size()][23];
-		System.out.print("check");
+		//System.out.print("check");
 		members = setProperty(memberList.size(), 23);
 		// members(전체)에서 curDatas(10개만)
 		curDatas = new String[10][23];

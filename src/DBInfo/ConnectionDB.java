@@ -15,10 +15,10 @@ public class ConnectionDB {
 		Connection con = null;
 		try {
 			Class.forName(DRIVER);
-			System.out.println("데이터베이스 연결중..");
-			con = DriverManager.getConnection(url, "root", "1q2w3e4r!@"); // 각자 로컬 아이디로 ..
+			//System.out.println("데이터베이스 연결중..");
+			con = DriverManager.getConnection(url, "root", "123456"); // 각자 로컬 아이디로 ..
 
-			System.out.println("데이터베이스 연결 성공");
+			//System.out.println("데이터베이스 연결 성공");
 		}catch(ClassNotFoundException ex) {
 			System.out.println(ex.getMessage());
 		}catch(SQLException ex) {
