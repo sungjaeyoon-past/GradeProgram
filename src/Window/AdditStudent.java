@@ -191,7 +191,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 		if(b == bSave) {
 			System.out.println("창 저장버튼");
 			insertStudent();
-		}else if(b == bExit) {
+		}else if(e.getSource() == bExit) {
 			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
 			if(s == JOptionPane.OK_OPTION) {
 				dispose(); // 현재 띄워진 프레임 종료
