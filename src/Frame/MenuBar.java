@@ -132,8 +132,8 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener {
 			chooser.setFileFilter(filter);
 			returnVal = chooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				JOptionPane.showMessageDialog(null, "여는중 ...");
 				new CsvManagement().openCsv("" + chooser.getSelectedFile());
+				JOptionPane.showMessageDialog(null, "완료!");
 			}
 			break;
 		case "저장":
@@ -141,6 +141,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener {
 			returnVal = chooser.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				new CsvManagement().saveCsv("" + chooser.getSelectedFile());
+				JOptionPane.showMessageDialog(null, "완료!");
 			}
 			break;
 		case "종료":

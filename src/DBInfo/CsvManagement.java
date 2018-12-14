@@ -118,6 +118,9 @@ public class CsvManagement {
 					score[i - 8] = Integer.parseInt(std[i]);
 				}
 				db.setScore(score, std[0]);
+				sql = "UPDATE attend SET attendString='"+std[7]+"' WHERE studentNumber='"+std[0]+"'";
+				ps = con.prepareStatement(sql);
+				ps.executeUpdate();
 			}
 			
 			
