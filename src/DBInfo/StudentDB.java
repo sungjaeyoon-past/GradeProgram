@@ -64,7 +64,7 @@ public class StudentDB {
 			String sql = "select * from student order by number asc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-			
+			int a=1;
 			while(rs.next()) {
 				String number = rs.getString("number");
                 String studentNumber = rs.getString("studentNumber");
@@ -77,7 +77,7 @@ public class StudentDB {
                 String ratio = rs.getString("ratio");
                
                 Vector row = new Vector();
-                row.add(number);
+                row.add(a++);
                 row.add(studentNumber);
                 row.add(name);
                 row.add(grade);
@@ -220,10 +220,10 @@ public class StudentDB {
 			for(int i=0; i<model.getRowCount();) {
 				model.removeRow(0);
 			}
-			
+			int a=1;
 			while(rs.next()) {
 				Object data [] = {
-					rs.getString(1),
+					a,
 					rs.getString(2),
 					rs.getString(3),
 					rs.getString(4),
@@ -233,6 +233,7 @@ public class StudentDB {
 					rs.getString(8),
 					rs.getString(9)
 				};
+				a++;
 				model.addRow(data);
 			}
 			
@@ -314,10 +315,10 @@ public class StudentDB {
 			for(int i=0; i<model.getRowCount();) {
 				model.removeRow(0);
 			}
-			
+			int a=1;
 			while(rs.next()) {
 				Object data [] = {
-					rs.getString(1),
+					a,
 					rs.getString(2),
 					rs.getString(3),
 					rs.getString(4),
@@ -327,6 +328,7 @@ public class StudentDB {
 					rs.getString(8),
 					rs.getString(9)
 				};
+				a++;
 				model.addRow(data);
 			}
 			

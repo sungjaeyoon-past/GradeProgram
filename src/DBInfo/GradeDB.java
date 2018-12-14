@@ -35,6 +35,8 @@ public class GradeDB {
 	public GradeDB() {
 		connectDB = new ConnectionDB();
 		con = connectDB.makeConnection();
+		getItemList();
+		getItemRatio();
 	}
 
 	GradeDB(GradePanel gp) {
@@ -390,7 +392,9 @@ public class GradeDB {
 	public int getFieldNum() {
 		return fieldNum;
 	}
-
+	public int[] getItemRatioNew() {
+		return itemRatio;
+	}
 	public void setFieldNum(int fieldNum) {
 		this.fieldNum = fieldNum;
 	}
