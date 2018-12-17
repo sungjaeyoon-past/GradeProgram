@@ -65,6 +65,7 @@ public class StudentDB {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			int a=1;
+			
 			while(rs.next()) {
 				String number = rs.getString("number");
                 String studentNumber = rs.getString("studentNumber");
@@ -251,6 +252,7 @@ public class StudentDB {
 			String sql = "select *from student order by studentNumber asc";
 			ps = con.prepareStatement(sql); 
 			rs = ps.executeQuery();
+			int a=1;
 			//tablemodel에 있는 데이터 지우기
 			for(int i=0; i<model.getRowCount();) {
 				model.removeRow(0);
@@ -258,7 +260,7 @@ public class StudentDB {
 			
 			while(rs.next()) {
 				Object data [] = {
-					rs.getString(1),
+					a,
 					rs.getString(2),
 					rs.getString(3),
 					rs.getString(4),
@@ -268,6 +270,7 @@ public class StudentDB {
 					rs.getString(8),
 					rs.getString(9)
 				};
+				a++;
 				model.addRow(data);
 			}
 			
