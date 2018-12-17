@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
@@ -163,7 +164,8 @@ public class ModifyDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton event = (JButton)e.getSource();		
-		att = 0; late = 0; abs = 0;
+		att = 0; late = 0; abs = 0; 
+		boolean recursion = false;
 		if(event == apply) {
 			String attendString = attend1.getText() + attend2.getText() + attend3.getText()
 					+ attend4.getText() + attend5.getText() + attend6.getText()
@@ -174,23 +176,33 @@ public class ModifyDialog extends JFrame implements ActionListener {
 			for(int i=0; i<16; i++) {
 				if(attendString.substring(i, i+1).equals("o")) {
 					att++;
+					recursion = true;
 				}else if(attendString.substring(i, i+1).equals("v")) {
 					late++;
+					recursion = true;
 				}else if(attendString.substring(i, i+1).equals("x") ) {
 					abs++;
+					recursion = true;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "o, v, x 중 하나를 선택해주세요", 
+							"출결 에러", JOptionPane.ERROR_MESSAGE);
+					att = 0;
+					late = 0;
+					abs = 0;
+					recursion = false;
+					break;
 				}
 			}
-
-			String[] attendStatus = {attendString, Integer.toString(att), 
-					Integer.toString(late), Integer.toString(abs), extra.getText()
-			};
-			
-			att_db.modifyAttendData(target, attendStatus);
-			//구현되지 않은것
-			//1. 다이얼로그 종료
-			//2. 테이블 새로고침
-			isApplied = true;
-			modifier.dispose();
+			if(recursion) {
+				String[] attendStatus = {attendString, Integer.toString(att), 
+						Integer.toString(late), Integer.toString(abs), extra.getText()
+				};
+					
+				att_db.modifyAttendData(target, attendStatus);
+				isApplied = true;
+				modifier.dispose();
+			}
 		}
 		else if(event == cancel) {
 			isApplied = false;
