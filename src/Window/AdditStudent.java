@@ -178,7 +178,7 @@ public class AdditStudent extends JFrame implements ActionListener{
 	    bModify.addActionListener(this);
 	    bExit.addActionListener(this);
 	    
-		setSize(360,430);
+		setSize(360,400);
 	    setVisible(true);
 	    setResizable(false);
 	    setLocation(600,300);
@@ -188,9 +188,17 @@ public class AdditStudent extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
+	
 		if(b == bSave) {
-			System.out.println("창 저장버튼");
-			insertStudent();
+			if(tStuNum.getText().equals("")||tname.getText().equals("")||tphoneNum.getText().equals("")
+				||tremark.getText().equals("")||tYear.getText().equals("")||tMonth.getText().equals("")
+				||tDate.getText().equals("")) {
+				JOptionPane.showMessageDialog(this, "빈칸없이 입력해주세요.");
+			}else if(tYear.getText().length()!=4||tMonth.getText().length()!=2||tDate.getText().length()!=2){
+				JOptionPane.showMessageDialog(this, "날짜 형식을 지켜주세요. ex)1995/09/26");
+			}else {
+				insertStudent();
+			}
 		}else if(e.getSource() == bExit) {
 			int s = JOptionPane.showConfirmDialog(this, "종료하시면 작성하신 내용이 사라집니다.");
 			if(s == JOptionPane.OK_OPTION) {
