@@ -296,6 +296,7 @@ public class AttendPanel extends JPanel {
 		table.setFont(new Font("HY엽서L", 1, 15));//테이블 폰트변경
 		table.setRowHeight(50);//테이블 높이변경
 		table.getColumn("학번").setPreferredWidth(150);
+		table.getColumn("이름").setPreferredWidth(100);
 		//재배열 및 크기조정 불가
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
