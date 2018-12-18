@@ -191,6 +191,13 @@ public class StudentDB {
 			ps.setString(1, studentNumber);
 			int saveStu = ps.executeUpdate();
 			
+			//
+			String sqlatt = "delete from attend where studentNumber=?";
+			System.out.println(check);
+			ps = con.prepareStatement(sqlatt);
+			ps.setString(1, studentNumber);
+			ps.executeUpdate();
+			//
 			sql="delete from grade where ÇÐ¹ø="+studentNumber;
 	        System.out.println(sql);
 	        ps = con.prepareStatement(sql);

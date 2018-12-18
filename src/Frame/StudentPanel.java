@@ -224,7 +224,8 @@ public class StudentPanel extends JPanel implements ActionListener, MouseListene
 			}else {
 				aClick.deleteStudent(studentNumber);
 				this.JTableRefresh();//action부분에 넣어야함.
-				//studentNumber = null;
+				//출결 삭제
+				
 			}
 		 }else if(b.getText().equals("▼  이름정렬")) {
 			 s.studentCheck(model);

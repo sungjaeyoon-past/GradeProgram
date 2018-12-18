@@ -71,9 +71,8 @@ public class AttendPanel extends JPanel {
 	AttendDB stu_db;	//StudentDB 자식
 	Student stu;
 	Connection con;
-	ResultSet rs;
+	ResultSet rs, rstu;
 	
-//	PreparedStatement pstmt;
 	
 	public AttendPanel() {
 		//DB가 있을 때 없을 때를 나누어야 할까
@@ -117,14 +116,18 @@ public class AttendPanel extends JPanel {
 		try {
 			con = stu_db.getConnection().makeConnection();
 			String sql = "SELECT * FROM student.attend";
+			String sqlstu = "SELECT * FROM student.student";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-		
+			pstmt = con.prepareStatement(sqlstu);
+			rstu = pstmt.executeQuery();
+			int counter = 0;
 			for(int i=0; i<x; i++) {
 				rs.next();
-				mem[i][0] = rs.getString("number");
-				mem[i][1] = rs.getString("studentNumber");
-				mem[i][2] = rs.getString("name");
+				rstu.next();
+				mem[i][0] = Integer.toString(++counter);
+				mem[i][1] = rstu.getString("studentNumber");
+				mem[i][2] = rstu.getString("name");
 				mem[i][3] = rs.getString("attendString").substring(0, 1); // 1
 				mem[i][4] = rs.getString("attendString").substring(1, 2); // 2
 				mem[i][5] = rs.getString("attendString").substring(2, 3); // 3
@@ -156,7 +159,7 @@ public class AttendPanel extends JPanel {
 		}
 		return mem;
 	}
-	
+
 	// getMembers(int start) : members에서 start~start+10까지의 data를 가져온다.
 	public String[][] getMembers(int start){
 		String[][] mem = new String[10][23];
