@@ -93,16 +93,8 @@ public class ModifyDialog extends JFrame implements ActionListener {
 		JLabel latt4start, latt4end;
 		JLabel ex;
 		
-//		mainMod.add(lstuNum = new JLabel("학번 : "));
-//		lstuNum.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-//		mainMod.add(studentNumber = new JTextField(6));
-//		
-//		mainMod.add(lname = new JLabel("이름 : "));
-//		lname.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
-//		mainMod.add(name = new JTextField(6)); 
-		
-		mainMod.add(lattend = new JLabel("출석 체크(o, v, x)"));
-		lattend.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 30));
+		mainMod.add(lattend = new JLabel("출석 체크(o(출석), v(지각), x(결석)"));
+		lattend.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 18));
 		
 		mainMod.add(latt1start = new JLabel("      [1  :  "));
 		latt1start.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 15));
