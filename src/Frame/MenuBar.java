@@ -74,7 +74,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener {
 		lectureMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		lectureMenu.addMouseListener(this);
 //제작정보
-		IntroMenu = new JMenu(" Help");
+		IntroMenu = new JMenu(" 메인");
 		IntroMenu.setPreferredSize(new Dimension(80, 50));
 		IntroMenu.setFont(new Font("KBIZ한마음고딕 M", Font.BOLD, 20));
 		IntroMenu.addMouseListener(this);
@@ -132,8 +132,11 @@ public class MenuBar extends JMenuBar implements ActionListener, MouseListener {
 			chooser.setFileFilter(filter);
 			returnVal = chooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				new CsvManagement().openCsv("" + chooser.getSelectedFile());
-				JOptionPane.showMessageDialog(null, "완료!");
+				if(new CsvManagement().openCsv("" + chooser.getSelectedFile())) {					
+					JOptionPane.showMessageDialog(null, "완료!");
+				}else {
+					JOptionPane.showMessageDialog(null, "csv 형식이 손상되었습니다.");					
+				}
 			}
 			break;
 		case "저장":

@@ -32,7 +32,7 @@ public class CsvManagement {
 		st = new StudentDB();
 	}
 
-	public void openCsv(String filepath) {
+	public boolean openCsv(String filepath) {
 		BufferedReader br = null;
 		PreparedStatement ps = null;
 		String sql;
@@ -86,6 +86,10 @@ public class CsvManagement {
 			line = br.readLine();line = br.readLine();			
 			  
 			// 학생 전체 드롭
+			sql="set sql_safe_updates=0";
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			
 			sql="delete from grade";
 			ps = con.prepareStatement(sql);
 			ps.executeUpdate();
@@ -125,11 +129,19 @@ public class CsvManagement {
 			
 			
 			br.close();
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
+		} catch(IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			return false;	
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+			return false;	
 		}
 
 	}
